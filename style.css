@@ -954,7 +954,7 @@ body {
 @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500&display=swap");
 
         #loadingText,
-        body {
+        body.page-gift {
             font-family: League Spartan, sans-serif
         }
 
@@ -967,7 +967,7 @@ body {
         .intro,
         .login-container,
         .love,
-        h1 {
+        body.page-gift h1 {
             text-align: center
         }
 
@@ -976,8 +976,8 @@ body {
             overflow: hidden
         }
 
-        body,
-        html {
+        body.page-gift,
+        body.page-gift {
             cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 24 24' fill='white' stroke='%23dc4971' stroke-width='1.5'%3E%3Cpath d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'/%3E%3C/svg%3E") 14 14, auto
         }
 
@@ -991,11 +991,11 @@ body {
             cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 24 24' fill='%23dc4971' stroke='%23dc4971' stroke-width='1.5'%3E%3Cpath d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'/%3E%3C/svg%3E") 14 14, auto !important
         }
 
-        a,
-        button,
-        input,
-        label,
-        textarea {
+        body.page-gift a,
+        body.page-gift button,
+        body.page-gift input,
+        body.page-gift label,
+        body.page-gift textarea {
             cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 24 24' fill='%23dc4971' stroke='%23c43c61' stroke-width='2'%3E%3Cpath d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'/%3E%3C/svg%3E") 14 14, pointer !important
         }
 
@@ -1021,7 +1021,7 @@ body {
             letter-spacing: 2px
         }
 
-        body {
+        body.page-gift {
             margin: 0;
             padding: 20px;
             background-color: #f4ecd8;
@@ -1030,18 +1030,7 @@ body {
             overflow-x: hidden
         }
 
-        .firefly {
-            position: fixed;
-            width: 5px;
-            height: 5px;
-            background: #fff;
-            border-radius: 50%;
-            box-shadow: 0 0 10px #fff, 0 0 20px #ffb3c6, 0 0 30px #dc4971;
-            z-index: -1;
-            animation: 15s linear infinite floatUp;
-            opacity: 0;
-            pointer-events: none
-        }
+        body.page-gift .firefly {
 
         @keyframes floatUp {
             0% {
@@ -1076,7 +1065,7 @@ body {
             height: 100%
         }
 
-        body {
+        body.page-gift {
             color: #4a4a4a
         }
 
@@ -1135,9 +1124,9 @@ body {
         .category-title,
         .love,
         .title,
-        h1,
-        h2,
-        h3 {
+        body.page-gift h1,
+        body.page-gift h2,
+        body.page-gift h3 {
             font-family: Great Vibes, cursive;
             color: #dc4971;
             font-weight: 400;
@@ -1149,13 +1138,13 @@ body {
             font-weight: 600
         }
 
-        h1 {
+        body.page-gift h1 {
             font-size: 5em;
             margin-bottom: 10px
         }
 
-        h2,
-        h3 {
+        body.page-gift h2,
+        body.page-gift h3 {
             font-size: 2.5em
         }
 
@@ -1253,7 +1242,7 @@ body {
         .love,
         .precisions strong,
         .red,
-        a {
+        body.page-gift a {
             color: #dc4971
         }
 
@@ -1367,11 +1356,11 @@ body {
             text-align: right
         }
 
-        a {
+        body.page-gift a {
             text-decoration: underline
         }
 
-        a:hover {
+        body.page-gift a:hover {
             text-decoration: none
         }
 
@@ -1601,23 +1590,23 @@ body {
                 margin: 12mm
             }
 
-            html,
-            body {
+            body.page-gift,
+            body.page-gift {
                 background: #fff !important;
                 height: auto !important;
                 overflow: visible !important
             }
 
-            body:before,
-            body:after {
+            body.page-gift:before,
+            body.page-gift:after {
                 display: none !important
             }
 
-            body *:not(:has(#ticket-wrapper)):not(#ticket-wrapper):not(#ticket-wrapper *) {
+            body.page-gift *:not(:has(#ticket-wrapper)):not(#ticket-wrapper):not(#ticket-wrapper *) {
                 display: none !important
             }
 
-            body *:has(#ticket-wrapper) {
+            body.page-gift *:has(#ticket-wrapper) {
                 position: static !important;
                 width: auto !important;
                 max-width: none !important;
@@ -1841,7 +1830,7 @@ body {
             animation: termBlink 1s steps(1) infinite
         }
 
-        body {
+        body.page-gift {
             transition: background-color 1s ease
         }
 
@@ -1868,7 +1857,7 @@ body {
             visibility: hidden
         }
 
-        body:after {
+        body.page-gift:after {
             content: "";
             position: fixed;
             top: 0;
@@ -2008,7 +1997,7 @@ body {
             -webkit-backdrop-filter: none
         }
 
-        body:before {
+        body.page-gift:before {
             content: "";
             position: fixed;
             top: 0;
@@ -2219,7 +2208,7 @@ body {
             transition: opacity 1.2s ease .3s
         }
 
-        body:not(.locked) #heartField {
+        body.page-gift:not(.locked) #heartField {
             opacity: 1
         }
 
@@ -2631,7 +2620,7 @@ body {
             }
         }
 
-        :root {
+        body.page-gift {
             --sign-red: #cc0605;
             --sign-red-dim: #7a0403;
             --text-1: #ff4d4d;
@@ -2853,7 +2842,7 @@ body {
             background: var(--text-1)
         }
 
-        :root {
+        body.page-gift {
             --sign-red: #dc4971;
             --sign-red-dim: #f0e6e0;
             --text-1: #dc4971;
@@ -3328,16 +3317,16 @@ body {
             }
         }
 
-        :root {
+        body.page-gift {
             --gutter: clamp(8px, 3.5vw, 20px)
         }
 
-        html {
+        body.page-gift {
             -webkit-text-size-adjust: 100%;
             text-size-adjust: 100%
         }
 
-        body {
+        body.page-gift {
             padding: var(--gutter);
             padding-top: max(var(--gutter), env(safe-area-inset-top, 0px));
             padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
@@ -3359,12 +3348,12 @@ body {
             right: clamp(22px, 6vw, 40px)
         }
 
-        h1 {
+        body.page-gift h1 {
             font-size: clamp(2.6rem, 12.5vw, 5rem)
         }
 
-        h2,
-        h3 {
+        body.page-gift h2,
+        body.page-gift h3 {
             font-size: clamp(1.9rem, 7.5vw, 2.5rem)
         }
 
