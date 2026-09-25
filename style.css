@@ -11,8 +11,8 @@
   --muted: #75626a;
   --line: #f0dcd8;
   --field: #fff8f4;
-  --script: "Great Vibes", "Snell Roundhand", cursive;
-  --sans: "League Spartan", "Helvetica Neue", Arial, sans-serif;
+  --script: "Great Vibes", cursive;
+  --sans: "League Spartan", Arial, sans-serif;
 }
 
 * {
@@ -49,7 +49,6 @@ body {
   overflow-x: hidden;
 }
 
-/* Particules lumineuses flottantes */
 .firefly {
   position: fixed;
   width: 5px;
@@ -80,7 +79,6 @@ body {
   }
 }
 
-/* Apparition douce des cartes / lettres */
 @keyframes riseIn {
   0% {
     opacity: 0;
@@ -93,7 +91,6 @@ body {
   }
 }
 
-/* Séparateur avec petit losange central, ex : <div class="ornament">&#10022;</div> */
 .ornament {
   display: flex;
   align-items: center;
@@ -110,7 +107,6 @@ body {
   background: var(--line);
 }
 
-/* Boutons génériques (variantes : .btn-yes en plein, .btn-no en contour) */
 .btn {
   padding: 14px;
   border-radius: 10px;
@@ -158,8 +154,6 @@ body {
   }
 }
 
-
-/* ===== Styles spécifiques : cdi.html ===== */
 body {
       padding-top: max(20px, env(safe-area-inset-top));
     }
@@ -328,10 +322,9 @@ body {
     .offer-meta b {
       display: block;
       color: var(--rose-dark);
-      font-size: .68em;
-      text-transform: uppercase;
-      letter-spacing: .06em;
+      font-size: 1em;
       margin-bottom: 2px;
+      font-family: var(--script);
     }
 
     .offer-section {
@@ -391,6 +384,10 @@ body {
       top: .05em;
       color: var(--rose);
       font-size: .85em;
+    }
+
+    .offer-section em {
+        color: var(--rose-dark);
     }
 
     .offer-quote {
@@ -516,8 +513,6 @@ body {
       }
     }
 
-
-/* ===== Styles spécifiques : date.html ===== */
 .stage{position:relative;z-index:1;width:100%;max-width:460px}
 
   #envelope-wrap{display:flex;flex-direction:column;align-items:center;gap:22px}
@@ -591,7 +586,7 @@ body {
   .letter .sub{
     color:var(--muted);
     margin:0 auto;
-    max-width:30ch;
+    max-width:40ch;
     font-size:1em;
   }
 
@@ -601,7 +596,7 @@ body {
     font-family:var(--script);
     font-size:clamp(3.6rem,24vw,6.4rem);
     line-height:.85;
-    color:var(--rose);
+    color:var(--rose-dark);
     margin:2px 0 4px;
   }
   .day-month{
@@ -641,9 +636,9 @@ body {
 
   .tip{margin:0}
   .tip-title{font-family:var(--script);font-weight:400;font-size:clamp(1.5rem,7vw,2rem);line-height:1.1;color:var(--rose);margin:0 0 6px}
-  .tip-text{margin:0 auto;max-width:32ch;font-weight:600;color:var(--rose-dark);font-size:1.05em}
+  .tip-text{margin:0 auto;max-width:32ch;font-weight:600;color:var(--muted);font-size:1em}
 
-  #rsvp-form{text-align:left}
+  #rsvp-form{text-align:left; margin-top: 24px;}
   .time-range-title{font-size:1.05em;font-weight:700;color:var(--rose-dark);margin:0}
   .time-range{display:flex;gap:12px;margin-top:10px}
   .time-range label,.msg-field label{font-size:.9em;color:var(--muted)}
@@ -778,8 +773,6 @@ body {
     .modal{animation:none!important}
   }
 
-
-/* ===== Styles spécifiques : index.html ===== */
 .page {
       position: relative;
       z-index: 1;
@@ -828,9 +821,9 @@ body {
       text-transform: uppercase;
       color: var(--rose-dark);
       background: var(--rose-soft);
-      padding: 5px 14px;
+      padding: 6px 12px 2px;
       border-radius: 999px;
-      margin-bottom: 12px;
+      margin-bottom: 24px;
     }
 
     h1 {
@@ -866,8 +859,8 @@ body {
       gap: 14px;
       text-align: left;
       padding: 15px 18px;
-      background: var(--field);
-      border: 1px solid var(--line);
+      background: white;
+      border: 1px solid var(--rose);
       border-radius: 12px;
       text-decoration: none;
       color: var(--ink);
@@ -877,8 +870,8 @@ body {
     .link-btn:hover {
       transform: translateY(-2px);
       box-shadow: 0 10px 22px #9f032c1f;
-      border-color: var(--rose-soft);
-      background: #fff;
+      border-color: var(--rose);
+      background: var(--rose-soft);
     }
 
     .link-btn:active { transform: scale(.98) }
@@ -936,7 +929,6 @@ body {
       margin-top: 2px;
       font-size: .68em;
       letter-spacing: .05em;
-      text-transform: uppercase;
       color: var(--muted);
     }
 
@@ -949,8 +941,6 @@ body {
       .card, .firefly { animation: none !important }
     }
 
-
-/* ===== Styles spécifiques : gift.html ===== */
 @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500&display=swap");
 
         #loadingText,
@@ -1029,8 +1019,6 @@ body {
             -webkit-user-select: none;
             overflow-x: hidden
         }
-
-        body.page-gift .firefly {
 
         @keyframes floatUp {
             0% {

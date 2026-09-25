@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="robots" content="noindex, nofollow, noarchive">
     <title>Vérification de sécurité requise</title>
-    <link rel="icon" href="data:,">
+    <link rel="icon" href="assets/icon.svg">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <link rel="stylesheet" href="style.css">
-    
+
 </head>
 
 <body class="locked">
@@ -18,7 +18,7 @@
         <svg class="loading-heart" viewBox="0 0 24 24" width="72" height="72" fill="#dc4971" aria-hidden="true">
             <path
                 d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-            </svg>
+        </svg>
         <div id="loadingText">Connexion sécurisée...</div>
     </div>
     <div id="cuteAlert"></div>
@@ -33,9 +33,11 @@
         <div class="login-container">
             <div id="bootLog" aria-hidden="true"></div>
             <h1 style="font-size: 4em; margin-bottom: 5px;">Accès Réservé</h1>
-            <p class="intro" style="margin-bottom: 20px; padding-bottom: 10px; min-height: auto;">Réponds correctement à au moins 80 % des questions sur nous pour accéder à ta surprise.</p>
+            <p class="intro" style="margin-bottom: 20px; padding-bottom: 10px; min-height: auto;">Réponds correctement à
+                au moins 80 % des questions sur nous pour accéder à ta surprise.</p>
             <div id="gateQuiz" aria-live="polite"></div>
-            <button type="button" id="loginBtn" class="btn-submit" style="display:none;margin-top:16px">Entrer →</button>
+            <button type="button" id="loginBtn" class="btn-submit" style="display:none;margin-top:16px">Entrer
+                →</button>
             <div id="grantedBanner" role="status" aria-live="polite"></div>
         </div>
     </div>
@@ -47,8 +49,10 @@
             <form id="menuForm" action="https://formspree.io/f/xykbyqbl" method="POST">
                 <div class="category" id="sec-date">
                     <div class="category-title"><span>Date à Deux</span><span class="note">AU CHOIX</span></div>
-                    <label class="option"><input type="radio" name="date_weekend" value="20 mars" required>SAMEDI 20 &amp; DIMANCHE 21 MARS<span class="desc">3 jours avant</span></label>
-                    <label class="option"><input type="radio" name="date_weekend" value="27 mars">SAMEDI 27 &amp; DIMANCHE 28 MARS<span class="desc">4 jours après</span></label>
+                    <label class="option"><input type="radio" name="date_weekend" value="20 mars" required>SAMEDI 20
+                        &amp; DIMANCHE 21 MARS<span class="desc">3 jours avant</span></label>
+                    <label class="option"><input type="radio" name="date_weekend" value="27 mars">SAMEDI 27 &amp;
+                        DIMANCHE 28 MARS<span class="desc">4 jours après</span></label>
                 </div>
                 <div class="category fade-in-section" id="sec-activite" style="display: none;">
                     <div class="category-title"><span>Activité à Deux</span><span class="note">AU CHOIX</span></div>
@@ -165,7 +169,8 @@
                             DIMANCHE</span></div>
                     <label class="option"><input type="radio" name="activite_dimanche" value="Grasse mat">GRASSE
                         MATINÉE<span class="desc">le repos absolu mais pas très productif</span></label>
-                    <label class="option"><input type="radio" name="activite_dimanche" value="Balade">BALADE LE LONG DU CLAIN<span class="desc">pour prendre l'air frais mais aussi et surtout pour profiter du paysage
+                    <label class="option"><input type="radio" name="activite_dimanche" value="Balade">BALADE LE LONG DU
+                        CLAIN<span class="desc">pour prendre l'air frais mais aussi et surtout pour profiter du paysage
                             (pas exceptionnel...)</span></label>
                     <label class="option"><input type="radio" name="activite_dimanche" value="Visite">VISITE DE LA
                         VILLE<span class="desc">la Place Ducale nous attend, même si on risque de l'avoir déjà faite
@@ -191,8 +196,9 @@
                     <label class="option"><input type="checkbox" name="ptitdej" value="Autre" class="other-toggle">AUTRE
                         PROPOSITION<span class="desc">à toi de choisir...</span><textarea class="other-textarea"
                             rows="2" placeholder="Écris ton idée ici..."></textarea></label>
-                    <label class="option"><input type="checkbox" name="ptitdej" value="Joker">P'TIT-DÉJ DE LA CHANCE<span
-                            class="desc">Tu me réveilles, tu me nourris, je pose pas de questions ☕🥐</span></label>
+                    <label class="option"><input type="checkbox" name="ptitdej" value="Joker">P'TIT-DÉJ DE LA
+                        CHANCE<span class="desc">Tu me réveilles, tu me nourris, je pose pas de questions
+                            ☕🥐</span></label>
                 </div>
                 <div id="sec-final" class="fade-in-section" style="display: none;">
                     <div id="info-surprise"
@@ -200,7 +206,8 @@
                         <h2 style="font-size: 2.2em; margin-bottom: 15px;">À titre indicatif :</h2>
                         <p style="font-size: 1.1em; line-height: 1.6; color: #777;"><i>Le reste du weekend ne s'arrête
                                 pas là !</i><br>Tu es la bienvenue aussi longtemps que tu le souhaites, mon cœur !! J'ai
-                            pensé que l'on déciderait du restant du weekend sur le moment.<br><em>Non, ce n'est pas parce
+                            pensé que l'on déciderait du restant du weekend sur le moment.<br><em>Non, ce n'est pas
+                                parce
                                 que je n'ai plus d'idée en stock. J'en ai même encore des tonnes !</em></p>
                     </div>
                     <div id="recap-container" class="recap-card" style="display: none;">
@@ -210,7 +217,8 @@
                     </div>
                     <div class="precisions">
                         <h3>Précisions à Deux</h3>
-                        <p>LE RESTAURANT NE PREND :<br>ni les cartes bleues,<br>ni les chèques,<br>ni toute autre méthode
+                        <p>LE RESTAURANT NE PREND :<br>ni les cartes bleues,<br>ni les chèques,<br>ni toute autre
+                            méthode
                             de paiement.<br><br><strong>MAIS ACCEPTE TOUT PAIEMENT DE FORMAT :</strong><br>- des
                             milliers de bisous, des centaines de câlins ;<br>- prochain date à la charge de Madame ;
                             <span class="mini red">il te faudra faire mieux :)</span>
@@ -265,7 +273,8 @@
                     <h3>🧳 Ma valise</h3>
                     <p class="pack-progress" id="packProgress"></p>
                     <ul id="packList"></ul>
-                    <p class="pack-avoid"><strong>🚫 Ne surtout pas prendre :</strong> ton portefeuille, ta carte bancaire, ton chéquier… (ici, tout se paie en bisous 😘)</p>
+                    <p class="pack-avoid"><strong>🚫 Ne surtout pas prendre :</strong> ton portefeuille, ta carte
+                        bancaire, ton chéquier… (ici, tout se paie en bisous 😘)</p>
                 </div>
                 <div
                     style="margin-top: 40px; padding: 20px; background: #fff0f3; border-radius: 10px; border: 1px dashed #dc4971;">
@@ -295,7 +304,8 @@
                         </svg>
                     </button>
                     <p id="letterStatus" class="letter-status" role="status" aria-live="polite"></p>
-                    <button type="button" id="letterOpenBtn" class="btn-submit letter-open" hidden>📜 Lire ma fable</button>
+                    <button type="button" id="letterOpenBtn" class="btn-submit letter-open" hidden>📜 Lire ma
+                        fable</button>
                 </div>
             </div>
             <div id="error">
@@ -321,7 +331,7 @@
                     <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
                         <path
                             d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-                        </svg>
+                    </svg>
                 </div>
             </div>
         </div>
@@ -337,20 +347,28 @@
             <div class="poem-scroll">
                 <h2 id="letterTitle" class="poem-title">Le Corbeau et le Renard</h2>
                 <div class="poem-body letter-body">
-                    <p class="letter-para">Maître Corbeau, sur un arbre perché,<br>Tenait en son bec un fromage.<br>Maître Renard, par l'odeur alléché,<br>Lui tint à peu près ce langage :</p>
-                    <p class="letter-para">« Hé ! bonjour, Monsieur du Corbeau.<br>Que vous êtes joli ! que vous me semblez beau !<br>Sans mentir, si votre ramage<br>Se rapporte à votre plumage,<br>Vous êtes le Phénix des hôtes de ces bois. »</p>
-                    <p class="letter-para">À ces mots le Corbeau ne se sent pas de joie ;<br>Et pour montrer sa belle voix,<br>Il ouvre un large bec, laisse tomber sa proie.</p>
-                    <p class="letter-para">Le Renard s'en saisit, et dit : « Mon bon Monsieur,<br>Apprenez que tout flatteur<br>Vit aux dépens de celui qui l'écoute.<br>Cette leçon vaut bien un fromage, sans doute. »</p>
-                    <p class="letter-para">Le Corbeau honteux et confus<br>Jura, mais un peu tard, qu'on ne l'y prendrait plus.</p>
+                    <p class="letter-para">Maître Corbeau, sur un arbre perché,<br>Tenait en son bec un
+                        fromage.<br>Maître Renard, par l'odeur alléché,<br>Lui tint à peu près ce langage :</p>
+                    <p class="letter-para">« Hé ! bonjour, Monsieur du Corbeau.<br>Que vous êtes joli ! que vous me
+                        semblez beau !<br>Sans mentir, si votre ramage<br>Se rapporte à votre plumage,<br>Vous êtes le
+                        Phénix des hôtes de ces bois. »</p>
+                    <p class="letter-para">À ces mots le Corbeau ne se sent pas de joie ;<br>Et pour montrer sa belle
+                        voix,<br>Il ouvre un large bec, laisse tomber sa proie.</p>
+                    <p class="letter-para">Le Renard s'en saisit, et dit : « Mon bon Monsieur,<br>Apprenez que tout
+                        flatteur<br>Vit aux dépens de celui qui l'écoute.<br>Cette leçon vaut bien un fromage, sans
+                        doute. »</p>
+                    <p class="letter-para">Le Corbeau honteux et confus<br>Jura, mais un peu tard, qu'on ne l'y
+                        prendrait plus.</p>
                     <p class="letter-para"><em>Jean de La Fontaine, Fables, livre I</em></p>
-                    <p class="letter-para">Et ce n'est pas tout, mon chat : une autre surprise t'attend le jour J. Pour la découvrir, il te faudra me la demander 😘</p>
+                    <p class="letter-para">Et ce n'est pas tout, mon chat : une autre surprise t'attend le jour J. Pour
+                        la découvrir, il te faudra me la demander 😘</p>
                     <p class="letter-sign">Ton chéri</p>
                 </div>
                 <div class="poem-end" aria-hidden="true">
                     <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
                         <path
                             d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-                        </svg>
+                    </svg>
                 </div>
             </div>
         </div>
@@ -384,7 +402,7 @@
                     n.type = "triangle", n.frequency.value = e, o.gain.setValueAtTime(.2, audioCtx
                             .currentTime), o.gain.exponentialRampToValueAtTime(.01, audioCtx
                             .currentTime + .5), n.connect(o), o.connect(audioCtx.destination), n
-                    .start(), n.stop(audioCtx.currentTime + .5)
+                        .start(), n.stop(audioCtx.currentTime + .5)
                 }, 100 * t)
             })
         }
@@ -416,10 +434,10 @@
         function showCuteAlert(e, t = 3500) {
             let n = document.getElementById("cuteAlert");
             n.innerText = e, n.style.display = "block", n.style.animation = "fadeIn 0.3s ease-in-out", setTimeout(
-        () => {
-                n.style.animation = "fadeOut 0.3s ease-in-out forwards", setTimeout(() => n.style.display =
-                    "none", 300)
-            }, t)
+                () => {
+                    n.style.animation = "fadeOut 0.3s ease-in-out forwards", setTimeout(() => n.style.display =
+                        "none", 300)
+                }, t)
         }
         document.body.addEventListener("click", initAudio, {
             once: !0
@@ -533,7 +551,10 @@
                 o = l => String(l).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g,
                     "&quot;"),
                 i = {
-                    date_weekend: {"20 mars": "Samedi 20 et dimanche 21 mars", "27 mars": "Samedi 27 et dimanche 28 mars"},
+                    date_weekend: {
+                        "20 mars": "Samedi 20 et dimanche 21 mars",
+                        "27 mars": "Samedi 27 et dimanche 28 mars"
+                    },
                     qui_cuisine: {
                         Moi: "Mon chéri cuisine pour moi",
                         Nous: "On cuisine à deux",
@@ -555,8 +576,14 @@
                     }
                 },
                 a = l => n.getAll(l).map(r => String(r).trim()).filter(r => r && r !== "Autre").map(r => i[l] && i[l][
-                    r] || r),
-                c = [{day: "Notre weekend", rows: [["date_weekend", "📅 Date"]]}, {
+                    r
+                ] || r),
+                c = [{
+                    day: "Notre weekend",
+                    rows: [
+                        ["date_weekend", "📅 Date"]
+                    ]
+                }, {
                     day: "Samedi",
                     rows: [
                         ["activite", "✨ " + TICKET_INFO.heure + " · Activité"],
@@ -593,9 +620,10 @@
             c.forEach(l => {
                 const r = l.rows.map(([d, p]) => [p, a(d), d]).filter(d => d[1].length);
                 r.length && (m = !0, u += `<li class="tl-day"><span>${l.day}</span></li>`, r.forEach(([d, p,
-                    h]) => {
-                        u += `<li class="tl-item"><span class="tl-dot" aria-hidden="true"></span><button type="button" class="tl-go" data-target="${s[h]}" title="Modifier ce choix"><strong class="recap-label">${o(d)}</strong><span class="recap-value">${o(p.join(" & "))}</span></button></li>`
-                    }))
+                    h
+                ]) => {
+                    u += `<li class="tl-item"><span class="tl-dot" aria-hidden="true"></span><button type="button" class="tl-go" data-target="${s[h]}" title="Modifier ce choix"><strong class="recap-label">${o(d)}</strong><span class="recap-value">${o(p.join(" & "))}</span></button></li>`
+                }))
             }), e.innerHTML = u, m && (t.style.display = "block")
         }
 
@@ -642,7 +670,8 @@
                 u = document.createElement("div"),
                 m = document.createElement("span"),
                 l = document.createElement("small");
-            return c.className = "ticket-foot", s.className = "ticket-no", s.textContent = "N° " + newTicketNo(), u.className =
+            return c.className = "ticket-foot", s.className = "ticket-no", s.textContent = "N° " + newTicketNo(), u
+                .className =
                 "ticket-stamp", m.textContent = "Validé", l.textContent = new Date(e.ts || Date.now())
                 .toLocaleDateString("fr-FR"), u.append(m, l), c.append(s, u), t.append(a, c), t
         }
@@ -792,10 +821,10 @@
                     "10000", a.style.pointerEvents = "none", a.style.transition =
                     "top 4s linear, transform 4s ease-in-out", a.style.transform =
                     `rotate(${360*Math.random()}deg)`, document.body.appendChild(a), requestAnimationFrame(
-                () => {
-                        a.style.top = "120vh", a.style.transform =
-                            `rotate(${360*Math.random()}deg) translateX(${200*Math.random()-100}px)`
-                    }), setTimeout(() => a.remove(), 4e3)
+                        () => {
+                            a.style.top = "120vh", a.style.transform =
+                                `rotate(${360*Math.random()}deg) translateX(${200*Math.random()-100}px)`
+                        }), setTimeout(() => a.remove(), 4e3)
             }, 100 * i)
         }
 
@@ -886,7 +915,9 @@
                 Pancakes: ["Rupture de stock sur le sirop d'érable... 🥞"],
                 Autre: ["Une idée perso ? Je suis tout ouïe 👀"]
             },
-            JOKER_REACTIONS = ["Tu me fais confiance ? Mauvaise idée 😈", "Challenge accepted 😏", "Compte sur moi pour la surprise ✨"];
+            JOKER_REACTIONS = ["Tu me fais confiance ? Mauvaise idée 😈", "Challenge accepted 😏",
+                "Compte sur moi pour la surprise ✨"
+            ];
 
         function showReaction(e) {
             const t = e.target;
@@ -901,6 +932,7 @@
             i.className = "reaction-bubble", i.setAttribute("aria-hidden", "true"), i.textContent = o[Math.floor(Math
                 .random() * o.length)], n.appendChild(i), setTimeout(() => i.remove(), 2700)
         }
+
         function resetFormAnswers() {
             try {
                 localStorage.removeItem(STORE_KEY)
@@ -910,11 +942,13 @@
                     e.value = "Autre"
                 }), document.querySelectorAll("#menuForm .other-textarea").forEach(e => {
                 e.value = "", e.style.display = "none"
-            }), ["sec-activite", "sec-quicuisine", "sec-cocktail", "sec-entree", "sec-plat", "sec-dessert", "sec-soiree",
+            }), ["sec-activite", "sec-quicuisine", "sec-cocktail", "sec-entree", "sec-plat", "sec-dessert",
+                "sec-soiree",
                 "sec-dimanche", "sec-act-dim", "sec-ptitdej", "info-surprise", "sec-final"
             ].forEach(e => {
                 const t = document.getElementById(e);
-                t && (hideTimeouts[e] && clearTimeout(hideTimeouts[e]), t.classList.remove("fade-out-section"), t
+                t && (hideTimeouts[e] && clearTimeout(hideTimeouts[e]), t.classList.remove("fade-out-section"),
+                    t
                     .style.display = "none")
             }), document.querySelectorAll(".reaction-bubble").forEach(e => e.remove()), document.getElementById(
                 "recap-list").innerHTML = "", document.getElementById("recap-container").style.display = "none"
@@ -999,12 +1033,12 @@
         }), document.querySelectorAll('input[name="qui_cuisine"]').forEach(e => {
             e.addEventListener("change", t => {
                 t.target.value === "Resto" || t.target.value === "Commande" ? (hide("sec-cocktail"),
-                        hide("sec-entree"), hide("sec-plat"), hide("sec-dessert"), reveal("sec-soiree")
-                        ) : (reveal("sec-cocktail"), document.querySelector(
-                            'input[name="cocktail"]:checked') && reveal("sec-entree"), document
-                        .querySelector('input[name="entree"]:checked') && reveal("sec-plat"), document
-                        .querySelector('input[name="plat"]:checked') && reveal("sec-dessert"), document
-                        .querySelector('input[name="dessert"]:checked') && reveal("sec-soiree"))
+                    hide("sec-entree"), hide("sec-plat"), hide("sec-dessert"), reveal("sec-soiree")
+                ) : (reveal("sec-cocktail"), document.querySelector(
+                        'input[name="cocktail"]:checked') && reveal("sec-entree"), document
+                    .querySelector('input[name="entree"]:checked') && reveal("sec-plat"), document
+                    .querySelector('input[name="plat"]:checked') && reveal("sec-dessert"), document
+                    .querySelector('input[name="dessert"]:checked') && reveal("sec-soiree"))
             })
         }), document.querySelectorAll('input[name="cocktail"]').forEach(e => {
             e.addEventListener("change", () => reveal("sec-entree"))
@@ -1580,7 +1614,7 @@
                 attributes: !0,
                 attributeFilter: ["style"]
             });
-                    })();
+        })();
     </script>
     <script>
         (function () {
@@ -1816,128 +1850,294 @@
             }), document.addEventListener("visibilitychange", u), setInterval(u, 1e3), u()
         })();
     </script>
-<script>
+    <script>
         (function () {
-            var D = {"20 mars": "20270320T110000Z/20270321T230000Z", "27 mars": "20270327T110000Z/20270328T230000Z"};
-            var LD = {"20 mars": ["19 mars", "March 19, 2027 00:00:00"], "27 mars": ["23 mars", "March 23, 2027 00:00:00"]};
+            var D = {
+                "20 mars": "20270320T110000Z/20270321T230000Z",
+                "27 mars": "20270327T110000Z/20270328T230000Z"
+            };
+            var LD = {
+                "20 mars": ["19 mars", "March 19, 2027 00:00:00"],
+                "27 mars": ["23 mars", "March 23, 2027 00:00:00"]
+            };
+
             function apply(k) {
                 if (!D[k]) return;
                 LETTER_START = new Date(LD[k][1]);
                 TICKET_INFO.date = k;
-                WEEKEND_START = new Date(k.replace(" mars", " March") .replace(/^(\d+) March/, "March $1") + ", 2027 12:00:00");
+                WEEKEND_START = new Date(k.replace(" mars", " March").replace(/^(\d+) March/, "March $1") +
+                    ", 2027 12:00:00");
                 var a = document.querySelector('a[href*="calendar.google.com"]');
                 if (a) a.href = a.href.replace(/dates=[^&]*/, "dates=" + D[k]);
-                var c = document.getElementById("letterCard"), f = document.getElementById("letterStatus");
-                if (f && c && c.classList.contains("is-locked")) f.innerHTML = "Cadenas fermé jusqu'au " + LD[k][0] + "…<small>Il s'ouvrira tout seul, ici, ce jour-là.</small>";
+                var c = document.getElementById("letterCard"),
+                    f = document.getElementById("letterStatus");
+                if (f && c && c.classList.contains("is-locked")) f.innerHTML = "Cadenas fermé jusqu'au " + LD[k][
+                    0] + "…<small>Il s'ouvrira tout seul, ici, ce jour-là.</small>";
                 if (typeof updateCountdown == "function") updateCountdown()
             }
             document.querySelectorAll('input[name="date_weekend"]').forEach(function (r) {
-                r.addEventListener("change", function () { apply(r.value); reveal("sec-activite") })
+                r.addEventListener("change", function () {
+                    apply(r.value);
+                    reveal("sec-activite")
+                })
             });
-            var sent = readSent(), ck = document.querySelector('input[name="date_weekend"]:checked');
-            if (sent && sent.date) apply(sent.date); else if (ck) apply(ck.value);
+            var sent = readSent(),
+                ck = document.querySelector('input[name="date_weekend"]:checked');
+            if (sent && sent.date) apply(sent.date);
+            else if (ck) apply(ck.value);
             if (ck) reveal("sec-activite");
 
-            var K = "weekendScratch_v1", S = {}, built = !1, g = document.getElementById("scratchGrid"),
-                B = [["💆‍♀️", "Bon pour un massage", "valable une fois, durant ce weekend uniquement"], ["🥐", "Petit-déj au lit", "servi avec amour"], ["🎬", "Tu choisis le film", "ton gentleman attitré te laisse choisir"]];
-            try { S = JSON.parse(localStorage.getItem(K)) || {} } catch (e) {}
+            var K = "weekendScratch_v1",
+                S = {},
+                built = !1,
+                g = document.getElementById("scratchGrid"),
+                B = [
+                    ["💆‍♀️", "Bon pour un massage", "valable une fois, durant ce weekend uniquement"],
+                    ["🥐", "Petit-déj au lit", "servi avec amour"],
+                    ["🎬", "Tu choisis le film", "ton gentleman attitré te laisse choisir"]
+                ];
+            try {
+                S = JSON.parse(localStorage.getItem(K)) || {}
+            } catch (e) {}
+
             function done(el, i) {
-                el.classList.add("done"); S[i] = 1;
-                try { localStorage.setItem(K, JSON.stringify(S)) } catch (e) {}
-                try { playMagic() } catch (e) {}
-                try { confetti({particleCount: 40, spread: 70, origin: {y: .7}, colors: ["#dc4971", "#ffb3c6", "#FFD700"]}) } catch (e) {}
+                el.classList.add("done");
+                S[i] = 1;
+                try {
+                    localStorage.setItem(K, JSON.stringify(S))
+                } catch (e) {}
+                try {
+                    playMagic()
+                } catch (e) {}
+                try {
+                    confetti({
+                        particleCount: 40,
+                        spread: 70,
+                        origin: {
+                            y: .7
+                        },
+                        colors: ["#dc4971", "#ffb3c6", "#FFD700"]
+                    })
+                } catch (e) {}
             }
+
             function init() {
                 if (built || !g || !g.offsetWidth) return;
                 built = !0;
                 B.forEach(function (b, i) {
                     var el = document.createElement("div");
-                    el.className = "scratch"; el.tabIndex = 0; el.setAttribute("role", "button");
-                    el.setAttribute("aria-label", "Bon à gratter : " + b[1] + ". Appuie sur Entrée pour le révéler.");
-                    el.innerHTML = '<span aria-hidden="true">' + b[0] + "</span><b>" + b[1] + "</b><small>" + b[2] + "</small>";
+                    el.className = "scratch";
+                    el.tabIndex = 0;
+                    el.setAttribute("role", "button");
+                    el.setAttribute("aria-label", "Bon à gratter : " + b[1] +
+                        ". Appuie sur Entrée pour le révéler.");
+                    el.innerHTML = '<span aria-hidden="true">' + b[0] + "</span><b>" + b[1] +
+                        "</b><small>" + b[2] + "</small>";
                     g.appendChild(el);
-                    if (S[i]) { el.classList.add("done"); return }
-                    var c = document.createElement("canvas"), w = c.width = el.clientWidth, h = c.height = el.clientHeight, x = c.getContext("2d"), gr = x.createLinearGradient(0, 0, w, h), down = !1, n = 0;
-                    gr.addColorStop(0, "#d9d9de"); gr.addColorStop(.5, "#f4f4f7"); gr.addColorStop(1, "#bdbdc6");
-                    x.fillStyle = gr; x.fillRect(0, 0, w, h);
-                    x.fillStyle = "#9a9aa5"; x.font = "600 18px League Spartan,sans-serif"; x.textAlign = "center"; x.textBaseline = "middle"; x.fillText("GRATTE ICI ♥", w / 2, h / 2);
+                    if (S[i]) {
+                        el.classList.add("done");
+                        return
+                    }
+                    var c = document.createElement("canvas"),
+                        w = c.width = el.clientWidth,
+                        h = c.height = el.clientHeight,
+                        x = c.getContext("2d"),
+                        gr = x.createLinearGradient(0, 0, w, h),
+                        down = !1,
+                        n = 0;
+                    gr.addColorStop(0, "#d9d9de");
+                    gr.addColorStop(.5, "#f4f4f7");
+                    gr.addColorStop(1, "#bdbdc6");
+                    x.fillStyle = gr;
+                    x.fillRect(0, 0, w, h);
+                    x.fillStyle = "#9a9aa5";
+                    x.font = "600 18px League Spartan,sans-serif";
+                    x.textAlign = "center";
+                    x.textBaseline = "middle";
+                    x.fillText("GRATTE ICI ♥", w / 2, h / 2);
                     x.globalCompositeOperation = "destination-out";
+
                     function chk() {
-                        var d = x.getImageData(0, 0, w, h).data, t = 0, k;
-                        for (k = 3; k < d.length; k += 64) if (d[k] === 0) t++;
+                        var d = x.getImageData(0, 0, w, h).data,
+                            t = 0,
+                            k;
+                        for (k = 3; k < d.length; k += 64)
+                            if (d[k] === 0) t++;
                         if (t > d.length / 64 * .45) done(el, i)
                     }
+
                     function p(e) {
                         var r = c.getBoundingClientRect();
-                        x.beginPath(); x.arc((e.clientX - r.left) * w / r.width, (e.clientY - r.top) * h / r.height, 16, 0, 7); x.fill();
+                        x.beginPath();
+                        x.arc((e.clientX - r.left) * w / r.width, (e.clientY - r.top) * h / r.height, 16, 0,
+                            7);
+                        x.fill();
                         if (++n % 6 === 0) chk()
                     }
-                    c.addEventListener("pointerdown", function (e) { down = !0; try { c.setPointerCapture(e.pointerId) } catch (z) {} p(e) });
-                    c.addEventListener("pointermove", function (e) { down && p(e) });
-                    c.addEventListener("pointerup", function () { down = !1; chk() });
-                    c.addEventListener("pointercancel", function () { down = !1 });
+                    c.addEventListener("pointerdown", function (e) {
+                        down = !0;
+                        try {
+                            c.setPointerCapture(e.pointerId)
+                        } catch (z) {}
+                        p(e)
+                    });
+                    c.addEventListener("pointermove", function (e) {
+                        down && p(e)
+                    });
+                    c.addEventListener("pointerup", function () {
+                        down = !1;
+                        chk()
+                    });
+                    c.addEventListener("pointercancel", function () {
+                        down = !1
+                    });
                     el.addEventListener("keydown", function (e) {
-                        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); done(el, i) }
+                        if (e.key === "Enter" || e.key === " ") {
+                            e.preventDefault();
+                            done(el, i)
+                        }
                     });
                     el.appendChild(c)
                 })
             }
             var sr = window.showResult;
             if (typeof sr == "function") window.showResult = function () {
-                var r = sr.apply(this, arguments); requestAnimationFrame(init); return r
+                var r = sr.apply(this, arguments);
+                requestAnimationFrame(init);
+                return r
             };
             var res = document.getElementById("result");
             if (res && getComputedStyle(res).display !== "none") requestAnimationFrame(init)
         })();
     </script>
-<script>
+    <script>
         (function () {
-            var QUIZ = [
-                {q: "Quel est mon film préféré ?", a: ["F1 : Le film", "Fast Five", "Comte de Monte Cristo"]},
-                {q: "Combien de mois fêtons-nous bientôt ?", a: ["6 mois", "3 mois", "J'ai arrêté de compter..."]},
-                {q: "Quel vin blanc t'ais-je conseillé et que tu as adoré ?", a: ["Coteaux du Layon", "Saumur blanc", "Uby n°4"]},
-                {q: "Quelle pizza est « la meilleure de toutes » ?", a: ["Chèvre miel", "Pistacchio", "Reine"]},
-                {q: "Quelle rivière longe notre balade du dimanche ?", a: ["Le Clain", "La Vienne", "La Marne"]},
-                {q: "Quelle est la première chose que j'ai remarquée chez toi ?", a: ["", "", ""]},
-                {q: "Où avons-nous été lors de notre premier rendez-vous ?", a: ["La Taverne", "Oh le Bistro", "Parc de Blossac"]},
-                {q: "Quel était mon tout premier message ?", a: ["C'est bien ici pour les discussions jusqu'à 2h du matin ??", "J'ai montré ton profil à mon meilleur pote, il m'a dit de tenter ma chance sinon il arrête de me parler. Donc salut !", "Aucun, c'est toi qui a envoyé le premier message."]},
-                {q: "Quelle bêtise nous a fait rire aux larmes ?", a: ["", "", ""]},
-                {q: "Quelle est la première chose que tu bois le matin ?", a: ["", "", ""]},
-                {q: "Quelle chanson nous fait toujours danser ?", a: ["J'irais où tu iras", "Perfect", ""]},
-                {q: "Quelle est la sortie que l'on n'oubliera jamais ?", a: ["", "", ""]},
-                {q: "D'où vient notre surnom ?", a: ["", "", ""]},
-                {q: "Quel pays je rêverais de visiter ?", a: ["Australie", "Etats-Unis", "Italie"]},
-                {q: "Quel jour nous sommes-nous mis ensemble ?", a: ["Le 23 septembre", "Le 21 septembre", "Le 18 septembre"]}
-            ],
-            PASS = QUIZ.length,
-                b = document.getElementById("gateQuiz"), go = document.getElementById("loginBtn");
+            var QUIZ = [{
+                        q: "Quel est mon film préféré ?",
+                        a: ["F1 : Le film", "Fast Five", "Comte de Monte Cristo"]
+                    },
+                    {
+                        q: "Combien de mois fêtons-nous bientôt ?",
+                        a: ["6 mois", "3 mois", "J'ai arrêté de compter..."]
+                    },
+                    {
+                        q: "Quel vin blanc t'ais-je conseillé et que tu as adoré ?",
+                        a: ["Coteaux du Layon", "Saumur blanc", "Uby n°4"]
+                    },
+                    {
+                        q: "Quelle pizza est « la meilleure de toutes » ?",
+                        a: ["Chèvre miel", "Pistacchio", "Reine"]
+                    },
+                    {
+                        q: "Quelle rivière longe notre balade du dimanche ?",
+                        a: ["Le Clain", "La Vienne", "La Marne"]
+                    },
+                    {
+                        q: "Quelle est la première chose que j'ai remarquée chez toi ?",
+                        a: ["", "", ""]
+                    },
+                    {
+                        q: "Où avons-nous été lors de notre premier rendez-vous ?",
+                        a: ["La Taverne", "Oh le Bistro", "Parc de Blossac"]
+                    },
+                    {
+                        q: "Quel était mon tout premier message ?",
+                        a: ["C'est bien ici pour les discussions jusqu'à 2h du matin ??",
+                            "J'ai montré ton profil à mon meilleur pote, il m'a dit de tenter ma chance sinon il arrête de me parler. Donc salut !",
+                            "Aucun, c'est toi qui a envoyé le premier message."
+                        ]
+                    },
+                    {
+                        q: "Quelle bêtise nous a fait rire aux larmes ?",
+                        a: ["", "", ""]
+                    },
+                    {
+                        q: "Quelle est la première chose que tu bois le matin ?",
+                        a: ["", "", ""]
+                    },
+                    {
+                        q: "Quelle chanson nous fait toujours danser ?",
+                        a: ["J'irais où tu iras", "Perfect", ""]
+                    },
+                    {
+                        q: "Quelle est la sortie que l'on n'oubliera jamais ?",
+                        a: ["", "", ""]
+                    },
+                    {
+                        q: "D'où vient notre surnom ?",
+                        a: ["", "", ""]
+                    },
+                    {
+                        q: "Quel pays je rêverais de visiter ?",
+                        a: ["Australie", "Etats-Unis", "Italie"]
+                    },
+                    {
+                        q: "Quel jour nous sommes-nous mis ensemble ?",
+                        a: ["Le 23 septembre", "Le 21 septembre", "Le 18 septembre"]
+                    }
+                ],
+                PASS = QUIZ.length,
+                b = document.getElementById("gateQuiz"),
+                go = document.getElementById("loginBtn");
             if (!b || !go) return;
+
             function btn(t, f) {
                 var x = document.createElement("button");
-                x.type = "button"; x.className = "quiz-opt"; x.textContent = t; x.addEventListener("click", f); return x
+                x.type = "button";
+                x.className = "quiz-opt";
+                x.textContent = t;
+                x.addEventListener("click", f);
+                return x
             }
+
             function end(sc) {
-                var p = document.createElement("p"), ok = sc >= PASS;
-                b.innerHTML = ""; p.className = "quiz-score";
-                p.textContent = sc + " / " + QUIZ.length + (ok ? " : tu me connais par cœur 🥰" : " : il faut TOUTES les bonnes réponses pour entrer. Retente ta chance 😏");
+                var p = document.createElement("p"),
+                    ok = sc >= PASS;
+                b.innerHTML = "";
+                p.className = "quiz-score";
+                p.textContent = sc + " / " + QUIZ.length + (ok ? " : tu me connais par cœur 🥰" :
+                    " : il faut TOUTES les bonnes réponses pour entrer. Retente ta chance 😏");
                 b.appendChild(p);
                 if (ok) {
-                    window.gatePassed = !0; go.style.display = "";
-                    try { playMagic() } catch (e) {}
-                    try { go.focus() } catch (e) {}
-                } else b.appendChild(btn("Réessayer", function () { ask(0, 0) }))
+                    window.gatePassed = !0;
+                    go.style.display = "";
+                    try {
+                        playMagic()
+                    } catch (e) {}
+                    try {
+                        go.focus()
+                    } catch (e) {}
+                } else b.appendChild(btn("Réessayer", function () {
+                    ask(0, 0)
+                }))
             }
+
             function ask(i, sc) {
-                var q = QUIZ[i], n = document.createElement("p"), t = document.createElement("p"), locked = !1, wrongTries = 0;
-                b.innerHTML = ""; n.className = "quiz-q"; t.className = "quiz-title";
-                n.textContent = "Question " + (i + 1) + " / " + QUIZ.length; t.textContent = q.q; b.append(n, t);
-                q.a.map(function (v, k) { return [Math.random(), v, k === 0] }).sort(function (x, y) { return x[0] - y[0] }).forEach(function (o) {
+                var q = QUIZ[i],
+                    n = document.createElement("p"),
+                    t = document.createElement("p"),
+                    locked = !1,
+                    wrongTries = 0;
+                b.innerHTML = "";
+                n.className = "quiz-q";
+                t.className = "quiz-title";
+                n.textContent = "Question " + (i + 1) + " / " + QUIZ.length;
+                t.textContent = q.q;
+                b.append(n, t);
+                q.a.map(function (v, k) {
+                    return [Math.random(), v, k === 0]
+                }).sort(function (x, y) {
+                    return x[0] - y[0]
+                }).forEach(function (o) {
                     var x = btn(o[1], function () {
                         if (locked || x.disabled) return;
                         if (o[2]) {
                             locked = !0;
                             x.classList.add("ok");
-                            try { initAudio(); playPop() } catch (e) {}
+                            try {
+                                initAudio();
+                                playPop()
+                            } catch (e) {}
                             setTimeout(function () {
                                 var s2 = sc + 1;
                                 i + 1 < QUIZ.length ? ask(i + 1, s2) : end(s2)
@@ -1945,7 +2145,10 @@
                         } else {
                             x.classList.add("ko");
                             x.disabled = !0;
-                            try { initAudio(); playError() } catch (e) {}
+                            try {
+                                initAudio();
+                                playError()
+                            } catch (e) {}
                             wrongTries++;
                             if (wrongTries >= 3) {
                                 locked = !0;
