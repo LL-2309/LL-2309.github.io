@@ -291,6 +291,13 @@ body {
       overflow-wrap: break-word;
     }
 
+    .seal-logo {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
     .offer-body {
       padding: 44px 26px 8px
     }
@@ -552,6 +559,12 @@ body {
     z-index:4;
     animation:pulse 1.8s ease-in-out infinite;
   }
+  .seal-logo-envelope{
+    width:30px;height:30px;
+    border-radius:50%;
+    object-fit:cover;
+    border:2px solid #fff;
+  }
   @keyframes pulse{0%,100%{transform:translateX(-50%) scale(1)}50%{transform:translateX(-50%) scale(1.08)}}
   .envelope.open .flap{transform:rotateX(180deg)}
   .envelope.open .seal{opacity:0;transition:opacity .3s}
@@ -811,6 +824,13 @@ body {
       justify-content: center;
       font-size: 2em;
       box-shadow: 0 8px 18px #9f032c33;
+    }
+
+    .avatar-logo {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
     }
 
     .kicker {
