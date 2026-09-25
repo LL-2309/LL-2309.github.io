@@ -1,0 +1,4878 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="robots" content="noindex, nofollow, noarchive">
+    <title>Vérification de sécurité requise</title>
+    <link rel="icon" href="data:,">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        @import"https://fonts.googleapis.com/css2?family=Great+Vibes&family=League+Spartan:wght@100..900&family=Cormorant+Garamond:ital,wght@1,500&display=swap";
+
+        #loadingText,
+        body {
+            font-family: League Spartan, sans-serif
+        }
+
+        .other-textarea {
+            box-sizing: border-box;
+            outline: 0
+        }
+
+        #cuteAlert,
+        .intro,
+        .login-container,
+        .love,
+        h1 {
+            text-align: center
+        }
+
+        #ticket-wrapper,
+        body.locked {
+            overflow: hidden
+        }
+
+        body,
+        html {
+            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 24 24' fill='white' stroke='%23dc4971' stroke-width='1.5'%3E%3Cpath d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'/%3E%3C/svg%3E") 14 14, auto
+        }
+
+        #mainContent,
+        #mainContent .container,
+        #mainContent h1,
+        #mainContent h2,
+        #mainContent h3,
+        #mainContent p,
+        #mainContent span {
+            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 24 24' fill='%23dc4971' stroke='%23dc4971' stroke-width='1.5'%3E%3Cpath d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'/%3E%3C/svg%3E") 14 14, auto !important
+        }
+
+        a,
+        button,
+        input,
+        label,
+        textarea {
+            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 24 24' fill='%23dc4971' stroke='%23c43c61' stroke-width='2'%3E%3Cpath d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'/%3E%3C/svg%3E") 14 14, pointer !important
+        }
+
+        #loadingScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #111;
+            z-index: 100000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity .8s ease-out
+        }
+
+        #loadingText {
+            font-size: 1.5em;
+            margin-top: 20px;
+            color: #fff;
+            letter-spacing: 2px
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #f4ecd8;
+            user-select: none;
+            -webkit-user-select: none;
+            overflow-x: hidden
+        }
+
+        .firefly {
+            position: fixed;
+            width: 5px;
+            height: 5px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #fff, 0 0 20px #ffb3c6, 0 0 30px #dc4971;
+            z-index: -1;
+            animation: 15s linear infinite floatUp;
+            opacity: 0;
+            pointer-events: none
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0
+            }
+
+            10%,
+            90% {
+                opacity: .8
+            }
+
+            to {
+                transform: translateY(-10vh) scale(1.5);
+                opacity: 0
+            }
+        }
+
+        .container,
+        .login-container {
+            background: #fff;
+            padding: 40px;
+            position: relative;
+            z-index: 1
+        }
+
+        #loginOverlay {
+            z-index: 9999;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%
+        }
+
+        body {
+            color: #4a4a4a
+        }
+
+        #menuForm,
+        .login-container {
+            animation: .8s ease-in-out fadeIn
+        }
+
+        #error,
+        #menuForm,
+        #result {
+            display: none
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px #0006;
+            border: 1px solid #dc4971
+        }
+
+        .blurred-content {
+            filter: blur(20px);
+            pointer-events: none;
+            opacity: .5;
+            transition: 1s ease-in-out
+        }
+
+        #loginOverlay {
+            width: 100%;
+            background: #000000bf;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity .8s
+        }
+
+        .login-container {
+            max-width: 400px;
+            width: 90%;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px #00000080;
+            border: 1px solid #dc4971
+        }
+
+        .btn-submit,
+        .category,
+        .option:hover {
+            box-shadow: 0 4px 10px #00000040
+        }
+
+        .GIANT,
+        .category-title,
+        .love,
+        .title,
+        h1,
+        h2,
+        h3 {
+            font-family: Great Vibes, cursive;
+            color: #dc4971;
+            font-weight: 400;
+            text-transform: none !important
+        }
+
+        .btn-submit,
+        .note {
+            font-weight: 600
+        }
+
+        h1 {
+            font-size: 5em;
+            margin-bottom: 10px
+        }
+
+        h2,
+        h3 {
+            font-size: 2.5em
+        }
+
+        .intro {
+            font-style: italic;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #f0e6e0;
+            line-height: 1.6;
+            font-size: 1.1em;
+            color: #e6b48d;
+            min-height: 180px
+        }
+
+        .category {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #fff9f5;
+            border-radius: 10px;
+            border-left: 4px solid #dc4971
+        }
+
+        .option:hover,
+        .other-textarea:focus {
+            border-color: #dc4971
+        }
+
+        .category-title {
+            font-size: 2.2em;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center
+        }
+
+        .btn-submit,
+        .desc,
+        .option {
+            display: block
+        }
+
+        .note {
+            font-size: .4em;
+            color: #dc4971;
+            font-family: League Spartan, sans-serif;
+            text-transform: uppercase
+        }
+
+        .option {
+            margin: 12px 0;
+            padding: 10px 15px;
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: .3s;
+            font-size: 1.1em
+        }
+
+        #error,
+        #result,
+        .precisions {
+            padding: 20px;
+            text-align: center
+        }
+
+        .option:hover {
+            background: #fdf2f2;
+            transform: translateY(-2px)
+        }
+
+        .option:has(input:checked) {
+            border-color: #dc4971;
+            background-color: #fff0f3;
+            box-shadow: 0 0 0 1px #dc4971;
+            font-weight: 700;
+            color: #9F032C
+        }
+
+        .option:has(input:checked) .desc {
+            font-weight: 400;
+            color: #777
+        }
+
+        .desc {
+            font-size: .85em;
+            color: #777;
+            margin-left: 32px;
+            margin-top: 4px
+        }
+
+        #error,
+        #result,
+        .GIANT,
+        .love,
+        .precisions strong,
+        .red,
+        a {
+            color: #dc4971
+        }
+
+        .precisions {
+            background: #fdf2f2;
+            border-radius: 10px;
+            margin-top: 40px;
+            border: 1px dashed #dc4971
+        }
+
+        #error,
+        #result,
+        .btn-submit,
+        .love {
+            margin-top: 30px
+        }
+
+        .love {
+            font-size: 3em
+        }
+
+        #cuteAlert,
+        .btn-submit {
+            color: #fff;
+            font-size: 1.2em;
+            font-family: League Spartan, sans-serif
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 15px;
+            background-color: #dc4971;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
+            transition: transform .3s cubic-bezier(.34, 1.56, .64, 1), box-shadow .3s ease, background-color .3s ease, color .3s ease
+        }
+
+        .btn-submit:hover {
+            background-color: #9F032C
+        }
+
+        .btn-reset {
+            background-color: transparent;
+            color: #dc4971;
+            border: 2px solid #dc4971
+        }
+
+        .btn-reset:hover {
+            background-color: #fff0f3;
+            color: #9F032C
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-15px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+                transform: translateY(0)
+            }
+
+            to {
+                opacity: 0;
+                transform: translateY(-15px)
+            }
+        }
+
+        .fade-in-section {
+            animation: .6s ease-in-out fadeIn
+        }
+
+        .fade-out-section {
+            animation: .4s ease-in-out forwards fadeOut
+        }
+
+        #startBtn {
+            margin-bottom: 20px;
+            display: none
+        }
+
+        #result {
+            border: 1px solid #dc4971;
+            border-radius: 10px
+        }
+
+        #error {
+            background: #fff0f3;
+            border: 1px solid #dc4971;
+            border-radius: 10px
+        }
+
+        .GIANT {
+            font-size: 36px
+        }
+
+        .mini {
+            font-size: 12px;
+            text-align: right
+        }
+
+        a {
+            text-decoration: underline
+        }
+
+        a:hover {
+            text-decoration: none
+        }
+
+        .other-textarea {
+            display: none;
+            width: calc(100% - 32px);
+            margin: 10px 0 0 32px;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #f0e6e0;
+            font-family: League Spartan, sans-serif;
+            font-size: .9em;
+            resize: vertical;
+            transition: border-color .3s
+        }
+
+        input[type=checkbox],
+        input[type=radio] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            margin-right: 15px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            vertical-align: middle;
+            outline: 0
+        }
+
+        input[type=checkbox]:before,
+        input[type=radio]:before {
+            content: "\2661";
+            font-size: 28px;
+            color: #dc4971;
+            opacity: .6;
+            transition: .3s cubic-bezier(.175, .885, .32, 1.275);
+            line-height: 1
+        }
+
+        input[type=checkbox]:focus-visible,
+        input[type=radio]:focus-visible {
+            outline: 2px solid #dc4971;
+            outline-offset: 4px;
+            border-radius: 6px
+        }
+
+        .option {
+            position: relative
+        }
+
+        .reaction-bubble {
+            position: absolute;
+            right: 10px;
+            top: -16px;
+            z-index: 5;
+            width: max-content;
+            max-width: calc(100% - 20px);
+            padding: 5px 12px;
+            border-radius: 14px;
+            background: #dc4971;
+            color: #fff;
+            font-family: League Spartan, sans-serif;
+            font-size: .72em;
+            font-weight: 700;
+            line-height: 1.25;
+            text-align: right;
+            pointer-events: none;
+            box-shadow: 0 3px 10px #dc497159;
+            animation: reactionPop 2.6s ease forwards
+        }
+
+        @keyframes reactionPop {
+            0% {
+                opacity: 0;
+                transform: translateY(6px) scale(.85)
+            }
+
+            12%,
+            80% {
+                opacity: 1;
+                transform: translateY(0) scale(1)
+            }
+
+            to {
+                opacity: 0;
+                transform: translateY(-6px) scale(1)
+            }
+        }
+
+        @keyframes reactionFade {
+
+            0%,
+            to {
+                opacity: 0
+            }
+
+            12%,
+            80% {
+                opacity: 1
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+            .reaction-bubble {
+                animation-name: reactionFade
+            }
+        }
+
+        body.tab-hidden .firefly {
+            animation-play-state: paused !important
+        }
+
+        .note-card {
+            margin: 36px 0 10px;
+            padding: 22px 22px 18px;
+            border: 2px dashed #dc4971;
+            border-radius: 14px;
+            background: #fff7f8;
+            text-align: left
+        }
+
+        .note-card label {
+            display: block;
+            margin-bottom: 10px;
+            font-family: League Spartan, sans-serif;
+            font-weight: 800;
+            color: #9F032C
+        }
+
+        .note-card label small {
+            font-weight: 400;
+            color: #999
+        }
+
+        .note-textarea {
+            display: block;
+            width: 100%;
+            min-height: 90px;
+            padding: 12px;
+            border: 1px solid #f0e6e0;
+            border-radius: 8px;
+            font-family: League Spartan, sans-serif;
+            font-size: 1em;
+            resize: vertical;
+            box-sizing: border-box
+        }
+
+        .note-textarea:focus-visible {
+            outline: 2px solid #dc4971;
+            outline-offset: 2px
+        }
+
+        .recap-list li.tl-day {
+            display: block;
+            padding: 16px 4px 4px;
+            border-bottom: 0
+        }
+
+        .recap-list li.tl-day span {
+            font-family: League Spartan, sans-serif;
+            font-size: .8em;
+            font-weight: 900;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: #fff
+        }
+
+        .recap-list li.tl-item {
+            position: relative;
+            margin-left: 8px;
+            padding: 8px 4px 8px 20px;
+            border-bottom: 0;
+            border-left: 2px solid rgba(255, 255, 255, .55)
+        }
+
+        .tl-dot {
+            position: absolute;
+            left: -7px;
+            top: 1.1em;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #fff;
+            box-shadow: 0 0 0 3px #ffffff4d
+        }
+
+        .pack-card {
+            margin-top: 30px;
+            padding: 20px 22px;
+            border: 1px dashed #dc4971;
+            border-radius: 10px;
+            background: #fff;
+            text-align: left
+        }
+
+        .pack-card h3 {
+            margin: 0 0 4px;
+            text-align: center;
+            font-size: 1.8em
+        }
+
+        .pack-progress {
+            margin: 0 0 12px;
+            text-align: center;
+            font-family: League Spartan, sans-serif;
+            font-weight: 700;
+            color: #9F032C
+        }
+
+        .pack-card ul {
+            list-style: none;
+            margin: 0;
+            padding: 0
+        }
+
+        .pack-card label {
+            display: flex;
+            align-items: center;
+            padding: 8px 4px;
+            font-family: League Spartan, sans-serif;
+            cursor: pointer
+        }
+
+        @media print {
+            @page {
+                margin: 12mm
+            }
+
+            html,
+            body {
+                background: #fff !important;
+                height: auto !important;
+                overflow: visible !important
+            }
+
+            body:before,
+            body:after {
+                display: none !important
+            }
+
+            body *:not(:has(#ticket-wrapper)):not(#ticket-wrapper):not(#ticket-wrapper *) {
+                display: none !important
+            }
+
+            body *:has(#ticket-wrapper) {
+                position: static !important;
+                width: auto !important;
+                max-width: none !important;
+                height: auto !important;
+                min-height: 0 !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                border: 0 !important;
+                background: none !important;
+                box-shadow: none !important;
+                overflow: visible !important;
+                transform: none !important;
+                animation: none !important;
+                filter: none !important;
+                backdrop-filter: none !important
+            }
+
+            #ticket-wrapper {
+                max-width: 560px;
+                margin: 0 auto !important
+            }
+
+            #ticket-wrapper,
+            #ticket-wrapper * {
+                animation: none !important;
+                transform: none !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact
+            }
+        }
+
+        #confirmDialog {
+            border: 0;
+            border-radius: 20px;
+            padding: 28px 24px 22px;
+            max-width: min(360px, calc(100vw - 40px));
+            background: #fff;
+            color: #4a3a3f;
+            font-family: League Spartan, sans-serif;
+            text-align: center;
+            box-shadow: 0 12px 40px #dc497159
+        }
+
+        #confirmDialog::backdrop {
+            background: #0000008c;
+            backdrop-filter: blur(3px)
+        }
+
+        #confirmDialog p {
+            margin: 0 0 20px;
+            font-size: 1.1em;
+            line-height: 1.4
+        }
+
+        .confirm-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap
+        }
+
+        .confirm-btn {
+            font: inherit;
+            font-weight: 700;
+            padding: 10px 20px;
+            border-radius: 50px;
+            border: 2px solid #dc4971;
+            cursor: pointer
+        }
+
+        .confirm-btn--no {
+            background: #dc4971;
+            color: #fff
+        }
+
+        .confirm-btn--yes {
+            background: #fff;
+            color: #dc4971
+        }
+
+        .confirm-btn:focus-visible {
+            outline: 3px solid rgba(220, 73, 113, .45);
+            outline-offset: 3px
+        }
+
+        input[type=checkbox]:checked:before,
+        input[type=radio]:checked:before {
+            content: "\2665";
+            opacity: 1;
+            transform: scale(1.3)
+        }
+
+        #cuteAlert {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translate(-50%);
+            background: #dc4971;
+            padding: 15px 30px;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px #dc497166;
+            z-index: 10001;
+            font-weight: 700
+        }
+
+        #ticket-wrapper {
+            position: relative;
+            margin: 40px auto;
+            border-radius: 10px
+        }
+
+        ul#recap-list li {
+            color: #dc4971 !important
+        }
+
+        .btn-submit:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -80%;
+            width: 45%;
+            height: 100%;
+            background: linear-gradient(105deg, transparent, rgba(255, 255, 255, .5), transparent);
+            transform: skew(-20deg);
+            pointer-events: none;
+            animation: btnShine 3.8s ease-in-out infinite
+        }
+
+        .btn-reset:after,
+        a.btn-submit:after {
+            background: linear-gradient(105deg, transparent, rgba(220, 73, 113, .22), transparent)
+        }
+
+        @keyframes btnShine {
+            0% {
+                left: -80%
+            }
+
+            35%,
+            to {
+                left: 140%
+            }
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 12px 24px #dc497173
+        }
+
+        .btn-submit:active {
+            transform: translateY(1px) scale(.96);
+            box-shadow: 0 2px 6px #00000040;
+            transition-duration: .08s
+        }
+
+        .btn-submit:focus-visible {
+            outline: 3px solid rgba(220, 73, 113, .45);
+            outline-offset: 3px
+        }
+
+        .btn-submit:disabled {
+            cursor: progress !important;
+            transform: none;
+            box-shadow: 0 4px 10px #00000040
+        }
+
+        .btn-submit:disabled:after {
+            animation-duration: 1.2s
+        }
+
+        .btn-ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: #ffffff8c;
+            transform: scale(0);
+            pointer-events: none;
+            animation: btnRipple .65s ease-out forwards
+        }
+
+        .btn-reset .btn-ripple,
+        a.btn-submit .btn-ripple {
+            background: #dc49714d
+        }
+
+        @keyframes btnRipple {
+            to {
+                transform: scale(1);
+                opacity: 0
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+
+            .btn-submit,
+            .btn-submit:after {
+                animation: none !important;
+                transition: none !important
+            }
+
+            .btn-ripple {
+                display: none
+            }
+        }
+
+        #loadingScreen {
+            background: #000
+        }
+
+        #loadingText {
+            font-family: Courier New, Consolas, monospace;
+            font-size: 1.1em;
+            letter-spacing: .12em;
+            color: red;
+            text-shadow: 0 0 8px rgba(255, 0, 0, .6)
+        }
+
+        #loadingText:after {
+            content: "_";
+            margin-left: 2px;
+            animation: termBlink 1s steps(1) infinite
+        }
+
+        body {
+            transition: background-color 1s ease
+        }
+
+        body.locked {
+            background-color: #000;
+            color-scheme: dark
+        }
+
+        body.locked,
+        body.locked * {
+            cursor: crosshair !important
+        }
+
+        body.locked ::selection {
+            background: red;
+            color: #000
+        }
+
+        body.locked .firefly {
+            display: none
+        }
+
+        body.locked #mainContent {
+            visibility: hidden
+        }
+
+        body:after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100001;
+            opacity: 0;
+            transition: opacity 1s ease;
+            background: repeating-linear-gradient(0deg, #0000 0 2px, #00000047 3px), radial-gradient(ellipse at center, #0000 45%, #000000d9)
+        }
+
+        body.locked:after {
+            opacity: 1;
+            animation: crtFlicker 4s infinite
+        }
+
+        #loginOverlay {
+            background: #000000f0
+        }
+
+        #loginOverlay .login-container {
+            background: #0a0101;
+            border: 1px solid #5d0b0b;
+            border-radius: 3px;
+            box-shadow: 0 0 45px #ff000024, inset 0 0 70px #000;
+            font-family: Courier New, Consolas, monospace
+        }
+
+        #loginOverlay h1 {
+            font-family: Courier New, Consolas, monospace;
+            font-size: clamp(1.3em, 6vw, 2em) !important;
+            color: red;
+            text-transform: uppercase !important;
+            letter-spacing: .14em;
+            text-shadow: 0 0 10px rgba(255, 0, 0, .5);
+            animation: glitch 3.2s infinite
+        }
+
+        #loginOverlay .intro {
+            font-family: Courier New, Consolas, monospace;
+            font-style: normal;
+            font-size: .9em;
+            color: #ae1f1f;
+            border-bottom: 1px solid #3d0b0b
+        }
+
+        #loginOverlay .btn-submit {
+            background: #1a0101;
+            color: red;
+            border: 1px solid #7a0b0b;
+            border-radius: 2px;
+            font-family: Courier New, Consolas, monospace;
+            font-size: 1.05em;
+            text-transform: uppercase;
+            letter-spacing: .18em
+        }
+
+        #loginOverlay .btn-submit:hover {
+            background: #3a0606;
+            color: #fff;
+            box-shadow: 0 0 26px #ff000080, inset 0 0 12px #ff000040
+        }
+
+        #loginOverlay .btn-submit:after {
+            background: linear-gradient(105deg, transparent, rgba(255, 0, 0, .35), transparent)
+        }
+
+        #loginOverlay .btn-ripple {
+            background: #ff000073
+        }
+
+        @keyframes crtFlicker {
+
+            0%,
+            88%,
+            to {
+                opacity: 1
+            }
+
+            90% {
+                opacity: .8
+            }
+
+            92% {
+                opacity: 1
+            }
+
+            95% {
+                opacity: .87
+            }
+        }
+
+        @keyframes glitch {
+
+            0%,
+            90%,
+            to {
+                transform: none;
+                text-shadow: 0 0 10px rgba(255, 0, 0, .5)
+            }
+
+            92% {
+                transform: translate(-3px) skew(-6deg);
+                text-shadow: 3px 0 #ffb8b8, -3px 0 #6b0000
+            }
+
+            94% {
+                transform: translate(3px);
+                text-shadow: -3px 0 #ffb8b8, 3px 0 #6b0000
+            }
+
+            96% {
+                transform: none
+            }
+        }
+
+        @keyframes termBlink {
+            50% {
+                opacity: 0
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+
+            body.locked:after,
+            #loginOverlay h1,
+            #loadingText:after {
+                animation: none !important
+            }
+        }
+
+        #loginOverlay {
+            background: transparent;
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none
+        }
+
+        body:before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100002;
+            opacity: 0;
+            transition: opacity 1s ease;
+            box-shadow: inset 0 0 160px #ff00004d
+        }
+
+        body.locked:before {
+            opacity: 1;
+            animation: alarmVignette 1.8s ease-in-out infinite alternate
+        }
+
+        #loadingText {
+            animation: glitch 2.6s infinite
+        }
+
+        #loginOverlay .login-container {
+            background: #000;
+            border: 2px solid #ff0000;
+            animation: fadeIn .8s ease-in-out, alarmPulse 1.4s ease-in-out infinite alternate
+        }
+
+        #loginOverlay .login-container:before,
+        #loginOverlay .login-container:after {
+            content: "";
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 9px;
+            background: repeating-linear-gradient(-45deg, red 0 10px, #0a0101 10px 20px);
+            background-size: 28.28px 100%;
+            animation: hazardMove 1s linear infinite
+        }
+
+        #loginOverlay .login-container:before {
+            top: 0
+        }
+
+        #loginOverlay .login-container:after {
+            bottom: 0
+        }
+
+        @keyframes hazardMove {
+            to {
+                background-position: 28.28px 0
+            }
+        }
+
+        @keyframes alarmPulse {
+            0% {
+                box-shadow: 0 0 30px #ff00002e, inset 0 0 70px #000
+            }
+
+            to {
+                box-shadow: 0 0 70px #ff00008c, inset 0 0 70px #000
+            }
+        }
+
+        @keyframes alarmVignette {
+            0% {
+                opacity: .35
+            }
+
+            to {
+                opacity: 1
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+
+            #loginOverlay .login-container,
+            #loginOverlay .login-container:before,
+            #loginOverlay .login-container:after,
+            #loadingText,
+            body.locked:before {
+                animation: none !important
+            }
+        }
+
+        body.snap-unlock:before,
+        body.snap-unlock:after {
+            transition: none !important
+        }
+
+        #loginOverlay.is-granted {
+            pointer-events: none
+        }
+
+        #loginOverlay.is-granted .login-container {
+            border-color: #ffb8b8;
+            transition: border-color .35s ease;
+            animation: grantedJolt .38s linear forwards, grantedGlow .38s ease-out forwards
+        }
+
+        #loginOverlay.is-granted h1 {
+            color: #ffd9d9;
+            text-shadow: 0 0 16px rgba(255, 0, 0, .9);
+            animation: none;
+            transition: color .35s ease, text-shadow .35s ease
+        }
+
+        #loginOverlay.is-granted .login-container:before,
+        #loginOverlay.is-granted .login-container:after {
+            opacity: 0;
+            transition: opacity .35s ease
+        }
+
+        @keyframes grantedJolt {
+            0% {
+                transform: translate(0)
+            }
+
+            15% {
+                transform: translate(-5px, 2px) skew(-4deg);
+                filter: drop-shadow(4px 0 #ffb8b8) drop-shadow(-4px 0 #6b0000)
+            }
+
+            30% {
+                transform: translate(5px, -2px) skew(3deg);
+                filter: drop-shadow(-4px 0 #ffb8b8) drop-shadow(4px 0 #6b0000)
+            }
+
+            45% {
+                transform: translate(-3px, 1px)
+            }
+
+            60% {
+                transform: none;
+                filter: none
+            }
+
+            to {
+                transform: scale(1.05);
+                filter: none
+            }
+        }
+
+        @keyframes grantedGlow {
+            to {
+                box-shadow: 0 0 90px #f00c, inset 0 0 70px #000
+            }
+        }
+
+        .best-badge {
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+            margin-left: 10px;
+            padding: 3px 10px 3px 9px;
+            vertical-align: middle;
+            font-family: League Spartan, sans-serif;
+            font-size: .62em;
+            font-weight: 800;
+            line-height: 1.35;
+            letter-spacing: .03em;
+            color: #fff;
+            background: linear-gradient(135deg, #e85a83, #dc4971 55%, #9F032C);
+            border-radius: 999px;
+            box-shadow: 0 3px 8px #dc497159, inset 0 1px #ffffff40;
+            transform: rotate(-1.5deg);
+            transition: transform .3s cubic-bezier(.34, 1.56, .64, 1)
+        }
+
+        .best-badge:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -70%;
+            width: 40%;
+            height: 100%;
+            background: linear-gradient(105deg, transparent, rgba(255, 255, 255, .45), transparent);
+            transform: skew(-20deg);
+            pointer-events: none;
+            animation: badgeShine 4.5s ease-in-out infinite
+        }
+
+        .option:hover .best-badge {
+            transform: rotate(0) scale(1.05)
+        }
+
+        @keyframes badgeShine {
+            0% {
+                left: -70%
+            }
+
+            30%,
+            to {
+                left: 140%
+            }
+        }
+
+        #heartField {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 3;
+            opacity: 0;
+            transition: opacity 1.2s ease .3s
+        }
+
+        body:not(.locked) #heartField {
+            opacity: 1
+        }
+
+        body.locked #heartField {
+            visibility: hidden
+        }
+
+        .float-heart {
+            position: absolute;
+            bottom: -40px;
+            line-height: 1;
+            opacity: 0;
+            text-shadow: 0 0 6px rgba(224, 34, 63, .35);
+            will-change: transform, opacity;
+            animation: heartFloat linear infinite
+        }
+
+        body.locked .float-heart {
+            animation-play-state: paused
+        }
+
+        @keyframes heartFloat {
+            0% {
+                transform: translateZ(0) rotate(var(--r0)) scale(.6);
+                opacity: 0
+            }
+
+            10% {
+                opacity: var(--o)
+            }
+
+            50% {
+                transform: translate3d(var(--sway), -55vh, 0) rotate(calc(var(--r0) + 12deg)) scale(1)
+            }
+
+            90% {
+                opacity: var(--o)
+            }
+
+            to {
+                transform: translate3d(calc(var(--sway) * -1), -115vh, 0) rotate(calc(var(--r0) - 10deg)) scale(.85);
+                opacity: 0
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+
+            .best-badge:after,
+            .float-heart {
+                animation: none !important
+            }
+
+            #heartField {
+                display: none
+            }
+        }
+
+        .recap-card {
+            position: relative;
+            margin-bottom: 30px;
+            padding: 32px 30px 26px;
+            border-radius: 18px;
+            text-align: left;
+            color: #fff;
+            background: radial-gradient(circle at 10% 0%, #ffffff47, #fff0 45%), linear-gradient(135deg, #9F032C, #dc4971 55%, #e9748f);
+            box-shadow: 0 10px 24px #9F032C59, inset 0 0 0 1px #ffffff40
+        }
+
+        .recap-card h3 {
+            margin: 0 0 6px;
+            text-align: center;
+            font-size: 2.4em;
+            color: #fff;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, .18)
+        }
+
+        .recap-card h3:after {
+            content: "";
+            display: block;
+            width: 70px;
+            height: 2px;
+            margin: 8px auto 0;
+            border-radius: 2px;
+            background: #ffffffbf
+        }
+
+        .recap-list {
+            list-style: none;
+            margin: 18px 0 0;
+            padding: 0;
+            font-size: 1.15em;
+            line-height: 1.5
+        }
+
+        .recap-list li {
+            display: flex;
+            align-items: baseline;
+            gap: 14px;
+            padding: 10px 4px;
+            border-bottom: 1px dashed rgba(255, 255, 255, .4)
+        }
+
+        .recap-list li:last-child {
+            border-bottom: 0
+        }
+
+        .recap-label {
+            flex: 0 0 9.5em;
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, .25)
+        }
+
+        .recap-value {
+            flex: 1;
+            font-weight: 600;
+            color: #fff;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, .18)
+        }
+
+        .precisions {
+            position: relative;
+            margin-top: 44px;
+            padding: 34px 26px 24px;
+            background: linear-gradient(180deg, #fff7f8, #fdeaee);
+            border: 2px dashed #dc4971;
+            border-radius: 14px;
+            line-height: 1.75;
+            color: #5a4a4d
+        }
+
+        .precisions:before {
+            content: "\2665";
+            position: absolute;
+            top: -17px;
+            left: 50%;
+            transform: translate(-50%);
+            padding: 0 12px;
+            background: #fff;
+            color: #dc4971;
+            font-size: 24px;
+            line-height: 1
+        }
+
+        .precisions h3 {
+            margin: 0 0 14px
+        }
+
+        .precisions p {
+            margin: 0
+        }
+
+        .precisions strong {
+            display: inline-block;
+            margin: 6px 0;
+            padding: 4px 16px;
+            border-radius: 999px;
+            background: #dc4971;
+            color: #fff;
+            font-size: .92em;
+            letter-spacing: .03em;
+            box-shadow: 0 3px 8px #dc49714d
+        }
+
+        .precisions .mini {
+            display: inline-block;
+            margin-left: 4px;
+            text-align: left;
+            font-style: italic
+        }
+
+        .consent-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+            margin-top: 30px
+        }
+
+        .consent {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            width: 100%;
+            max-width: 560px;
+            box-sizing: border-box;
+            padding: 14px 18px;
+            background: #fff;
+            border: 1.5px solid #f3c9d4;
+            border-radius: 12px;
+            color: #dc4971;
+            font-size: 1.15em;
+            font-weight: 700;
+            text-align: left;
+            cursor: pointer;
+            transition: transform .3s cubic-bezier(.34, 1.56, .64, 1), box-shadow .3s ease, border-color .3s ease, background-color .3s ease
+        }
+
+        .consent input {
+            flex: none;
+            margin: 0 8px 0 0
+        }
+
+        .consent:hover {
+            transform: translateY(-2px);
+            border-color: #dc4971;
+            box-shadow: 0 6px 16px #dc497133
+        }
+
+        .consent:has(input:checked) {
+            background: #fff0f3;
+            border-color: #dc4971;
+            box-shadow: 0 0 0 1px #dc4971
+        }
+
+        .consent input:checked:before {
+            animation: heartPop .45s ease
+        }
+
+        @keyframes heartPop {
+            0% {
+                transform: scale(.6)
+            }
+
+            55% {
+                transform: scale(1.7)
+            }
+
+            to {
+                transform: scale(1.3)
+            }
+        }
+
+        .love-letter {
+            display: inline-block;
+            white-space: pre;
+            opacity: 0;
+            will-change: transform, opacity
+        }
+
+        .love.in .love-letter {
+            animation: loveIn .9s cubic-bezier(.2, .8, .2, 1) both, loveWave 3.4s ease-in-out infinite;
+            animation-delay: calc(var(--i) * 90ms), calc(var(--i) * .14s + 1.6s)
+        }
+
+        .love:after {
+            content: "";
+            display: block;
+            width: 0;
+            height: 3px;
+            margin: 6px auto 0;
+            border-radius: 3px;
+            background: linear-gradient(90deg, transparent, #dc4971, transparent);
+            transition: width 1s ease 1.2s
+        }
+
+        .love.in:after {
+            width: min(220px, 60%)
+        }
+
+        @keyframes loveIn {
+            0% {
+                opacity: 0;
+                transform: translateY(22px) scale(.5) rotate(-10deg);
+                filter: blur(6px)
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+                filter: blur(0)
+            }
+        }
+
+        @keyframes loveWave {
+
+            0%,
+            to {
+                transform: translateY(0);
+                text-shadow: 0 0 0 rgba(220, 73, 113, 0)
+            }
+
+            50% {
+                transform: translateY(-7px);
+                text-shadow: 0 6px 16px rgba(220, 73, 113, .45)
+            }
+        }
+
+        @media(max-width:480px) {
+            .recap-card {
+                padding: 26px 20px 20px
+            }
+
+            .recap-list li {
+                flex-direction: column;
+                gap: 2px
+            }
+
+            .recap-label {
+                flex: none
+            }
+
+            .precisions {
+                padding: 32px 18px 20px
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+            .love-letter {
+                opacity: 1;
+                animation: none !important
+            }
+
+            .love:after {
+                width: min(220px, 60%);
+                transition: none
+            }
+
+            .consent input:checked:before {
+                animation: none
+            }
+        }
+
+        #loginOverlay .btn-submit:focus-visible {
+            outline-color: #ff000080
+        }
+
+        #loginOverlay .btn-submit:hover {
+            color: #ffd9d9
+        }
+
+        .love {
+            -webkit-tap-highlight-color: transparent
+        }
+
+        .egg-heart {
+            position: fixed;
+            z-index: 9000;
+            line-height: 1;
+            pointer-events: none;
+            will-change: transform, opacity;
+            text-shadow: 0 0 8px rgba(224, 34, 63, .4)
+        }
+
+        .egg-pulse {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9000;
+            pointer-events: none;
+            background: radial-gradient(circle at center, #e0223f00 35%, #e0223f66)
+        }
+
+        .egg-message {
+            position: fixed;
+            left: 50%;
+            bottom: 12%;
+            z-index: 9001;
+            transform: translate(-50%);
+            max-width: min(90vw, 520px);
+            padding: 14px 22px;
+            border-radius: 16px;
+            background: #dc4971;
+            color: #fff;
+            font: 700 1.15em League Spartan, sans-serif;
+            text-align: center;
+            box-shadow: 0 10px 30px #dc497173;
+            pointer-events: none
+        }
+
+        .unlock-heart {
+            position: fixed;
+            width: 100px;
+            height: 100px;
+            z-index: 100005;
+            pointer-events: none;
+            transform-origin: 50% 50%
+        }
+
+        .unlock-heart svg {
+            display: block
+        }
+
+        #loginOverlay.is-granted .login-container {
+            border-color: #dc4971;
+            transition: border-color .2s ease;
+            box-shadow: inset 0 0 90px #000, 0 0 36px #dc497166;
+            animation: grantedFade .3s ease-in .5s forwards
+        }
+
+        #loginOverlay.is-granted .login-container>*:not(#grantedBanner) {
+            opacity: 0;
+            animation: none;
+            transition: opacity .18s ease
+        }
+
+        #loginOverlay.is-granted #grantedBanner {
+            opacity: 1;
+            transition: opacity .2s ease .12s
+        }
+
+        @keyframes grantedFade {
+            to {
+                opacity: 0;
+                transform: scale(.94);
+                filter: blur(3px)
+            }
+        }
+
+        :root {
+            --sign-red: #cc0605;
+            --sign-red-dim: #7a0403;
+            --text-1: #ff4d4d;
+            --text-2: #f53535;
+            --ink: #070303;
+            --ink-field: #030000;
+            --ink-btn: #100303
+        }
+
+        body.locked {
+            background-color: #000
+        }
+
+        body.locked ::selection {
+            background: var(--sign-red);
+            color: #fff
+        }
+
+        body.locked:before,
+        body.locked:after {
+            z-index: 9998
+        }
+
+        body.locked:before {
+            box-shadow: inset 0 0 260px 50px #000000f5
+        }
+
+        body.locked:after {
+            background: repeating-linear-gradient(0deg, #0000 0 2px, #00000073 3px), radial-gradient(ellipse at center, #0000 20%, #000000f7)
+        }
+
+        #loginOverlay .login-container {
+            background: var(--ink);
+            border: 2px solid var(--sign-red);
+            border-radius: 0;
+            box-shadow: inset 0 0 90px #000;
+            animation: fadeIn .8s ease-in-out, dreadPulse 2.6s ease-in-out infinite alternate
+        }
+
+        #loginOverlay .login-container:before,
+        #loginOverlay .login-container:after {
+            background: repeating-linear-gradient(-45deg, var(--sign-red) 0, var(--sign-red) 10px, var(--ink) 10px, var(--ink) 20px);
+            background-size: 28.28px 100%
+        }
+
+        #loginOverlay h1 {
+            color: var(--text-1);
+            text-shadow: none;
+            animation: glitchFreq 1.6s infinite
+        }
+
+        #loginOverlay .intro {
+            color: var(--text-2);
+            border-bottom: 1px solid var(--sign-red-dim)
+        }
+
+        #loginOverlay .btn-submit:focus-visible {
+            outline: 2px solid var(--text-1);
+            outline-offset: 2px
+        }
+
+        #loginOverlay .btn-submit {
+            background: var(--ink-btn);
+            color: var(--text-1);
+            border: 1px solid var(--sign-red)
+        }
+
+        #loginOverlay .btn-submit:hover {
+            background: var(--sign-red);
+            color: #fff;
+            box-shadow: none
+        }
+
+        #loginOverlay .btn-submit:after {
+            background: linear-gradient(105deg, transparent, rgba(255, 255, 255, .06), transparent)
+        }
+
+        #loginOverlay .btn-ripple {
+            background: #ffffff4d
+        }
+
+        @keyframes dreadPulse {
+            0% {
+                box-shadow: 0 0 #cc060500, inset 0 0 90px #000
+            }
+
+            to {
+                box-shadow: 0 0 34px #cc060566, inset 0 0 90px #000
+            }
+        }
+
+        @keyframes glitchFreq {
+
+            0%,
+            14%,
+            36%,
+            64%,
+            86%,
+            to {
+                transform: none;
+                text-shadow: none
+            }
+
+            8% {
+                transform: translate(-3px) skew(-6deg);
+                text-shadow: 3px 0 var(--sign-red), -3px 0 #5a0000
+            }
+
+            11% {
+                transform: translate(3px);
+                text-shadow: -3px 0 var(--sign-red), 3px 0 #5a0000
+            }
+
+            42% {
+                transform: translate(-2px) skew(5deg);
+                text-shadow: -3px 0 var(--sign-red), 3px 0 #5a0000
+            }
+
+            46% {
+                transform: translate(3px) skew(-3deg);
+                text-shadow: 3px 0 var(--sign-red), -3px 0 #5a0000
+            }
+
+            50% {
+                transform: none;
+                text-shadow: none
+            }
+
+            70% {
+                transform: translate(2px) skew(-5deg);
+                text-shadow: 3px 0 var(--sign-red), -3px 0 #5a0000
+            }
+
+            74% {
+                transform: translate(-3px);
+                text-shadow: -3px 0 var(--sign-red), 3px 0 #5a0000
+            }
+
+            78% {
+                transform: none;
+                text-shadow: none
+            }
+        }
+
+        #bootLog {
+            display: none;
+            position: absolute;
+            top: 44px;
+            left: 40px;
+            right: 40px;
+            text-align: left;
+            font-size: .95em;
+            line-height: 1.8;
+            white-space: pre-wrap;
+            color: var(--text-2)
+        }
+
+        #loginOverlay.is-booting .login-container>* {
+            visibility: hidden
+        }
+
+        #loginOverlay.is-booting .login-container>#bootLog {
+            display: block;
+            visibility: visible
+        }
+
+        .boot-caret {
+            animation: termBlink 1s steps(1) infinite
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+            .boot-caret {
+                animation: none !important
+            }
+        }
+
+        #grantedBanner {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: .5em;
+            padding: 0 20px;
+            font: 700 clamp(1.05em, 5vw, 1.5em) "Courier New", Consolas, monospace;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            text-align: center;
+            color: #ffc2d1;
+            opacity: 0;
+            pointer-events: none
+        }
+
+        #loginOverlay .btn-submit:disabled,
+        #loginOverlay .btn-submit:disabled:hover {
+            background: var(--ink-btn);
+            color: var(--text-1);
+            box-shadow: none;
+            opacity: 1
+        }
+
+        #loginOverlay .verify-label {
+            position: relative
+        }
+
+        #loginOverlay .verify-bar {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 5px;
+            background: #2a0606
+        }
+
+        #loginOverlay .verify-fill {
+            display: block;
+            width: 0;
+            height: 100%;
+            background: var(--text-1)
+        }
+
+        :root {
+            --sign-red: #dc4971;
+            --sign-red-dim: #f0e6e0;
+            --text-1: #dc4971;
+            --text-2: #a06a3c;
+            --ink: #fff;
+            --ink-field: #fff;
+            --ink-btn: #dc4971
+        }
+
+        body.locked {
+            background-color: #f4ecd8;
+            color-scheme: light
+        }
+
+        body.locked,
+        body.locked * {
+            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 24 24' fill='%23dc4971' stroke='%23dc4971' stroke-width='1.5'%3E%3Cpath d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'/%3E%3C/svg%3E") 14 14, auto !important
+        }
+
+        body.locked a,
+        body.locked button,
+        body.locked input,
+        body.locked label,
+        body.locked textarea {
+            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 24 24' fill='%23dc4971' stroke='%23c43c61' stroke-width='2'%3E%3Cpath d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'/%3E%3C/svg%3E") 14 14, pointer !important
+        }
+
+        body.locked ::selection {
+            background: #dc4971;
+            color: #fff
+        }
+
+        body.locked .firefly {
+            display: block
+        }
+
+        body.locked:before,
+        body.locked:after {
+            opacity: 0 !important;
+            animation: none !important;
+            box-shadow: none !important;
+            background: none !important
+        }
+
+        #loginOverlay {
+            background: transparent
+        }
+
+        #loginOverlay .login-container {
+            background: #fff;
+            border: 1px solid #dc4971;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px #0006;
+            font-family: League Spartan, sans-serif;
+            color: #4a4a4a;
+            animation: fadeIn .8s ease-in-out
+        }
+
+        #loginOverlay .login-container:before,
+        #loginOverlay .login-container:after {
+            display: none
+        }
+
+        #loginOverlay h1 {
+            font-family: Great Vibes, cursive !important;
+            font-size: clamp(2.6em, 13vw, 4em) !important;
+            font-weight: 400;
+            color: #dc4971;
+            text-transform: none !important;
+            letter-spacing: normal;
+            text-shadow: none;
+            margin-top: 0;
+            animation: none !important
+        }
+
+        #loginOverlay .intro {
+            font-family: League Spartan, sans-serif;
+            font-style: italic;
+            font-size: 1.1em;
+            color: #a06a3c;
+            border-bottom: 1px solid #f0e6e0
+        }
+
+        #loginOverlay .btn-submit {
+            background: #dc4971;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-family: League Spartan, sans-serif;
+            font-size: 1.2em;
+            font-weight: 600;
+            text-transform: none;
+            letter-spacing: normal;
+            box-shadow: 0 4px 10px #00000040
+        }
+
+        #loginOverlay .btn-submit:hover {
+            background: #9F032C;
+            color: #fff;
+            box-shadow: 0 12px 24px #dc497173
+        }
+
+        #loginOverlay .btn-submit:focus-visible {
+            outline: 3px solid rgba(220, 73, 113, .45);
+            outline-offset: 3px
+        }
+
+        #loginOverlay .btn-submit:after {
+            background: linear-gradient(105deg, transparent, rgba(255, 255, 255, .5), transparent)
+        }
+
+        #loginOverlay .btn-ripple {
+            background: #ffffff8c
+        }
+
+        #loginOverlay .btn-submit:disabled,
+        #loginOverlay .btn-submit:disabled:hover {
+            background: #dc4971;
+            color: #fff;
+            box-shadow: 0 4px 10px #00000040;
+            opacity: 1
+        }
+
+        #loginOverlay .verify-bar {
+            background: #ffffff59
+        }
+
+        #loginOverlay .verify-fill {
+            background: #fff
+        }
+
+        #loginOverlay .btn-submit:disabled:not([aria-busy=true]),
+        #loginOverlay .btn-submit:disabled:not([aria-busy=true]):hover {
+            background: #f0e6e0;
+            color: #8a7a70;
+            box-shadow: none
+        }
+
+        #loginOverlay .btn-submit:disabled:not([aria-busy=true]):after {
+            display: none
+        }
+
+        #bootLog {
+            font-family: League Spartan, sans-serif;
+            font-style: italic;
+            font-size: 1.05em;
+            color: #9F032C
+        }
+
+        #grantedBanner {
+            font: 400 clamp(2em, 9vw, 2.8em) "Great Vibes", cursive;
+            letter-spacing: normal;
+            text-transform: none;
+            color: #dc4971
+        }
+
+        #loginOverlay.is-granted .login-container {
+            border-color: #dc4971;
+            box-shadow: 0 4px 20px #0006, 0 0 36px #dc497180
+        }
+
+        #loginOverlay.is-granted h1 {
+            color: #dc4971;
+            text-shadow: none
+        }
+
+        #loadingScreen {
+            background: #f4ecd8
+        }
+
+        #loadingText {
+            font-family: League Spartan, sans-serif;
+            font-style: italic;
+            font-size: 1.3em;
+            letter-spacing: .04em;
+            color: #9F032C;
+            text-shadow: none;
+            animation: none
+        }
+
+        #loadingText:after {
+            content: none
+        }
+
+        .loading-heart {
+            display: block;
+            transform-origin: 50% 55%
+        }
+
+        @media(prefers-reduced-motion:no-preference) {
+            .loading-heart {
+                animation: loadingBeat 1.3s ease-in-out infinite
+            }
+        }
+
+        @keyframes loadingBeat {
+
+            0%,
+            70%,
+            to {
+                transform: scale(1)
+            }
+
+            14% {
+                transform: scale(1.18)
+            }
+
+            28% {
+                transform: scale(1)
+            }
+
+            42% {
+                transform: scale(1.12)
+            }
+        }
+
+        .poem-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            padding: 12px 10px;
+            background: radial-gradient(ellipse at center, #4a1c2a8c, #18080edb);
+            -webkit-backdrop-filter: blur(6px);
+            backdrop-filter: blur(6px);
+            opacity: 0;
+            transition: opacity .35s ease
+        }
+
+        .poem-overlay[hidden] {
+            display: none
+        }
+
+        .poem-overlay.is-open {
+            opacity: 1
+        }
+
+        .poem-sheet {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+            width: min(600px, 100%);
+            max-height: min(88vh, 780px);
+            max-height: min(88dvh, 780px);
+            border-radius: 6px;
+            background: linear-gradient(180deg, #fdf8ec, #f8efd9);
+            box-shadow: 0 30px 60px #00000073, 0 0 0 1px #a06a3c2e;
+            transform: translateY(32px) rotate(-.8deg) scale(.97);
+            transition: transform .7s cubic-bezier(.2, .8, .2, 1);
+            outline: none
+        }
+
+        .poem-overlay.is-open .poem-sheet {
+            transform: none
+        }
+
+        .poem-sheet:before {
+            content: "";
+            position: absolute;
+            inset: 10px;
+            border: 1px solid rgba(220, 73, 113, .3);
+            border-radius: 3px;
+            pointer-events: none
+        }
+
+        .poem-scroll {
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            -webkit-overflow-scrolling: touch;
+            padding: 58px clamp(22px, 6vw, 46px) clamp(32px, 6vw, 46px);
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 28px, #000 calc(100% - 28px), transparent 100%);
+            mask-image: linear-gradient(to bottom, transparent 0, #000 28px, #000 calc(100% - 28px), transparent 100%)
+        }
+
+        .poem-title {
+            margin: 0 0 clamp(20px, 4vw, 30px);
+            font-family: Great Vibes, cursive;
+            font-weight: 400;
+            font-size: clamp(2.7em, 10vw, 3.7em);
+            line-height: 1.1;
+            text-align: center;
+            color: #dc4971
+        }
+
+        .poem-title:after {
+            content: "";
+            display: block;
+            width: 72px;
+            height: 2px;
+            margin: 14px auto 0;
+            background: linear-gradient(90deg, transparent, #dc4971, transparent)
+        }
+
+        .poem-body {
+            width: fit-content;
+            max-width: 100%;
+            margin: 0 auto;
+            font-family: Cormorant Garamond, Georgia, Times New Roman, serif;
+            font-style: italic;
+            font-weight: 500;
+            font-size: clamp(1.02em, 4.4vw, 1.36em);
+            line-height: 1.6;
+            color: #4a3a3a
+        }
+
+        .poem-stanza {
+            margin: 0 0 1.5em
+        }
+
+        .poem-line {
+            display: block;
+            padding-left: 1.6em;
+            text-indent: -1.6em;
+            text-wrap: pretty
+        }
+
+        .poem-overlay.poem-js .poem-stanza {
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity .8s ease, transform .8s ease
+        }
+
+        .poem-overlay.poem-js .poem-stanza.is-in {
+            opacity: 1;
+            transform: none
+        }
+
+        .poem-end {
+            display: flex;
+            justify-content: center;
+            margin-top: .2em;
+            color: #dc4971
+        }
+
+        .poem-close {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            z-index: 2;
+            display: grid;
+            place-items: center;
+            width: 44px;
+            height: 44px;
+            padding: 0;
+            border: 1px solid rgba(220, 73, 113, .45);
+            border-radius: 50%;
+            background: #fdf8ec;
+            color: #dc4971;
+            transition: background-color .2s ease, color .2s ease, transform .15s ease
+        }
+
+        .poem-close:hover {
+            background: #dc4971;
+            color: #fff
+        }
+
+        .poem-close:active {
+            transform: scale(.92)
+        }
+
+        .poem-close:focus-visible {
+            outline: 2px solid #dc4971;
+            outline-offset: 3px
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+
+            .poem-overlay,
+            .poem-sheet,
+            .poem-overlay.poem-js .poem-stanza {
+                transition: none
+            }
+
+            .poem-sheet {
+                transform: none
+            }
+
+            .poem-overlay.poem-js .poem-stanza {
+                opacity: 1;
+                transform: none
+            }
+        }
+
+        .ticket-meta {
+            display: grid;
+            grid-template-columns: repeat(3, auto);
+            justify-content: space-between;
+            gap: 14px;
+            margin-top: 18px;
+            padding-top: 18px;
+            border-top: 2px dashed rgba(255, 255, 255, .65)
+        }
+
+        .ticket-meta>div {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            min-width: 0
+        }
+
+        .ticket-k {
+            font-size: .8em;
+            font-weight: 600;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: #fffc
+        }
+
+        .ticket-v {
+            font-size: 1.2em;
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, .25)
+        }
+
+        .ticket-foot {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 14px;
+            margin-top: 20px
+        }
+
+        .ticket-no {
+            font-family: Courier New, Consolas, monospace;
+            font-weight: 700;
+            font-size: 1.05em;
+            letter-spacing: .12em;
+            color: #ffffffeb
+        }
+
+        .ticket-stamp {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 6px 16px 5px;
+            border: 3px double rgba(255, 255, 255, .95);
+            border-radius: 8px;
+            transform: rotate(-8deg);
+            color: #fff;
+            line-height: 1.15;
+            text-align: center
+        }
+
+        .ticket-stamp span {
+            font-size: 1.15em;
+            font-weight: 800;
+            letter-spacing: .14em;
+            text-transform: uppercase
+        }
+
+        .ticket-stamp small {
+            font-size: .78em;
+            font-weight: 600;
+            letter-spacing: .06em
+        }
+
+        @media(max-width:480px) {
+            .ticket-meta {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .ticket-meta>div:last-child {
+                grid-column: 1 / -1
+            }
+        }
+
+        :root {
+            --gutter: clamp(8px, 3.5vw, 20px)
+        }
+
+        html {
+            -webkit-text-size-adjust: 100%;
+            text-size-adjust: 100%
+        }
+
+        body {
+            padding: var(--gutter);
+            padding-top: max(var(--gutter), env(safe-area-inset-top, 0px));
+            padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
+            padding-bottom: max(var(--gutter), env(safe-area-inset-bottom, 0px));
+            padding-left: max(var(--gutter), env(safe-area-inset-left, 0px))
+        }
+
+        .container {
+            padding: clamp(16px, 5vw, 40px)
+        }
+
+        .login-container {
+            padding: clamp(22px, 6vw, 40px)
+        }
+
+        #bootLog {
+            top: clamp(28px, 7vw, 44px);
+            left: clamp(22px, 6vw, 40px);
+            right: clamp(22px, 6vw, 40px)
+        }
+
+        h1 {
+            font-size: clamp(2.6rem, 12.5vw, 5rem)
+        }
+
+        h2,
+        h3 {
+            font-size: clamp(1.9rem, 7.5vw, 2.5rem)
+        }
+
+        .recap-card h3 {
+            font-size: clamp(1.9rem, 8vw, 2.4rem)
+        }
+
+        .GIANT {
+            font-size: clamp(28px, 8.5vw, 36px)
+        }
+
+        #info-surprise h2 {
+            font-size: clamp(1.8rem, 7vw, 2.2rem) !important
+        }
+
+        #countdown {
+            font-size: clamp(1.3rem, 7vw, 2.2rem) !important;
+            letter-spacing: 1px !important;
+            font-variant-numeric: tabular-nums;
+            overflow-wrap: anywhere
+        }
+
+        .category-title {
+            font-size: clamp(1.7rem, 6.8vw, 2.2rem);
+            flex-wrap: wrap;
+            gap: 4px 12px
+        }
+
+        .category-title .note {
+            margin-left: auto;
+            font-size: max(12px, .4em);
+            text-align: right
+        }
+
+        .option,
+        .recap-label,
+        .recap-value {
+            overflow-wrap: anywhere
+        }
+
+        .recap-label {
+            flex-basis: min(9.5em, 40%)
+        }
+
+        .other-textarea {
+            font-size: 16px
+        }
+
+        .btn-submit {
+            box-sizing: border-box
+        }
+
+        .category {
+            scroll-margin-top: 12px;
+            transition: box-shadow .45s ease
+        }
+
+        .category.jump-flash {
+            box-shadow: 0 0 0 3px #dc4971, 0 0 26px #dc49718c
+        }
+
+        #cuteAlert {
+            top: max(16px, env(safe-area-inset-top, 0px));
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            transform: none;
+            width: max-content;
+            max-width: calc(100vw - 32px);
+            box-sizing: border-box;
+            padding: 12px 24px;
+            line-height: 1.35
+        }
+
+        #loadingScreen {
+            inset: 0;
+            width: auto;
+            height: auto
+        }
+
+        #loginOverlay {
+            inset: 0;
+            width: auto;
+            height: auto;
+            box-sizing: border-box;
+            align-items: flex-start;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            -webkit-overflow-scrolling: touch;
+            padding: max(16px, env(safe-area-inset-top, 0px)) max(12px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(12px, env(safe-area-inset-left, 0px))
+        }
+
+        #loginOverlay .login-container {
+            box-sizing: border-box;
+            width: min(480px, 100%);
+            max-width: none;
+            margin: auto
+        }
+
+        .poem-overlay {
+            inset: 0;
+            width: auto;
+            height: auto;
+            padding: max(12px, env(safe-area-inset-top, 0px)) max(10px, env(safe-area-inset-right, 0px)) max(12px, env(safe-area-inset-bottom, 0px)) max(10px, env(safe-area-inset-left, 0px))
+        }
+
+        .confirm-btn {
+            min-height: 44px
+        }
+
+        .pack-card label {
+            padding-block: 11px
+        }
+
+        .option,
+        .consent,
+        .btn-submit,
+        .tl-go,
+        .letter-lock,
+        .pack-card label,
+        .confirm-btn {
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation
+        }
+
+        @media(max-width:600px) {
+            .container {
+                border-radius: 12px
+            }
+
+            .category {
+                margin-bottom: 24px;
+                padding: 16px 14px
+            }
+
+            .option {
+                margin: 10px 0;
+                padding: 10px 12px
+            }
+
+            .desc {
+                margin-left: 30px
+            }
+
+            .other-textarea {
+                width: calc(100% - 30px);
+                margin-left: 30px
+            }
+
+            .best-badge {
+                display: block;
+                width: fit-content;
+                max-width: 100%;
+                margin: 8px 0 2px 30px;
+                padding: 4px 12px;
+                border-radius: 14px;
+                font-size: .72em;
+                line-height: 1.3
+            }
+
+            .consent {
+                padding: 12px 14px;
+                font-size: 1.05em
+            }
+
+            .note-card {
+                margin-top: 28px;
+                padding: 18px 16px 14px
+            }
+
+            .pack-card {
+                padding: 16px 14px
+            }
+
+            .precisions {
+                margin-top: 36px
+            }
+
+            #result {
+                padding: 16px
+            }
+
+            #result .btn-submit {
+                width: 100% !important;
+                text-align: center
+            }
+
+            .love {
+                font-size: 2.4em
+            }
+
+            .letter-card {
+                padding: 18px 14px 16px
+            }
+        }
+
+        @media(max-width:480px) {
+            .tl-go {
+                flex-direction: column;
+                gap: 2px
+            }
+        }
+
+        @media(max-width:380px) {
+            .container {
+                padding: 16px 14px
+            }
+
+            .category {
+                padding: 14px 12px
+            }
+
+            .option {
+                font-size: 1.05em
+            }
+
+            .recap-card {
+                padding: 22px 16px 18px
+            }
+        }
+
+        @media(max-height:500px)and (orientation:landscape) {
+            #loginOverlay .login-container {
+                padding-top: 22px;
+                padding-bottom: 22px
+            }
+
+            #loginOverlay h1 {
+                margin-bottom: 0
+            }
+
+            .loading-heart {
+                width: 52px;
+                height: 52px
+            }
+        }
+
+        @media(hover:none) {
+            .option:hover:not(:has(input:checked)) {
+                background: #fff;
+                border-color: #eee;
+                box-shadow: none;
+                transform: none
+            }
+
+            .option:hover:has(input:checked),
+            .btn-submit:hover,
+            .consent:hover {
+                transform: none
+            }
+        }
+
+        .recap-hint {
+            margin: 4px 0 0;
+            text-align: center;
+            font-size: .85em;
+            font-style: italic;
+            color: #ffffffe6
+        }
+
+        .tl-go {
+            position: relative;
+            flex: 1;
+            min-width: 0;
+            width: 100%;
+            display: flex;
+            align-items: baseline;
+            gap: 14px;
+            margin: 0;
+            padding: 2px 26px 2px 0;
+            background: none;
+            border: 0;
+            border-radius: 8px;
+            font: inherit;
+            color: inherit;
+            text-align: left
+        }
+
+        .tl-go:after {
+            content: "\203a";
+            position: absolute;
+            right: 6px;
+            top: 50%;
+            transform: translateY(-52%);
+            font-size: 1.6em;
+            font-weight: 700;
+            line-height: 1;
+            color: #fff;
+            opacity: .75;
+            transition: transform .2s ease, opacity .2s ease
+        }
+
+        .tl-go:hover:after,
+        .tl-go:focus-visible:after {
+            opacity: 1;
+            transform: translate(3px, -52%)
+        }
+
+        .tl-go:hover .recap-value,
+        .tl-go:focus-visible .recap-value {
+            text-decoration: underline;
+            text-underline-offset: 3px
+        }
+
+        .tl-go:focus-visible {
+            outline: 2px solid #fff;
+            outline-offset: 2px
+        }
+
+        .letter-card {
+            margin-top: 24px;
+            padding: 22px 20px 20px;
+            background: #fff0f3;
+            border: 1px dashed #dc4971;
+            border-radius: 10px;
+            text-align: center
+        }
+
+        .letter-card h3 {
+            margin: 0 0 4px;
+            font-size: 1.8em
+        }
+
+        .letter-lock {
+            display: grid;
+            place-items: center;
+            width: 112px;
+            height: 112px;
+            margin: 10px auto 4px;
+            padding: 0;
+            border: 0;
+            border-radius: 50%;
+            background: #fff;
+            box-shadow: 0 6px 16px #dc497140, inset 0 0 0 2px #dc497140;
+            transition: transform .15s ease
+        }
+
+        .letter-lock:active {
+            transform: scale(.94)
+        }
+
+        .letter-lock:focus-visible {
+            outline: 3px solid rgba(220, 73, 113, .55);
+            outline-offset: 4px
+        }
+
+        .lock-svg {
+            overflow: visible
+        }
+
+        .lock-shackle {
+            transform-origin: 44px 30px;
+            transition: transform .8s cubic-bezier(.34, 1.56, .64, 1)
+        }
+
+        .letter-card.is-open .lock-shackle {
+            transform: translateY(-8px) rotate(28deg)
+        }
+
+        .letter-lock.is-wiggle {
+            animation: lockWiggle .5s ease
+        }
+
+        .letter-card.is-open .letter-lock {
+            animation: lockGlow 2.4s ease-in-out infinite
+        }
+
+        @keyframes lockWiggle {
+
+            0%,
+            to {
+                transform: none
+            }
+
+            20% {
+                transform: rotate(-9deg)
+            }
+
+            40% {
+                transform: rotate(8deg)
+            }
+
+            60% {
+                transform: rotate(-6deg)
+            }
+
+            80% {
+                transform: rotate(4deg)
+            }
+        }
+
+        @keyframes lockGlow {
+
+            0%,
+            to {
+                box-shadow: 0 6px 16px #dc497140, inset 0 0 0 2px #dc497140
+            }
+
+            50% {
+                box-shadow: 0 6px 28px #dc49718c, inset 0 0 0 2px #dc497199
+            }
+        }
+
+        .letter-status {
+            margin: 6px 0 0;
+            font-family: League Spartan, sans-serif;
+            font-size: 1.05em;
+            font-weight: 600;
+            line-height: 1.4;
+            color: #9F032C
+        }
+
+        .letter-status small {
+            display: block;
+            margin-top: 4px;
+            font-size: .85em;
+            font-weight: 400;
+            color: #8a6a72
+        }
+
+        .letter-open {
+            width: auto;
+            margin-top: 16px;
+            padding: 12px 26px
+        }
+
+        .letter-open[hidden] {
+            display: none
+        }
+
+        .letter-body {
+            width: auto;
+            font-size: clamp(1.1em, 4.6vw, 1.36em)
+        }
+
+        .letter-para {
+            margin: 0 0 1.15em;
+            text-wrap: pretty
+        }
+
+        .letter-sign {
+            margin: 1.2em 0 .4em;
+            text-align: right;
+            font-family: Great Vibes, cursive;
+            font-style: normal;
+            font-size: 1.9em;
+            line-height: 1.2;
+            color: #dc4971
+        }
+
+        .letter-overlay.is-open .letter-para,
+        .letter-overlay.is-open .letter-sign {
+            animation: letterIn .9s ease both;
+            animation-delay: calc(var(--i, 0) * .17s + .35s)
+        }
+
+        @keyframes letterIn {
+            0% {
+                opacity: 0;
+                transform: translateY(12px)
+            }
+
+            to {
+                opacity: 1;
+                transform: none
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+
+            .lock-shackle,
+            .tl-go:after,
+            .category {
+                transition: none
+            }
+
+            .letter-lock.is-wiggle,
+            .letter-card.is-open .letter-lock,
+            .letter-overlay.is-open .letter-para,
+            .letter-overlay.is-open .letter-sign {
+                animation: none
+            }
+        }
+    
+        .scratch-wrap{margin-top:30px;padding:20px;background:#fff0f3;border-radius:10px;border:1px dashed #dc4971;text-align:center}
+        .scratch-hint{font-size:.95em;color:#777;margin:0 0 14px}
+        .scratch-grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+        .scratch{position:relative;height:110px;box-sizing:border-box;padding:8px;border-radius:12px;background:#fff;border:1px solid #dc4971;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+        .scratch>span{font-size:1.6em}.scratch b{color:#9F032C}.scratch small{color:#777}
+        .scratch canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;transition:opacity .6s}
+        .scratch.done canvas{opacity:0;pointer-events:none}
+    
+        .quiz-q{margin:0 0 4px;color:#9F032C;font-weight:600}.quiz-title{margin:0 0 14px;font-size:1.2em;font-weight:600}
+        .quiz-opt{display:block;width:100%;margin:8px 0;padding:11px 14px;box-sizing:border-box;border:1px solid #dc4971;border-radius:8px;background:#fff;color:#4a4a4a;font:inherit;font-size:1.05em;transition:background .25s}
+        .quiz-opt.ok{background:#d7f5e0;border-color:#2e9d5b}.quiz-opt.ko{background:#ffe0e6}
+        .quiz-score{font-size:1.15em;font-weight:600;margin:0 0 12px}
+    
+        .pack-avoid{margin:12px 0 0;padding-top:12px;border-top:1px dashed #dc4971;font-family:League Spartan,sans-serif;color:#9F032C;line-height:1.5}
+    </style>
+</head>
+
+<body class="locked">
+    <div id="loadingScreen">
+        <svg class="loading-heart" viewBox="0 0 24 24" width="72" height="72" fill="#dc4971" aria-hidden="true">
+            <path
+                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+            </svg>
+        <div id="loadingText">Connexion sécurisée...</div>
+    </div>
+    <div id="cuteAlert"></div>
+    <dialog id="confirmDialog" aria-labelledby="confirmTitle">
+        <p id="confirmTitle">Es-tu sûre de vouloir effacer tous tes choix, mon chat ? 🥺</p>
+        <div class="confirm-actions">
+            <button type="button" class="confirm-btn confirm-btn--no" id="confirmNo">Non, je garde</button>
+            <button type="button" class="confirm-btn confirm-btn--yes" id="confirmYes">Oui, effacer</button>
+        </div>
+    </dialog>
+    <div id="loginOverlay" style="display: none;">
+        <div class="login-container">
+            <div id="bootLog" aria-hidden="true"></div>
+            <h1 style="font-size: 4em; margin-bottom: 5px;">Accès Réservé</h1>
+            <p class="intro" style="margin-bottom: 20px; padding-bottom: 10px; min-height: auto;">Réponds correctement à au moins 80 % des questions sur nous pour accéder à ta surprise.</p>
+            <div id="gateQuiz" aria-live="polite"></div>
+            <button type="button" id="loginBtn" class="btn-submit" style="display:none;margin-top:16px">Entrer →</button>
+            <div id="grantedBanner" role="status" aria-live="polite"></div>
+        </div>
+    </div>
+    <div id="mainContent" class="blurred-content">
+        <div class="container">
+            <h1>Weekend à Deux</h1>
+            <div class="intro" id="intro-text"></div>
+            <button type="button" class="btn-submit" id="startBtn">Préparer l'organisation de notre weekend →</button>
+            <form id="menuForm" action="https://formspree.io/f/xykbyqbl" method="POST">
+                <div class="category" id="sec-date">
+                    <div class="category-title"><span>Date à Deux</span><span class="note">AU CHOIX</span></div>
+                    <label class="option"><input type="radio" name="date_weekend" value="20 mars" required>SAMEDI 20 &amp; DIMANCHE 21 MARS<span class="desc">3 jours avant</span></label>
+                    <label class="option"><input type="radio" name="date_weekend" value="27 mars">SAMEDI 27 &amp; DIMANCHE 28 MARS<span class="desc">4 jours après</span></label>
+                </div>
+                <div class="category fade-in-section" id="sec-activite" style="display: none;">
+                    <div class="category-title"><span>Activité à Deux</span><span class="note">AU CHOIX</span></div>
+                    <label class="option"><input type="radio" name="activite" value="Surprise" required>SURPRISE<span
+                            class="desc">non, je ne suis pas en manque d'idées,</span></label>
+                    <label class="option"><input type="radio" name="activite" value="Surprise">SURPRISE<span
+                            class="desc">je n'ai juste pas encore réfléchi...</span></label>
+                    <label class="option best"><input type="radio" name="activite" value="Surprises">SURPRISES<span
+                            class="desc">seulement au pluriel :)</span></label>
+                    <label class="option"><input type="radio" name="activite" value="Autre" class="other-toggle">AUTRE
+                        PROPOSITION<span class="desc">à toi de choisir...</span><textarea class="other-textarea"
+                            rows="2" placeholder="Écris ton idée ici..."></textarea></label>
+                    <label class="option"><input type="radio" name="activite" value="Joker">GO AU FEELING<span
+                            class="desc">Choisis pour moi et fais-moi kiffer !!</span></label>
+                </div>
+                <div class="category fade-in-section" id="sec-quicuisine" style="display: none;">
+                    <div class="category-title"><span>Qui cuisine ?</span><span class="note">AU CHOIX</span></div>
+                    <label class="option"><input type="radio" name="qui_cuisine" value="Moi" id="cuisineMoi">MOI<span
+                            class="desc">je te prépare tout avec amour, tu n'as qu'à mettre les pieds sous la
+                            table</span></label>
+                    <label class="option best"><input type="radio" name="qui_cuisine" value="Nous" required
+                            id="cuisineNous">NOUS DEUX, ENSEMBLE<span class="desc">un moment de complicité derrière les
+                            fourneaux</span></label>
+                    <label class="option"><input type="radio" name="qui_cuisine" value="Resto" id="cuisineResto">LE
+                        CUISINIER DU MEILLEUR RESTO DE LA VILLE<span class="desc">on met les pieds sous la
+                            table</span></label>
+                    <label class="option"><input type="radio" name="qui_cuisine" value="Commande"
+                            id="cuisineCommande">ON COMMANDE<span class="desc">autant juste attendre un
+                            livreur</span></label>
+                </div>
+                <div class="category fade-in-section" id="sec-cocktail" style="display: none;">
+                    <div class="category-title"><span>Cocktail à Deux</span><span class="note">Aucune autre proposition
+                            ne sera tolérée...</span></div>
+                    <label class="option best"><input type="radio" name="cocktail" value="Coteaux du Layon">COTEAUX DU
+                        LAYON<span class="desc">le blanc que tu as adoré</span></label>
+                    <label class="option"><input type="radio" name="cocktail" value="Coteaux du Layon">COTEAUX DU
+                        LAYON<span class="desc">toujours en blanc, le meilleur !</span></label>
+                    <label class="option"><input type="radio" name="cocktail" value="Autre" class="other-toggle">AUTRE
+                        PROPOSITION<span class="desc">Aucune autre proposition ne sera tolérée... même si tu as la
+                            possibilité d'inscrire ta propre idée</span><textarea class="other-textarea" rows="2"
+                            placeholder="Écris ton idée ici qui ne sera absolument pas prise en compte à cause de ma dictature..."></textarea></label>
+                    <label class="option"><input type="radio" name="cocktail" value="Joker">SHAKE LE HASARD<span
+                            class="desc">Balance ce que tu veux dans le shaker, je bois (avec modération, hein)
+                            🍹</span></label>
+                </div>
+                <div class="category fade-in-section" id="sec-entree" style="display: none;">
+                    <div class="category-title"><span>Entrée à Deux</span><span class="note">Possible de tout choisir
+                            !</span></div>
+                    <label class="option best"><input type="checkbox" name="entree" value="Sushis Italien">SUSHIS
+                        ITALIENS<span class="desc">tu verras bien...</span></label>
+                    <label class="option"><input type="checkbox" name="entree"
+                            value="Brochettes bœuf fromage">BROCHETTES BŒUF FROMAGE<span class="desc">comme au jap
+                            !</span></label>
+                    <label class="option"><input type="checkbox" name="entree" value="Wraps">WRAPS MYSTÈRES<span
+                            class="desc">mystérieux uniquement jusqu'à ce que tu voies les ingrédients
+                            mdrrrr</span></label>
+                    <label class="option"><input type="checkbox" name="entree" value="Joker">ENTRÉE MYSTÈRE<span
+                            class="desc">Loot box activée : je découvre ce qu'il y a dedans 🎁</span></label>
+                </div>
+                <div class="category fade-in-section" id="sec-plat" style="display: none;">
+                    <div class="category-title"><span>Plat à Deux</span><span class="note">AU CHOIX</span></div>
+                    <label class="option"><input type="radio" name="plat" value="Croques">LES MEILLEURS CROQUES DU MONDE
+                        ENTIER<span class="desc">entièrement objectif bien sûr !</span></label>
+                    <label class="option"><input type="radio" name="plat" value="Sushis">SUSHIS MAISON<span
+                            class="desc">ou commandés pour être sûr du résultat :)</span></label>
+                    <label class="option best"><input type="radio" name="plat" value="Pizza chèvre miel">PIZZA CHÈVRE
+                        MIEL<span class="desc">la meilleure de toutes</span></label>
+                    <label class="option"><input type="radio" name="plat" value="Egg bagel">EGG BAGEL<span
+                            class="desc">un peu comme un burger avec un trou au milieu</span></label>
+                    <label class="option"><input type="radio" name="plat" value="Joker">MODE ALÉATOIRE<span
+                            class="desc">Ma faim a dit « pas mon problème ». Je te laisse gérer, chef 🍽️</span></label>
+                </div>
+                <div class="category fade-in-section" id="sec-dessert" style="display: none;">
+                    <div class="category-title"><span>Dessert à Deux</span><span class="note">AU CHOIX</span></div>
+                    <label class="option"><input type="radio" name="dessert" value="Brownie">BROWNIE FONDANT<span
+                            class="desc">ou coulant si raté... :)</span></label>
+                    <label class="option best"><input type="radio" name="dessert" value="Beignets Nutella">BEIGNETS AU
+                        NUTELLA<span class="desc">faits maison</span></label>
+                    <label class="option"><input type="radio" name="dessert" value="Crepes">CRÊPES<span
+                            class="desc">faites maison</span></label>
+                    <label class="option"><input type="radio" name="dessert" value="Joker">SURPRENDS MA GOURMANDISE<span
+                            class="desc">Du sucré, du très sucré, et surtout de la surprise. Je suis pas difficile
+                            🍰</span></label>
+                </div>
+                <div class="category fade-in-section" id="sec-soiree" style="display: none;">
+                    <div class="category-title"><span>Soirée à Deux</span><span class="note">Possible de tout choisir
+                            !</span></div>
+                    <label class="option"><input type="checkbox" name="soiree" value="Netflix">CHILL : NETFLIX<span
+                            class="desc">crois pas que tu choisiras le film par contre ^_^</span></label>
+                    <label class="option best"><input type="checkbox" name="soiree" value="Jeux">SOIRÉE JEUX<span
+                            class="desc">pas de description : en manque d'inspi.</span></label>
+                    <label class="option"><input type="checkbox" name="soiree" value="Etoiles">ADMIRER LES ÉTOILES<span
+                            class="desc">une belle vue sur le ciel, et une belle vue à côté de moi ^^</span></label>
+                    <label class="option"><input type="checkbox" name="soiree" value="Autre" class="other-toggle">AUTRE
+                        PROPOSITION<span class="desc">à toi de choisir...</span><textarea class="other-textarea"
+                            rows="2" placeholder="Écris ton idée ici..."></textarea></label>
+                    <label class="option"><input type="checkbox" name="soiree" value="Joker">SOIRÉE EN FREESTYLE<span
+                            class="desc">Aucune idée de ce qu'on fera, mais vu la compagnie ça sent le bon plan
+                            😌</span></label>
+                </div>
+                <div class="category fade-in-section" id="sec-dimanche" style="display: none;">
+                    <div class="category-title">
+                        <span>Avec ton Dimanche idéal ?</span>
+                        <span class="note">AU CHOIX</span>
+                    </div>
+                    <label class="option"><input type="radio" name="dimanche" value="Oui" required
+                            id="dimancheOui">OUIIIIIIIIIIIIIIIIIIIIIIIIIII<span class="desc">Et comment ! J'adorerais
+                            tellement, mon chat !!</span></label>
+                    <label class="option"><input type="radio" name="dimanche" value="Non" id="dimancheNon">NON<span
+                            class="desc">Je dois malheureusement rentrer...</span></label>
+                </div>
+                <div class="category fade-in-section" id="sec-act-dim" style="display: none;">
+                    <div class="category-title"><span>Activité matinale à Deux</span><span class="note">AU CHOIX POUR
+                            DIMANCHE</span></div>
+                    <label class="option"><input type="radio" name="activite_dimanche" value="Grasse mat">GRASSE
+                        MATINÉE<span class="desc">le repos absolu mais pas très productif</span></label>
+                    <label class="option"><input type="radio" name="activite_dimanche" value="Balade">BALADE LE LONG DU CLAIN<span class="desc">pour prendre l'air frais mais aussi et surtout pour profiter du paysage
+                            (pas exceptionnel...)</span></label>
+                    <label class="option"><input type="radio" name="activite_dimanche" value="Visite">VISITE DE LA
+                        VILLE<span class="desc">la Place Ducale nous attend, même si on risque de l'avoir déjà faite
+                            avant... oupsii c'est un spoil.</span></label>
+                    <label class="option"><input type="radio" name="activite_dimanche" value="Running">RUNNING
+                        MATINAL<span class="desc">faut bien se préparer pour ta course !</span></label>
+                    <label class="option"><input type="radio" name="activite_dimanche" value="Autre"
+                            class="other-toggle">AUTRE PROPOSITION<span class="desc">à toi de choisir...</span><textarea
+                            class="other-textarea" rows="2" placeholder="Écris ton idée ici..."></textarea></label>
+                    <label class="option"><input type="radio" name="activite_dimanche" value="Joker">DIMANCHE SANS PRISE
+                        DE TÊTE<span class="desc">Cerveau en mode économie d'énergie : décide, je suis (presque)
+                            réveillée 😴</span></label>
+                </div>
+                <div class="category fade-in-section" id="sec-ptitdej" style="display: none;">
+                    <div class="category-title"><span>P'tit déj à Deux</span><span class="note">Possible de tout choisir
+                            !</span></div>
+                    <label class="option best"><input type="checkbox" name="ptitdej" value="Viennoiseries">CROISSANTS,
+                        PAINS AU CHOCOLAT<span class="desc">de la boulangerie, je n'ai pas ces talents...</span></label>
+                    <label class="option"><input type="checkbox" name="ptitdej" value="Crêpes">CRÊPES<span
+                            class="desc">faites maison</span></label>
+                    <label class="option"><input type="checkbox" name="ptitdej" value="Pancakes">PANCAKES<span
+                            class="desc">faits maison</span></label>
+                    <label class="option"><input type="checkbox" name="ptitdej" value="Autre" class="other-toggle">AUTRE
+                        PROPOSITION<span class="desc">à toi de choisir...</span><textarea class="other-textarea"
+                            rows="2" placeholder="Écris ton idée ici..."></textarea></label>
+                    <label class="option"><input type="checkbox" name="ptitdej" value="Joker">P'TIT-DÉJ DE LA CHANCE<span
+                            class="desc">Tu me réveilles, tu me nourris, je pose pas de questions ☕🥐</span></label>
+                </div>
+                <div id="sec-final" class="fade-in-section" style="display: none;">
+                    <div id="info-surprise"
+                        style="display: none; text-align: center; margin-bottom: 40px; padding: 20px;">
+                        <h2 style="font-size: 2.2em; margin-bottom: 15px;">À titre indicatif :</h2>
+                        <p style="font-size: 1.1em; line-height: 1.6; color: #777;"><i>Le reste du weekend ne s'arrête
+                                pas là !</i><br>Tu es la bienvenue aussi longtemps que tu le souhaites, mon cœur !! J'ai
+                            pensé que l'on déciderait du restant du weekend sur le moment.<br><em>Non, ce n'est pas parce
+                                que je n'ai plus d'idée en stock. J'en ai même encore des tonnes !</em></p>
+                    </div>
+                    <div id="recap-container" class="recap-card" style="display: none;">
+                        <h3>Ton Programme Idéal :</h3>
+                        <p class="recap-hint">Touche une ligne pour revenir à la question 💕</p>
+                        <ul id="recap-list" class="recap-list"></ul>
+                    </div>
+                    <div class="precisions">
+                        <h3>Précisions à Deux</h3>
+                        <p>LE RESTAURANT NE PREND :<br>ni les cartes bleues,<br>ni les chèques,<br>ni toute autre méthode
+                            de paiement.<br><br><strong>MAIS ACCEPTE TOUT PAIEMENT DE FORMAT :</strong><br>- des
+                            milliers de bisous, des centaines de câlins ;<br>- prochain date à la charge de Madame ;
+                            <span class="mini red">il te faudra faire mieux :)</span>
+                        </p>
+                    </div>
+                    <div class="note-card">
+                        <label for="motDoux">💌 Un petit mot pour moi ? <small>(optionnel)</small></label>
+                        <textarea id="motDoux" name="mot_doux" class="note-textarea" maxlength="500"
+                            placeholder="Écris-moi ce que tu veux, ça arrivera direct dans ma boîte mail..."></textarea>
+                    </div>
+                    <div class="consent-group">
+                        <label class="consent">
+                            <input type="checkbox" name="conditions_acceptees" required>J'accepte les conditions pour ce
+                            weekend.
+                        </label>
+                        <label class="consent">
+                            <input type="checkbox" name="precisions_acceptees" required>J'accepte les précisions de mon
+                            chéri absolument parfait !
+                        </label>
+                    </div>
+                    <button type="submit" class="btn-submit" id="submitBtn">Valider mes choix pour le weekend</button>
+                    <button type="button" class="btn-submit btn-reset" id="resetBtn" style="margin-top: 15px;">Effacer
+                        et recommencer</button>
+                    <button type="button" class="btn-submit btn-reset" id="cancelEditBtn"
+                        style="margin-top: 15px; display: none;">Annuler et garder mon billet</button>
+                </div>
+            </form>
+            <div id="result">
+                <h2>Paiement accepté !</h2>
+                <p>Tes choix ont été enregistrés, mon chat !<br>(la société Lennouille&Co espère que tu auras assez de
+                    bisous pour l'addition).</p>
+                <div id="ticket-wrapper"></div>
+                <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 20px;">
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Notre+weekend&dates=20270320T110000Z/20270321T230000Z&details=Notre+super+weekend+%C3%A0+deux+!+Pr%C3%A9pare+tes+affaires+pour+Poitiers+!&location=Poitiers,+Nouvelle-Aquitaine,+France"
+                        target="_blank" class="btn-submit"
+                        style="text-decoration:none; display:inline-block; width:auto; padding: 12px 25px; background: #fff; color: #dc4971; border: 1px solid #dc4971;"><span
+                            style="font-size: 1.2em; margin-right: 8px;">📅</span> Ajouter à mon agenda</a>
+                    <button type="button" id="downloadTicketBtn" class="btn-submit"
+                        style="width:auto; padding: 12px 25px; background: #dc4971; color: #fff; text-shadow: 0px 1px 0px rgba(255,255,255,0.5);"><span
+                            style="font-size: 1.2em; margin-right: 8px;">🎫</span> Télécharger mon Billet
+                        d'Amoureuse</button>
+                    <button type="button" id="printTicketBtn" class="btn-submit"
+                        style="width:auto; padding: 12px 25px; background: #fff; color: #dc4971; border: 1px solid #dc4971;"><span
+                            style="font-size: 1.2em; margin-right: 8px;">🖨️</span> Imprimer mon billet</button>
+                </div>
+                <div id="editWrap" style="margin-top: 15px; display: none;">
+                    <button type="button" id="editChoicesBtn" class="btn-submit"
+                        style="width:auto; padding: 10px 22px; background: #fff; color: #dc4971; border: 1px dashed #dc4971;"><span
+                            style="margin-right: 8px;">✏️</span> J'ai changé d'avis</button>
+                </div>
+                <div id="packWrap" class="pack-card" style="display: none;">
+                    <h3>🧳 Ma valise</h3>
+                    <p class="pack-progress" id="packProgress"></p>
+                    <ul id="packList"></ul>
+                    <p class="pack-avoid"><strong>🚫 Ne surtout pas prendre :</strong> ton portefeuille, ta carte bancaire, ton chéquier… (ici, tout se paie en bisous 😘)</p>
+                </div>
+                <div
+                    style="margin-top: 40px; padding: 20px; background: #fff0f3; border-radius: 10px; border: 1px dashed #dc4971;">
+                    <h3 style="margin-bottom: 10px; font-size: 1.8em;">Le compte à rebours est lancé...</h3>
+                    <div id="countdown" class="GIANT"
+                        style="font-family: 'League Spartan', sans-serif; font-weight: bold; font-size: 2.2em; letter-spacing: 2px;">
+                    </div>
+                    <p id="countdownMsg"
+                        style="margin: 12px 0 0; font-family: 'League Spartan', sans-serif; font-size: 1.15em; font-weight: 600; color: #9F032C;">
+                    </p>
+                </div>
+                <div class="scratch-wrap" id="scratchWrap">
+                    <h3>Tes bons à gratter 🎟️</h3>
+                    <p class="scratch-hint">Gratte avec ton doigt (ou ta souris) pour découvrir ce qui t'attend…</p>
+                    <div class="scratch-grid" id="scratchGrid"></div>
+                </div>
+                <div id="letterCard" class="letter-card is-locked">
+                    <h3>Une fable pour toi</h3>
+                    <button type="button" id="letterLock" class="letter-lock" aria-label="Fable verrouillée"
+                        aria-disabled="true">
+                        <svg class="lock-svg" viewBox="0 0 64 64" width="84" height="84" aria-hidden="true">
+                            <path class="lock-shackle" d="M20 32V20a12 12 0 0 1 24 0v12" fill="none" stroke="#9F032C"
+                                stroke-width="5" stroke-linecap="round" />
+                            <rect x="12" y="28" width="40" height="30" rx="7" fill="#dc4971" />
+                            <path transform="translate(23.6 34.4) scale(.7)" fill="#fff"
+                                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                        </svg>
+                    </button>
+                    <p id="letterStatus" class="letter-status" role="status" aria-live="polite"></p>
+                    <button type="button" id="letterOpenBtn" class="btn-submit letter-open" hidden>📜 Lire ma fable</button>
+                </div>
+            </div>
+            <div id="error">
+                <p>Oups ! Il y a eu un petit problème technique lors de l'envoi. Réessaie ou dis-le-moi directement par
+                    message !</p>
+            </div>
+            <div class="love">Je t'aime</div>
+        </div>
+    </div>
+    <div id="poemModal" class="poem-overlay" role="dialog" aria-modal="true" aria-labelledby="poemTitle" hidden>
+        <div class="poem-sheet" tabindex="-1">
+            <button type="button" class="poem-close" id="poemClose" aria-label="Fermer la lettre">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"
+                    stroke-linecap="round" aria-hidden="true">
+                    <path d="M5 5l14 14M19 5L5 19" /></svg>
+            </button>
+            <div class="poem-scroll">
+                <h2 id="poemTitle" class="poem-title">À ma précieuse chérie,</h2>
+                <div class="poem-body">
+                    <p class="poem-stanza"><span class="poem-line"></span></p>
+                </div>
+                <div class="poem-end" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+                        <path
+                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                        </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="letterModal" class="poem-overlay letter-overlay" role="dialog" aria-modal="true"
+        aria-labelledby="letterTitle" hidden>
+        <div class="poem-sheet" tabindex="-1">
+            <button type="button" class="poem-close" id="letterClose" aria-label="Fermer la fable">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"
+                    stroke-linecap="round" aria-hidden="true">
+                    <path d="M5 5l14 14M19 5L5 19" /></svg>
+            </button>
+            <div class="poem-scroll">
+                <h2 id="letterTitle" class="poem-title">Le Corbeau et le Renard</h2>
+                <div class="poem-body letter-body">
+                    <p class="letter-para">Maître Corbeau, sur un arbre perché,<br>Tenait en son bec un fromage.<br>Maître Renard, par l'odeur alléché,<br>Lui tint à peu près ce langage :</p>
+                    <p class="letter-para">« Hé ! bonjour, Monsieur du Corbeau.<br>Que vous êtes joli ! que vous me semblez beau !<br>Sans mentir, si votre ramage<br>Se rapporte à votre plumage,<br>Vous êtes le Phénix des hôtes de ces bois. »</p>
+                    <p class="letter-para">À ces mots le Corbeau ne se sent pas de joie ;<br>Et pour montrer sa belle voix,<br>Il ouvre un large bec, laisse tomber sa proie.</p>
+                    <p class="letter-para">Le Renard s'en saisit, et dit : « Mon bon Monsieur,<br>Apprenez que tout flatteur<br>Vit aux dépens de celui qui l'écoute.<br>Cette leçon vaut bien un fromage, sans doute. »</p>
+                    <p class="letter-para">Le Corbeau honteux et confus<br>Jura, mais un peu tard, qu'on ne l'y prendrait plus.</p>
+                    <p class="letter-para"><em>Jean de La Fontaine, Fables, livre I</em></p>
+                    <p class="letter-para">Et ce n'est pas tout, mon chat : une autre surprise t'attend le jour J. Pour la découvrir, il te faudra me la demander 😘</p>
+                    <p class="letter-sign">Ton chéri</p>
+                </div>
+                <div class="poem-end" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+                        <path
+                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                        </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        let audioCtx;
+
+        function initAudio() {
+            if (!audioCtx) {
+                let e = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new e
+            }
+            audioCtx.state === "suspended" && audioCtx.resume()
+        }
+
+        function playPop() {
+            if (!audioCtx) return;
+            let e = audioCtx.createOscillator(),
+                t = audioCtx.createGain();
+            e.type = "sine", e.frequency.setValueAtTime(600, audioCtx.currentTime), e.frequency
+                .exponentialRampToValueAtTime(300, audioCtx.currentTime + .1), t.gain.setValueAtTime(.3, audioCtx
+                    .currentTime), t.gain.exponentialRampToValueAtTime(.01, audioCtx.currentTime + .1), e.connect(t), t
+                .connect(audioCtx.destination), e.start(), e.stop(audioCtx.currentTime + .1)
+        }
+
+        function playMagic() {
+            audioCtx && [440, 554.37, 659.25, 880].forEach((e, t) => {
+                setTimeout(() => {
+                    let n = audioCtx.createOscillator(),
+                        o = audioCtx.createGain();
+                    n.type = "triangle", n.frequency.value = e, o.gain.setValueAtTime(.2, audioCtx
+                            .currentTime), o.gain.exponentialRampToValueAtTime(.01, audioCtx
+                            .currentTime + .5), n.connect(o), o.connect(audioCtx.destination), n
+                    .start(), n.stop(audioCtx.currentTime + .5)
+                }, 100 * t)
+            })
+        }
+
+        function playError() {
+            if (!audioCtx) return;
+            let e = audioCtx.createOscillator(),
+                t = audioCtx.createGain();
+            e.type = "sawtooth", e.frequency.setValueAtTime(150, audioCtx.currentTime), e.frequency
+                .exponentialRampToValueAtTime(50, audioCtx.currentTime + .2), t.gain.setValueAtTime(.2, audioCtx
+                    .currentTime), t.gain.exponentialRampToValueAtTime(.01, audioCtx.currentTime + .2), e.connect(t), t
+                .connect(audioCtx.destination), e.start(), e.stop(audioCtx.currentTime + .2)
+        }
+
+        function createFireflies() {
+            if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+            const e = innerWidth < 700 ? 12 : 30;
+            document.addEventListener("visibilitychange", function () {
+                document.body.classList.toggle("tab-hidden", document.hidden)
+            });
+            for (let t = 0; t < e; t++) {
+                let n = document.createElement("div");
+                n.className = "firefly", n.style.left = 100 * Math.random() + "vw", n.style.animationDuration = 15 *
+                    Math.random() + 10 + "s", n.style.animationDelay = 5 * Math.random() + "s", document.body
+                    .appendChild(n)
+            }
+        }
+
+        function showCuteAlert(e, t = 3500) {
+            let n = document.getElementById("cuteAlert");
+            n.innerText = e, n.style.display = "block", n.style.animation = "fadeIn 0.3s ease-in-out", setTimeout(
+        () => {
+                n.style.animation = "fadeOut 0.3s ease-in-out forwards", setTimeout(() => n.style.display =
+                    "none", 300)
+            }, t)
+        }
+        document.body.addEventListener("click", initAudio, {
+            once: !0
+        }), window.addEventListener("load", () => {
+            let e = ["Connexion sécurisée...", "Génération en cours...", "Ouverture de l'accès..."],
+                t = 0,
+                n = document.getElementById("loadingText"),
+                o = setInterval(() => {
+                    if (++t < e.length) n.innerText = e[t];
+                    else {
+                        clearInterval(o);
+                        let i = document.getElementById("loadingScreen");
+                        i.style.opacity = "0", setTimeout(() => {
+                            i.style.display = "none", document.getElementById("loginOverlay").style
+                                .display = "flex"
+                        }, 800)
+                    }
+                }, hasSavedState() || readSent() ? 450 : 1300)
+        }), createFireflies();
+        let hideTimeouts = {};
+
+        function reveal(e) {
+            let t = document.getElementById(e);
+            t.style.display !== "block" && (hideTimeouts[e] && clearTimeout(hideTimeouts[e]), t.classList.remove(
+                "fade-out-section"), t.style.display = "block", t.classList.add("fade-in-section"))
+        }
+
+        function hide(e) {
+            let t = document.getElementById(e);
+            t.style.display !== "none" && (t.classList.remove("fade-in-section"), t.classList.add("fade-out-section"),
+                hideTimeouts[e] && clearTimeout(hideTimeouts[e]), hideTimeouts[e] = setTimeout(() => {
+                    t.classList.contains("fade-out-section") && (t.style.display = "none", t.classList.remove(
+                        "fade-out-section"))
+                }, 380))
+        }
+        const STORE_KEY = "weekendFormState_v2",
+            SENT_KEY = "weekendSent_v1",
+            TICKET_INFO = {
+                date: "20 mars",
+                heure: "12h",
+                lieu: "Poitiers"
+            };
+        let WEEKEND_START = new Date("March 20, 2027 12:00:00");
+        let LETTER_START = new Date("March 19, 2027 00:00:00");
+        try {
+            localStorage.removeItem("weekendFormState"), /[?&]reset(=|&|$)/.test(location.search) && (localStorage
+                .removeItem(STORE_KEY), localStorage.removeItem(SENT_KEY))
+        } catch {}
+
+        function choiceInputs() {
+            return Array.from(document.querySelectorAll(
+                '#menuForm input[type="radio"], #menuForm input[type="checkbox"]'))
+        }
+
+        function hasSavedState() {
+            try {
+                return localStorage.getItem(STORE_KEY) !== null
+            } catch {
+                return !1
+            }
+        }
+
+        function getFormState() {
+            const e = choiceInputs();
+            return {
+                n: e.length,
+                checked: e.reduce((t, n, o) => n.checked ? t.concat(o) : t, []),
+                textareas: Array.from(document.querySelectorAll("#menuForm textarea")).map(t => t.value)
+            }
+        }
+
+        function saveFormState() {
+            const e = getFormState();
+            try {
+                localStorage.setItem(STORE_KEY, JSON.stringify(e))
+            } catch {}
+            updateRecap()
+        }
+
+        function loadFormState() {
+            let e;
+            try {
+                e = localStorage.getItem(STORE_KEY)
+            } catch {
+                return !1
+            }
+            if (!e) return !1;
+            try {
+                const t = JSON.parse(e),
+                    n = choiceInputs();
+                return !t || t.n !== n.length ? !1 : (t.checked.forEach(o => {
+                    const i = n[o];
+                    i && (i.checked = !0, i.dispatchEvent(new Event("change", {
+                        bubbles: !0
+                    })))
+                }), document.querySelectorAll("#menuForm textarea").forEach((o, i) => {
+                    t.textareas && t.textareas[i] && (o.value = t.textareas[i], o.dispatchEvent(new Event(
+                        "input", {
+                            bubbles: !0
+                        })))
+                }), !0)
+            } catch {
+                return !1
+            }
+        }
+
+        function updateRecap() {
+            const e = document.getElementById("recap-list"),
+                t = document.getElementById("recap-container"),
+                n = new FormData(document.getElementById("menuForm")),
+                o = l => String(l).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g,
+                    "&quot;"),
+                i = {
+                    date_weekend: {"20 mars": "Samedi 20 et dimanche 21 mars", "27 mars": "Samedi 27 et dimanche 28 mars"},
+                    qui_cuisine: {
+                        Moi: "Mon chéri cuisine pour moi",
+                        Nous: "On cuisine à deux",
+                        Resto: "Au resto",
+                        Commande: "On commande"
+                    },
+                    dimanche: {
+                        Oui: "Je reste dimanche !",
+                        Non: "Je dois rentrer… 🥺"
+                    },
+                    entree: {
+                        "Sushis Italien": "Sushis italiens"
+                    },
+                    dessert: {
+                        Crepes: "Crêpes"
+                    },
+                    soiree: {
+                        Etoiles: "Étoiles"
+                    }
+                },
+                a = l => n.getAll(l).map(r => String(r).trim()).filter(r => r && r !== "Autre").map(r => i[l] && i[l][
+                    r] || r),
+                c = [{day: "Notre weekend", rows: [["date_weekend", "📅 Date"]]}, {
+                    day: "Samedi",
+                    rows: [
+                        ["activite", "✨ " + TICKET_INFO.heure + " · Activité"],
+                        ["qui_cuisine", "👩‍🍳 Repas"],
+                        ["cocktail", "🍹 Cocktail"],
+                        ["entree", "🥗 Entrée"],
+                        ["plat", "🍝 Plat"],
+                        ["dessert", "🍰 Dessert"],
+                        ["soiree", "🌙 Soirée"]
+                    ]
+                }, {
+                    day: "Dimanche",
+                    rows: [
+                        ["dimanche", "☀️ Dimanche"],
+                        ["activite_dimanche", "🏃‍♀️ Matinée"],
+                        ["ptitdej", "🥐 P'tit déj"]
+                    ]
+                }],
+                s = {
+                    date_weekend: "sec-date",
+                    activite: "sec-activite",
+                    qui_cuisine: "sec-quicuisine",
+                    cocktail: "sec-cocktail",
+                    entree: "sec-entree",
+                    plat: "sec-plat",
+                    dessert: "sec-dessert",
+                    soiree: "sec-soiree",
+                    dimanche: "sec-dimanche",
+                    activite_dimanche: "sec-act-dim",
+                    ptitdej: "sec-ptitdej"
+                };
+            let u = "",
+                m = !1;
+            c.forEach(l => {
+                const r = l.rows.map(([d, p]) => [p, a(d), d]).filter(d => d[1].length);
+                r.length && (m = !0, u += `<li class="tl-day"><span>${l.day}</span></li>`, r.forEach(([d, p,
+                    h]) => {
+                        u += `<li class="tl-item"><span class="tl-dot" aria-hidden="true"></span><button type="button" class="tl-go" data-target="${s[h]}" title="Modifier ce choix"><strong class="recap-label">${o(d)}</strong><span class="recap-value">${o(p.join(" & "))}</span></button></li>`
+                    }))
+            }), e.innerHTML = u, m && (t.style.display = "block")
+        }
+
+        function readSent() {
+            try {
+                const e = JSON.parse(localStorage.getItem(SENT_KEY));
+                return e && e.no && e.html ? e : null
+            } catch {
+                return null
+            }
+        }
+
+        function newTicketNo() {
+            return "LL-230926-6M"
+        }
+
+        function buildTicket(e) {
+            const t = document.getElementById("recap-container").cloneNode(!0),
+                n = t.querySelector(".recap-list"),
+                o = t.querySelector("h3");
+            t.id = "ticket-to-download", n.removeAttribute("id"), n.innerHTML = e.html, n.querySelectorAll(".tl-go")
+                .forEach(r => {
+                    for (; r.firstChild;) r.parentNode.insertBefore(r.firstChild, r);
+                    r.remove()
+                });
+            const i = t.querySelector(".recap-hint");
+            i && i.remove(), t.style.display = "block", t.style.border = "3px solid #fff", t.style.boxShadow =
+                "0 10px 20px rgba(0,0,0,0.3)", o.innerText = "🎫 Billet d'Amoureuse 🎫", o.style.color = "#fff", o.style
+                .textShadow = "2px 2px 0px rgba(0,0,0,0.2)";
+            const a = document.createElement("div");
+            a.className = "ticket-meta", [
+                ["Date", TICKET_INFO.date],
+                ["Heure", TICKET_INFO.heure],
+                ["Lieu", TICKET_INFO.lieu]
+            ].forEach(([r, d]) => {
+                const p = document.createElement("div"),
+                    h = document.createElement("span"),
+                    f = document.createElement("span");
+                h.className = "ticket-k", h.textContent = r, f.className = "ticket-v", f.textContent = d, p
+                    .append(h, f), a.appendChild(p)
+            });
+            const c = document.createElement("div"),
+                s = document.createElement("span"),
+                u = document.createElement("div"),
+                m = document.createElement("span"),
+                l = document.createElement("small");
+            return c.className = "ticket-foot", s.className = "ticket-no", s.textContent = "N° " + newTicketNo(), u.className =
+                "ticket-stamp", m.textContent = "Validé", l.textContent = new Date(e.ts || Date.now())
+                .toLocaleDateString("fr-FR"), u.append(m, l), c.append(s, u), t.append(a, c), t
+        }
+        const PACK_KEY = "weekendPack_v1";
+
+        function packItems(e) {
+            const t = new Set;
+            try {
+                const o = choiceInputs(),
+                    i = e && e.state;
+                i && i.n === o.length && i.checked.forEach(a => o[a] && t.add(o[a].value))
+            } catch {}
+            const n = [
+                ["id", "Ta pièce d'identité 🪪"],
+                ["chargeur", "Ton chargeur de téléphone 🔌"],
+                ["trousse", "Ta trousse de toilette 🧴"]
+            ];
+            return t.has("Running") && n.push(["running", "Baskets et tenue de running 🏃‍♀️"]), t.has("Balade") && n
+                .push(["balade", "Des chaussures confortables pour la balade 👟"]), t.has("Etoiles") && n.push([
+                    "etoiles", "Un gilet bien chaud pour les étoiles 🧥"
+                ]), t.has("Netflix") && n.push(["plaid", "Tes chaussettes les plus douillettes 🧦"]), t.has("Jeux") && n
+                .push(["jeux", "Ton esprit de compétition 🎲"]), t.has("Grasse mat") && n.push(["masque",
+                    "De quoi bien dormir (masque, pyjama…) 😴"
+                ]), n.push(["humeur", "Ta bonne humeur (obligatoire) 😄"]), n
+        }
+
+        function renderPack(e) {
+            const t = document.getElementById("packWrap"),
+                n = document.getElementById("packList"),
+                o = document.getElementById("packProgress");
+            if (!t) return;
+            let i = {};
+            try {
+                i = JSON.parse(localStorage.getItem(PACK_KEY)) || {}
+            } catch {}
+            const a = packItems(e);
+
+            function c() {
+                const s = a.filter(([u]) => i[u]).length;
+                o.textContent = s === a.length ? "Valise prête ! 🎉" : s + " / " + a.length + " dans la valise"
+            }
+            n.innerHTML = "", a.forEach(([s, u]) => {
+                const m = document.createElement("li"),
+                    l = document.createElement("label"),
+                    r = document.createElement("input");
+                r.type = "checkbox", r.checked = !!i[s], r.addEventListener("change", () => {
+                    i[s] = r.checked;
+                    try {
+                        localStorage.setItem(PACK_KEY, JSON.stringify(i))
+                    } catch {}
+                    playPop(), c()
+                }), l.append(r, document.createTextNode(u)), m.appendChild(l), n.appendChild(m)
+            }), c(), t.style.display = "block"
+        }
+        const MAX_MODS = 3;
+        let editing = !1;
+
+        function showResult(e, t) {
+            form.style.display = "none";
+            const n = document.getElementById("editWrap");
+            n && (n.style.display = (e.mods || 0) < MAX_MODS ? "block" : "none"), document.getElementById(
+                    "cancelEditBtn").style.display = "none", renderPack(e), document.getElementById("startBtn").style
+                .display = "none", document.getElementById("error").style.display = "none";
+            const o = document.getElementById("ticket-wrapper"),
+                i = document.getElementById("result");
+            o.innerHTML = "", o.appendChild(buildTicket(e)), i.style.display = "block", t && (i.scrollIntoView({
+                behavior: "smooth"
+            }), window.showSent())
+        }
+        let pendingNo = null,
+            sending = !1;
+
+        function submitForm(e) {
+            if (e.preventDefault(), sending) return;
+            const t = readSent();
+            if (t && !editing) {
+                showResult(t, !1);
+                return
+            }
+            const n = new FormData(form),
+                o = document.getElementById("submitBtn"),
+                i = () => {
+                    sending = !1, playError(), document.getElementById("error").style.display = "block", o.innerHTML =
+                        editing ? "Valider mes modifications" : "Valider mes choix pour le weekend", o.style.opacity =
+                        "1", o.disabled = !1
+                };
+            pendingNo = pendingNo || newTicketNo(), n.append("numero_billet", pendingNo), editing && n.append(
+                    "modification", "oui"), sending = !0, o.innerHTML = "Envoi en cours...", o.style.opacity = "0.7", o
+                .disabled = !0, fetch(form.action, {
+                    method: form.method,
+                    body: n,
+                    headers: {
+                        Accept: "application/json"
+                    }
+                }).then(a => {
+                    if (!a.ok) return i();
+                    const c = {
+                        no: pendingNo,
+                        date: (form.elements.date_weekend || {}).value,
+                        ts: Date.now(),
+                        html: document.getElementById("recap-list").innerHTML,
+                        state: getFormState(),
+                        mods: editing ? (t && t.mods || 0) + 1 : 0
+                    };
+                    try {
+                        localStorage.setItem(SENT_KEY, JSON.stringify(c)), localStorage.removeItem(STORE_KEY)
+                    } catch {}
+                    editing = !1, showResult(c, !0)
+                }, i)
+        }
+
+        function fireConfetti() {
+            var e = Date.now() + 6e3,
+                t = {
+                    startVelocity: 30,
+                    spread: 360,
+                    ticks: 60,
+                    zIndex: 1e4,
+                    colors: ["#dc4971", "#ff9999", "#ffffff", "#FFD700"]
+                };
+
+            function n(i, a) {
+                return Math.random() * (a - i) + i
+            }
+            var o = setInterval(function () {
+                var i = e - Date.now();
+                if (i <= 0) return clearInterval(o);
+                var a = 50 * (i / 6e3);
+                confetti(Object.assign({}, t, {
+                    particleCount: a,
+                    origin: {
+                        x: n(.1, .3),
+                        y: Math.random() - .2
+                    }
+                })), confetti(Object.assign({}, t, {
+                    particleCount: a,
+                    origin: {
+                        x: n(.7, .9),
+                        y: Math.random() - .2
+                    }
+                }))
+            }, 250);
+            for (let i = 0; i < 60; i++) setTimeout(() => {
+                let a = document.createElement("div");
+                a.innerHTML = "❤️", a.style.position = "fixed", a.style.top = "-50px", a.style.left = 100 * Math
+                    .random() + "vw", a.style.fontSize = 20 * Math.random() + 15 + "px", a.style.zIndex =
+                    "10000", a.style.pointerEvents = "none", a.style.transition =
+                    "top 4s linear, transform 4s ease-in-out", a.style.transform =
+                    `rotate(${360*Math.random()}deg)`, document.body.appendChild(a), requestAnimationFrame(
+                () => {
+                        a.style.top = "120vh", a.style.transform =
+                            `rotate(${360*Math.random()}deg) translateX(${200*Math.random()-100}px)`
+                    }), setTimeout(() => a.remove(), 4e3)
+            }, 100 * i)
+        }
+
+        function askConfirm(e, t) {
+            const n = document.getElementById("confirmDialog"),
+                o = document.getElementById("confirmTitle"),
+                i = document.getElementById("confirmYes"),
+                a = document.getElementById("confirmNo");
+            if (askConfirm.def = askConfirm.def || {
+                    text: o.textContent,
+                    yes: i.textContent,
+                    no: a.textContent
+                }, t = Object.assign({}, askConfirm.def, t || {}), o.textContent = t.text, i.textContent = t.yes, a
+                .textContent = t.no, !n || typeof n.showModal != "function") {
+                confirm(t.text) && e();
+                return
+            }
+
+            function c() {
+                i.onclick = a.onclick = null, n.close()
+            }
+            i.onclick = function () {
+                c(), e()
+            }, a.onclick = c, n.showModal(), a.focus()
+        }
+        document.getElementById("printTicketBtn").addEventListener("click", function () {
+            window.print()
+        }), document.getElementById("editChoicesBtn").addEventListener("click", function () {
+            const e = readSent();
+            askConfirm(function () {
+                editing = !0, sending = !1, e && e.no && (pendingNo = e.no);
+                try {
+                    e && e.state && localStorage.setItem(STORE_KEY, JSON.stringify(e.state))
+                } catch {}
+                document.getElementById("result").style.display = "none", document.getElementById(
+                        "ticket-wrapper").innerHTML = "", document.getElementById("error").style
+                    .display = "none";
+                const t = document.getElementById("submitBtn");
+                t.innerHTML = "Valider mes modifications", t.style.opacity = "1", t.disabled = !1,
+                    document.getElementById("cancelEditBtn").style.display = "", form.style.display =
+                    "block", loadFormState(), form.scrollIntoView({
+                        behavior: "smooth"
+                    })
+            }, {
+                text: "Tu as changé d'avis ? Pas de souci, tu pourras revalider ton billet juste après 🥰",
+                yes: "Oui, je modifie",
+                no: "Non, c'est parfait"
+            })
+        }), document.getElementById("cancelEditBtn").addEventListener("click", function () {
+            const e = readSent();
+            editing = !1;
+            try {
+                localStorage.removeItem(STORE_KEY)
+            } catch {}
+            e && showResult(e, !1)
+        });
+        const REACTIONS = {
+                "20 mars": ["Mieux vaut être en avance qu'en retard 🥂"],
+                "27 mars": ["On respecte la date 🥰"],
+                Surprise: ["Mmh, j'adore te faire mariner 😏"],
+                Surprises: ["Le pluriel, tu as tout compris 😎"],
+                Moi: ["Service 5 étoiles en approche 🧑‍🍳"],
+                Nous: ["Team cuisine, c'est parti 👩‍🍳"],
+                Resto: ["Tu vises l'étoile Michelin 🌟"],
+                Commande: ["Efficacité maximale, respect 🛵"],
+                "Coteaux du Layon": ["Excellent goût, comme d'hab 🥂"],
+                "Sushis Italien": ["Fais-moi confiance, tu risques d'adorer !!! 🍣"],
+                "Brochettes bœuf fromage": ["Là, tu sais ce qui est bon 😋"],
+                Wraps: ["Mystère validé 🌯"],
+                Croques: ["Le classique qui ne déçoit jamais 🥪"],
+                Sushis: ["It's sushi time ! 🍣"],
+                "Pizza chèvre miel": ["Simplement le combo parfait 🍕"],
+                "Egg bagel": ["Le trou au milieu, c'est le secret de la réussite 🥯"],
+                Brownie: ["Prie pour qu'il soit fondant 🍫"],
+                "Beignets Nutella": ["Prépare-toi à en mettre partout 😋"],
+                Crepes: ["Sucre, confiture ou Nutella ? Ou les trois, gourmande ? 🥞"],
+                Crêpes: ["Team crêpes à fond 🥞"],
+                Netflix: ["Le choix du film, c'est moi 😏🍿"],
+                Jeux: ["Prépare-toi à perdre 😈"],
+                Etoiles: ["Option romantique activée ✨"],
+                Oui: ["YESSS 🥹"],
+                Non: ["Snif... on en profitera à fond avant 🥺"],
+                "Grasse mat": ["Dodo validé, je ne juge pas 😴"],
+                Balade: ["Au bord de l'eau, très romantique 🌿"],
+                Visite: ["Visite guidée par moi, évidemment 🗺️"],
+                Running: ["On oublie pas le sport, c'est important 🏃‍♀️"],
+                Viennoiseries: ["Croissant > tout 🥐"],
+                Pancakes: ["Rupture de stock sur le sirop d'érable... 🥞"],
+                Autre: ["Une idée perso ? Je suis tout ouïe 👀"]
+            },
+            JOKER_REACTIONS = ["Tu me fais confiance ? Mauvaise idée 😈", "Challenge accepted 😏", "Compte sur moi pour la surprise ✨"];
+
+        function showReaction(e) {
+            const t = e.target;
+            if (!e.isTrusted || !t.checked || !t.closest) return;
+            const n = t.closest(".option");
+            if (!n) return;
+            const o = t.value === "Joker" ? JOKER_REACTIONS : REACTIONS[t.classList.contains("other-toggle") ? "Autre" :
+                t.value];
+            if (!o) return;
+            (n.closest(".category") || n).querySelectorAll(".reaction-bubble").forEach(a => a.remove());
+            const i = document.createElement("span");
+            i.className = "reaction-bubble", i.setAttribute("aria-hidden", "true"), i.textContent = o[Math.floor(Math
+                .random() * o.length)], n.appendChild(i), setTimeout(() => i.remove(), 2700)
+        }
+        function resetFormAnswers() {
+            try {
+                localStorage.removeItem(STORE_KEY)
+            } catch {}
+            document.getElementById("menuForm").reset(), document.querySelectorAll("#menuForm .other-toggle").forEach(
+                e => {
+                    e.value = "Autre"
+                }), document.querySelectorAll("#menuForm .other-textarea").forEach(e => {
+                e.value = "", e.style.display = "none"
+            }), ["sec-activite", "sec-quicuisine", "sec-cocktail", "sec-entree", "sec-plat", "sec-dessert", "sec-soiree",
+                "sec-dimanche", "sec-act-dim", "sec-ptitdej", "info-surprise", "sec-final"
+            ].forEach(e => {
+                const t = document.getElementById(e);
+                t && (hideTimeouts[e] && clearTimeout(hideTimeouts[e]), t.classList.remove("fade-out-section"), t
+                    .style.display = "none")
+            }), document.querySelectorAll(".reaction-bubble").forEach(e => e.remove()), document.getElementById(
+                "recap-list").innerHTML = "", document.getElementById("recap-container").style.display = "none"
+        }
+        document.getElementById("menuForm").addEventListener("change", showReaction), document.getElementById(
+                "menuForm").addEventListener("change", saveFormState), document.getElementById("menuForm")
+            .addEventListener("input", saveFormState), document.getElementById("resetBtn").addEventListener("click",
+                function () {
+                    askConfirm(resetFormAnswers)
+                }), document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(e => {
+                e.addEventListener("change", playPop)
+            });
+        var form = document.getElementById("menuForm");
+        form.addEventListener("invalid", function (e) {
+            e.preventDefault();
+            let t = ["Hé, petite tricheuse, tu as oublié de faire un choix par ici ! ❤️",
+                "Tu dois vraiment choisir, je ne lis pas (encore) dans tes pensées ! 🤭",
+                "Oups ! Il manque une petite réponse, mon chat ! 🥰",
+                "Pas si vite ! Il faut tout compléter avant de valider. 😘"
+            ];
+            e.target.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            }), showCuteAlert(t[Math.floor(Math.random() * t.length)]), playError()
+        }, !0);
+        const rawIntroHTML =
+            `<p><span class="GIANT">Ma chère Léa,</span><br>vous êtes conviée à un weekend organisé spécialement en votre honneur à l'occasion de nos 6 mois,<br><span class="red">le 20 ou le 27 mars prochain (à vous de choisir), à partir de 12h par votre fidèle gentleman.</span></p><p><span>Ce formulaire a été conçu par un ingénieur complétement amoureux.</span><br><span class="red">Avec aucune question piège.</span><br><span>Seulement des choix hyper importants pour la suite de notre relation.</p><p class="red">Spoiler : tu vas adorer, quoi que tu choisisses.</p><p class="mini">Remplis ce formulaire ou ce magnifique week-end sera annulé <span class="red">(je bluffe, mais fais-le quand même 👀).</span></p>`;
+
+        function typeWriterHTML(e, t, n) {
+            window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches && (n = 0), e.innerHTML = "";
+            let o = 0,
+                i = !1,
+                a = "",
+                c, s = !1;
+
+            function u() {
+                if (s) return;
+                s = !0, clearTimeout(c), document.removeEventListener("pointerdown", m), document.removeEventListener(
+                    "keydown", l), e.innerHTML = t;
+                const r = document.getElementById("startBtn");
+                r.style.display = "block", r.style.animation = "fadeIn 1s ease-in-out"
+            }
+
+            function m(r) {
+                u()
+            }
+
+            function l(r) {
+                (r.key === "Escape" || r.key === "Enter" || r.key === " ") && u()
+            }
+            document.addEventListener("pointerdown", m), document.addEventListener("keydown", l), (function r() {
+                if (!s)
+                    if (o < t.length) {
+                        let d = t.charAt(o);
+                        a += d, e.innerHTML = a, o++, d === "<" && (i = !0), d === ">" && (i = !1), c =
+                            setTimeout(r, i ? 0 : n)
+                    } else u()
+            })()
+        }
+        document.getElementById("loginBtn").addEventListener("click", function () {
+            if (!window.__verifying) {
+                var n = {
+                    style: {}
+                };
+                initAudio(), window.gatePassed ? (playPop(), n.style.display = "none", window.loginVerify(
+                    () => unlockTransition(() => {
+                        const o = readSent();
+                        if (o) {
+                            document.getElementById("intro-text").innerHTML = rawIntroHTML,
+                                showResult(o, !1);
+                            return
+                        }
+                        let i = hasSavedState();
+                        typeWriterHTML(document.getElementById("intro-text"), rawIntroHTML, i ? 0 :
+                            25), i && loadFormState()
+                    }))) : playError()
+            }
+        }), document.getElementById("startBtn").addEventListener("click", function () {
+            playPop(), document.getElementById("menuForm").style.display = "block", this.style.display = "none"
+        }), document.querySelectorAll('input[name="activite"]').forEach(e => {
+            e.addEventListener("change", () => reveal("sec-quicuisine"))
+        }), document.querySelectorAll('input[name="qui_cuisine"]').forEach(e => {
+            e.addEventListener("change", t => {
+                t.target.value === "Resto" || t.target.value === "Commande" ? (hide("sec-cocktail"),
+                        hide("sec-entree"), hide("sec-plat"), hide("sec-dessert"), reveal("sec-soiree")
+                        ) : (reveal("sec-cocktail"), document.querySelector(
+                            'input[name="cocktail"]:checked') && reveal("sec-entree"), document
+                        .querySelector('input[name="entree"]:checked') && reveal("sec-plat"), document
+                        .querySelector('input[name="plat"]:checked') && reveal("sec-dessert"), document
+                        .querySelector('input[name="dessert"]:checked') && reveal("sec-soiree"))
+            })
+        }), document.querySelectorAll('input[name="cocktail"]').forEach(e => {
+            e.addEventListener("change", () => reveal("sec-entree"))
+        }), document.querySelectorAll('input[name="entree"]').forEach(e => {
+            e.addEventListener("change", () => {
+                document.querySelector('input[name="entree"]:checked') && reveal("sec-plat")
+            })
+        }), document.querySelectorAll('input[name="plat"]').forEach(e => {
+            e.addEventListener("change", () => reveal("sec-dessert"))
+        }), document.querySelectorAll('input[name="dessert"]').forEach(e => {
+            e.addEventListener("change", () => reveal("sec-soiree"))
+        }), document.querySelectorAll('input[name="soiree"]').forEach(e => {
+            e.addEventListener("change", () => {
+                document.querySelector('input[name="soiree"]:checked') && reveal("sec-dimanche")
+            })
+        }), document.querySelectorAll('input[name="dimanche"]').forEach(e => {
+            e.addEventListener("change", t => {
+                t.target.value === "Oui" ? (reveal("info-surprise"), reveal("sec-act-dim"), document
+                    .querySelector('input[name="activite_dimanche"]:checked') && reveal(
+                        "sec-ptitdej"), document.querySelector('input[name="ptitdej"]:checked') &&
+                    reveal("sec-final")) : (hide("info-surprise"), hide("sec-act-dim"), hide(
+                    "sec-ptitdej"), reveal("sec-final"))
+            })
+        }), document.querySelectorAll('input[name="activite_dimanche"]').forEach(e => {
+            e.addEventListener("change", () => reveal("sec-ptitdej"))
+        }), document.querySelectorAll('input[name="ptitdej"]').forEach(e => {
+            e.addEventListener("change", () => {
+                document.querySelector('input[name="ptitdej"]:checked') && reveal("sec-final")
+            })
+        });
+        let secretCode = "amour",
+            inputBuffer = "";
+
+        function countdownMessage(e, t) {
+            const n = i => {
+                    const a = new Date(i);
+                    return a.setHours(0, 0, 0, 0), a.getTime()
+                },
+                o = Math.round((n(e) - n(t)) / 864e5);
+            return o > 60 ? "Ça se rapproche doucement… 🐢" : o > 30 ? "Moins de deux mois avant notre weekend 🥰" : o >
+                14 ? "Plus que " + o + " jours 😏" : o > 7 ? "Moins de deux semaines : pense à ta valise 🧳" : o > 1 ?
+                "Plus que " + o + " jours, ça sent bon 🥹" : o === 1 ? "C'est DEMAIN ! 🎉" : o === 0 && e > t ?
+                "C'est aujourd'hui ❤️" : o >= -3 ? "Profite de chaque seconde 🥰" :
+                "Merci pour ce weekend, les souvenirs resteront gravés à jamais 🥹"
+        }
+
+        function updateCountdown() {
+            let e = WEEKEND_START.getTime(),
+                t = new Date().getTime(),
+                n = e - t;
+            const o = document.getElementById("countdownMsg");
+            if (o && (o.textContent = countdownMessage(e, t)), n < 0) {
+                document.getElementById("countdown").innerHTML = "C'est l'heure ! ❤️";
+                return
+            }
+            document.getElementById("countdown").innerHTML = Math.floor(n / 864e5) + "j " + Math.floor(n % 864e5 /
+                36e5) + "h " + Math.floor(n % 36e5 / 6e4) + "m " + Math.floor(n % 6e4 / 1e3) + "s"
+        }
+        document.addEventListener("keydown", function (e) {
+                e.target.tagName !== "INPUT" && e.target.tagName !== "TEXTAREA" && ((inputBuffer += e.key
+                    .toLowerCase()).length > secretCode.length && (inputBuffer = inputBuffer.slice(-
+                    secretCode.length)), inputBuffer === secretCode && (playMagic(), window.openPoem &&
+                    window.openPoem(), inputBuffer = ""))
+            }), form.addEventListener("submit", submitForm), document.getElementById("downloadTicketBtn")
+            .addEventListener("click", function () {
+                let e = document.getElementById("ticket-to-download"),
+                    t = e.style.transform;
+                e.style.transform = "none", html2canvas(e, {
+                    backgroundColor: null,
+                    scale: 2
+                }).then(n => {
+                    let o = document.createElement("a");
+                    o.download = "Billet_Amour_Weekend.png", o.href = n.toDataURL("image/png"), o.click(), e
+                        .style.transform = t
+                })
+            }), document.querySelectorAll(".category").forEach(e => {
+                let t = e.querySelectorAll('input[type="radio"], input[type="checkbox"]'),
+                    n = e.querySelector(".other-toggle"),
+                    o = e.querySelector(".other-textarea");
+                n && o && t.forEach(i => {
+                    i.addEventListener("change", () => {
+                        n.checked ? o.style.display = "block" : (o.style.display = "none", o.value =
+                            "", updateRecap())
+                    })
+                })
+            }), document.querySelectorAll(".other-textarea").forEach(e => {
+                let t = n => {
+                    let o = n.closest(".option").querySelector(".other-toggle");
+                    o && !o.checked && (o.checked = !0, o.dispatchEvent(new Event("change", {
+                        bubbles: !0
+                    })))
+                };
+                e.addEventListener("click", function () {
+                    t(this)
+                }), e.addEventListener("focus", function () {
+                    t(this)
+                }), e.addEventListener("input", function () {
+                    let n = this.closest(".option").querySelector(".other-toggle");
+                    n && (n.value = this.value.trim() !== "" ? this.value : "Autre"), t(this), updateRecap()
+                })
+            }), setInterval(updateCountdown, 1e3), updateCountdown(), document.querySelectorAll(".best").forEach(e => {
+                let t = document.createElement("span");
+                t.className = "best-badge", t.textContent = "Le Chef recommande fortement ce choix ! 😉";
+                let n = e.querySelector(".desc");
+                n ? e.insertBefore(t, n) : e.appendChild(t)
+            });
+    </script>
+    <script>
+        document.addEventListener("pointerdown", function (e) {
+            var n = e.target.closest && e.target.closest(".btn-submit");
+            if (!(!n || n.disabled)) {
+                var i = n.getBoundingClientRect(),
+                    a = Math.max(i.width, i.height) * 2,
+                    t = document.createElement("span");
+                t.className = "btn-ripple", t.style.width = t.style.height = a + "px", t.style.left = e
+                    .clientX - i.left - a / 2 + "px", t.style.top = e.clientY - i.top - a / 2 + "px", n
+                    .appendChild(t), t.addEventListener("animationend", function () {
+                        t.remove()
+                    })
+            }
+        });
+    </script>
+    <script>
+        (function () {
+            var t = "Proposition romantique sur mesure";
+            new MutationObserver(function () {
+                document.body.classList.contains("locked") || (document.title = t, this.disconnect())
+            }).observe(document.body, {
+                attributes: !0,
+                attributeFilter: ["class"]
+            })
+        })();
+    </script>
+    <script>
+        window.unlockTransition = function (o) {
+            if (window.__unlocking) return;
+            window.__unlocking = !0;
+            var n = document.body,
+                d = document.getElementById("loginOverlay"),
+                i = document.getElementById("mainContent"),
+                x = document.getElementById("loginBtn"),
+                r = x.getBoundingClientRect(),
+                s = r.left + r.width / 2,
+                c = r.top + r.height / 2,
+                f = innerWidth,
+                m = innerHeight,
+                M = Math.ceil(Math.hypot(Math.max(s, f - s), Math.max(c, m - c))) + 20,
+                h = M / 20;
+
+            function y() {
+                n.classList.add("snap-unlock"), n.style.transition = "none", i.style.transition = "none", d.style
+                    .display = "none", i.classList.remove("blurred-content"), n.classList.remove("locked");
+                var a = document.querySelector('meta[name="theme-color"]');
+                a && a.setAttribute("content", "#f4ecd8")
+            }
+            if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) {
+                y(), n.style.transition = "", i.style.transition = "", o && o();
+                return
+            }
+            d.classList.add("is-granted");
+            var p = document.getElementById("grantedBanner");
+            p && (p.textContent = "✓ Accès autorisé"), setTimeout(function () {
+                function a(e) {
+                    var t = document.createElement("div");
+                    return t.className = "unlock-heart", t.setAttribute("aria-hidden", "true"), t.style
+                        .left = s - 50 + "px", t.style.top = c - 50 + "px", t.style.transform = "scale(0)",
+                        t.innerHTML = '<svg viewBox="0 0 24 24" width="100" height="100"><path fill="' + e +
+                        '" d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>',
+                        n.appendChild(t), t
+                }
+                var l = 1850,
+                    g = 850,
+                    v = "cubic-bezier(.7,0,.2,1)",
+                    b = [
+                        [0, 0],
+                        [120, .7],
+                        [240, .55],
+                        [360, .88],
+                        [500, .6],
+                        [640, .98],
+                        [800, .64],
+                        [1e3, .64],
+                        [l, h]
+                    ],
+                    w = a("#dc4971"),
+                    u = a("#f4ecd8");
+                w.animate(b.map(function (e, t) {
+                    return {
+                        transform: "scale(" + e[1] + ")",
+                        offset: e[0] / l,
+                        easing: t === b.length - 2 ? v : "ease-in-out"
+                    }
+                }), {
+                    duration: l,
+                    fill: "forwards"
+                }), u.animate([{
+                    transform: "scale(0)"
+                }, {
+                    transform: "scale(" + h + ")"
+                }], {
+                    duration: g,
+                    delay: l - g + 130,
+                    easing: v,
+                    fill: "both"
+                }).onfinish = function () {
+                    y(), w.remove(), i.animate([{
+                        opacity: 0,
+                        transform: "translateY(28px) scale(.97)"
+                    }, {
+                        opacity: 1,
+                        transform: "none"
+                    }], {
+                        duration: 850,
+                        easing: "cubic-bezier(.2,.7,.2,1)"
+                    }).onfinish = function () {
+                        i.style.transition = "", n.style.transition = ""
+                    }, u.animate([{
+                        opacity: 1
+                    }, {
+                        opacity: 0
+                    }], {
+                        duration: 600,
+                        easing: "ease-out",
+                        fill: "forwards"
+                    }).onfinish = function () {
+                        u.remove()
+                    }, setTimeout(function () {
+                        o && o()
+                    }, 350)
+                }, setTimeout(function () {
+                    if (typeof confetti == "function") {
+                        var e = {
+                            particleCount: 46,
+                            spread: 360,
+                            startVelocity: 30,
+                            gravity: .7,
+                            ticks: 120,
+                            origin: {
+                                x: s / f,
+                                y: c / m
+                            },
+                            colors: ["#ffffff", "#ffb3c6", "#f4ecd8"],
+                            scalar: 1.8,
+                            zIndex: 100006,
+                            disableForReducedMotion: !0
+                        };
+                        try {
+                            confetti.shapeFromText && (e.shapes = [confetti.shapeFromText({
+                                text: "❤️",
+                                scalar: 1.8
+                            })])
+                        } catch {}
+                        confetti(e)
+                    }
+                }, 1e3)
+            }, 720)
+        };
+    </script>
+    <script>
+        (function () {
+            if (!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches)) {
+                var a = document.createElement("div"),
+                    n = innerWidth < 600 ? 14 : 24;
+                a.id = "heartField", a.setAttribute("aria-hidden", "true");
+                for (var r = 0; r < n; r++) {
+                    var t = document.createElement("span"),
+                        e = t.style;
+                    t.className = "float-heart", t.textContent = "❤︎", e.left = Math.random() * 96 + 2 + "vw", e
+                        .fontSize = 10 + Math.random() * 14 + "px", e.color = Math.random() < .5 ? "#e0223f" :
+                        "#c8102e", e.animationDuration = 9 + Math.random() * 10 + "s", e.animationDelay = -Math
+                        .random() * 18 + "s", e.setProperty("--o", (.45 + Math.random() * .4).toFixed(2)), e
+                        .setProperty("--sway", (Math.random() * 80 - 40).toFixed(0) + "px"), e.setProperty("--r0", (
+                            Math.random() * 40 - 20).toFixed(0) + "deg"), a.appendChild(t)
+                }
+                document.body.appendChild(a)
+            }
+        })();
+    </script>
+    <script>
+        (function () {
+            var e = document.querySelector(".love");
+            if (!e) return;
+            var i = e.textContent.trim(),
+                s = !1;
+            e.setAttribute("aria-label", i), e.textContent = "", Array.from(i).forEach(function (r, o) {
+                var n = document.createElement("span");
+                n.className = "love-letter", n.setAttribute("aria-hidden", "true"), n.style.setProperty(
+                    "--i", o), n.textContent = r, e.appendChild(n)
+            });
+
+            function t() {
+                if (!(s || document.body.classList.contains("locked"))) {
+                    var r = e.getBoundingClientRect();
+                    r.top < innerHeight * .9 && r.bottom > 0 && (s = !0, e.classList.add("in"), removeEventListener(
+                        "scroll", t), removeEventListener("resize", t))
+                }
+            }
+            addEventListener("scroll", t, {
+                passive: !0
+            }), addEventListener("resize", t), new MutationObserver(function () {
+                document.body.classList.contains("locked") || (this.disconnect(), setTimeout(t, 1100))
+            }).observe(document.body, {
+                attributes: !0,
+                attributeFilter: ["class"]
+            }), t()
+        })();
+    </script>
+    <script>
+        (function () {
+            var c = document.querySelector(".love");
+            if (!c) return;
+            var u = "",
+                d = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches,
+                s = ["#e0223f", "#c8102e", "#ff4d79", "#dc4971", "#ff8fab"],
+                r = 0,
+                f = 0;
+
+            function o(t, e) {
+                return t + Math.random() * (e - t)
+            }
+
+            function x(t, e, n) {
+                for (var i = 0; i < n && f < 160; i++) {
+                    var a = document.createElement("span"),
+                        y = o(0, Math.PI * 2),
+                        g = o(70, 190 + n * 3),
+                        h = Math.cos(y) * g,
+                        v = Math.sin(y) * g - o(20, 80);
+                    a.className = "egg-heart", a.textContent = "❤︎", a.style.left = t + "px", a.style.top = e +
+                        "px", a.style.fontSize = o(14, 34) + "px", a.style.color = s[Math.floor(Math.random() * s
+                            .length)], document.body.appendChild(a), f++, a.animate([{
+                            transform: "translate(-50%,-50%) scale(.2) rotate(0deg)",
+                            opacity: 1
+                        }, {
+                            transform: "translate(calc(-50% + " + h + "px),calc(-50% + " + v +
+                                "px)) scale(1.1) rotate(" + o(-40, 40) + "deg)",
+                            opacity: 1,
+                            offset: .55
+                        }, {
+                            transform: "translate(calc(-50% + " + h * 1.1 + "px),calc(-50% + " + (v + 90) +
+                                "px)) scale(.7) rotate(" + o(-70, 70) + "deg)",
+                            opacity: 0
+                        }], {
+                            duration: o(900, 1500),
+                            easing: "cubic-bezier(.2,.8,.3,1)",
+                            fill: "forwards"
+                        }).onfinish = (function (M) {
+                            return function () {
+                                M.remove(), f--
+                            }
+                        })(a)
+                }
+            }
+
+            function w() {
+                c.querySelectorAll(".love-letter").forEach(function (t, e) {
+                    t.animate([{
+                        transform: "translateY(0) scale(1)"
+                    }, {
+                        transform: "translateY(-28px) scale(1.4) rotate(-8deg)",
+                        offset: .4
+                    }, {
+                        transform: "translateY(0) scale(1)"
+                    }], {
+                        duration: 750,
+                        delay: e * 70,
+                        easing: "cubic-bezier(.34,1.56,.64,1)"
+                    })
+                })
+            }
+
+            function b(t, e) {
+                if (typeof confetti == "function") {
+                    var n = {
+                        particleCount: 70,
+                        spread: 90,
+                        startVelocity: 38,
+                        origin: {
+                            x: t / innerWidth,
+                            y: e / innerHeight
+                        },
+                        colors: s,
+                        scalar: 2,
+                        zIndex: 9e3
+                    };
+                    try {
+                        confetti.shapeFromText && (n.shapes = [confetti.shapeFromText({
+                            text: "❤️",
+                            scalar: 2
+                        })])
+                    } catch {}
+                    confetti(n)
+                }
+            }
+
+            function E() {
+                var t = document.createElement("div");
+                t.className = "egg-pulse", document.body.appendChild(t), t.animate([{
+                    opacity: 0
+                }, {
+                    opacity: 1,
+                    offset: .15
+                }, {
+                    opacity: .1,
+                    offset: .35
+                }, {
+                    opacity: .85,
+                    offset: .5
+                }, {
+                    opacity: 0
+                }], {
+                    duration: 1300,
+                    easing: "ease-out"
+                }).onfinish = function () {
+                    t.remove()
+                }, navigator.vibrate && navigator.vibrate([90, 70, 120])
+            }
+
+            function p() {
+                if (u) {
+                    var t = document.createElement("div");
+                    t.className = "egg-message", t.textContent = u, document.body.appendChild(t), t.animate([{
+                        opacity: 0,
+                        transform: "translate(-50%,20px)"
+                    }, {
+                        opacity: 1,
+                        transform: "translate(-50%,0)",
+                        offset: .12
+                    }, {
+                        opacity: 1,
+                        transform: "translate(-50%,0)",
+                        offset: .85
+                    }, {
+                        opacity: 0,
+                        transform: "translate(-50%,-10px)"
+                    }], {
+                        duration: 4500,
+                        easing: "ease-out"
+                    }).onfinish = function () {
+                        t.remove()
+                    }
+                }
+            }
+
+            function l(t) {
+                try {
+                    typeof t == "function" && t()
+                } catch {}
+            }
+
+            function m() {
+                r !== 7 || typeof window.openPoem != "function" || setTimeout(window.openPoem, d ? 0 : 1500)
+            }
+            c.addEventListener("click", function (t) {
+                if (c.classList.contains("in")) {
+                    r++;
+                    var e = c.getBoundingClientRect(),
+                        n = t.clientX || e.left + e.width / 2,
+                        i = t.clientY || e.top + e.height / 2;
+                    if (l(window.playPop), d) {
+                        r % 7 === 0 && p(), m();
+                        return
+                    }
+                    w(), x(n, i, 10 + Math.min(r, 10) * 2), r % 3 === 0 && (b(n, i), l(window.playMagic)),
+                        r % 7 === 0 && (E(), l(window.fireConfetti), p(), m())
+                }
+            })
+        })();
+    </script>
+    <script>
+        (function () {
+            var s = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+            window.showSent = function () {
+                try {
+                    showCuteAlert("Envoyé ❤️", 4e3)
+                } catch {}
+                try {
+                    playMagic()
+                } catch {}
+                try {
+                    typeof confetti == "function" && fireConfetti()
+                } catch {}
+            }, window.loginVerify = function (e) {
+                if (!window.__verifying) {
+                    window.__verifying = !0;
+                    var t = document.getElementById("loginBtn"),
+                        n, r, I = 1100;
+                    if (t.disabled = !0, t.setAttribute("aria-busy", "true"), t.innerHTML =
+                        '<span class="verify-label">Vérification…</span><span class="verify-bar" aria-hidden="true"><span class="verify-fill"></span></span>',
+                        r = t.querySelector(".verify-fill"), s) {
+                        r.style.width = "100%", setTimeout(e, 500);
+                        return
+                    }
+                    r.animate([{
+                        width: "0%",
+                        offset: 0
+                    }, {
+                        width: "28%",
+                        offset: .2
+                    }, {
+                        width: "41%",
+                        offset: .45
+                    }, {
+                        width: "83%",
+                        offset: .75
+                    }, {
+                        width: "100%",
+                        offset: 1
+                    }], {
+                        duration: I,
+                        easing: "linear",
+                        fill: "forwards"
+                    }), setTimeout(e, I + 150)
+                }
+            };
+            var i = document.getElementById("loginOverlay"),
+                y = document.getElementById("bootLog"),
+                g = ["> Connexion au serveur… OK", "> Analyse de l'appareil… OK", "> Identité non vérifiée !",
+                    "> Accès restreint : 1 personne", "> Authentification requise"
+                ],
+                d = !1,
+                c = !1,
+                u;
+
+            function L(e) {
+                y.textContent = e;
+                var t = document.createElement("span");
+                t.className = "boot-caret", t.textContent = "█", y.appendChild(t)
+            }
+
+            function a() {
+                c || (c = !0, clearTimeout(u), i.removeEventListener("pointerdown", a), document
+                    .removeEventListener("keydown", a), i.classList.remove("is-booting"), !s && i
+                    .querySelectorAll(".login-container > *:not(#bootLog):not(#grantedBanner)").forEach(
+                        function (e, t) {
+                            e.animate([{
+                                opacity: 0
+                            }, {
+                                opacity: 1
+                            }], {
+                                duration: 450,
+                                delay: t * 60,
+                                easing: "ease-out",
+                                fill: "backwards"
+                            })
+                        }))
+            }
+
+            function f(e, t, n) {
+                if (!c) {
+                    if (e >= g.length) {
+                        u = setTimeout(a, 450);
+                        return
+                    }
+                    var r = g[e];
+                    t <= r.length ? (L(n + r.slice(0, t)), u = setTimeout(function () {
+                        f(e, t + 1, n)
+                    }, 9)) : u = setTimeout(function () {
+                        f(e + 1, 0, n + r + `
+`)
+                    }, 150)
+                }
+            }
+
+            function T() {
+                d || (d = !0, !s && (i.classList.add("is-booting"), i.addEventListener("pointerdown", a), document
+                    .addEventListener("keydown", a), setTimeout(a, 8e3), f(0, 0, "")))
+            }
+            new MutationObserver(function () {
+                !d && getComputedStyle(i).display !== "none" && T()
+            }).observe(i, {
+                attributes: !0,
+                attributeFilter: ["style"]
+            });
+                    })();
+    </script>
+    <script>
+        (function () {
+            var t = document.getElementById("poemModal");
+            if (!t) return;
+            var u = t.querySelector(".poem-sheet"),
+                c = t.querySelector(".poem-scroll"),
+                d = document.getElementById("poemClose"),
+                r = Array.prototype.slice.call(t.querySelectorAll(".poem-stanza")),
+                f = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches,
+                o = null,
+                n = null,
+                l = "",
+                i = !1;
+
+            function m() {
+                if (o && o.disconnect(), r.forEach(function (e) {
+                        e.classList.remove("is-in"), e.style.transitionDelay = ""
+                    }), !("IntersectionObserver" in window)) {
+                    r.forEach(function (e) {
+                        e.classList.add("is-in")
+                    });
+                    return
+                }
+                o = new IntersectionObserver(function (e) {
+                    var a = 0;
+                    e.forEach(function (s) {
+                        s.isIntersecting && (s.target.style.transitionDelay = a++ * 140 + "ms", s
+                            .target.classList.add("is-in"), o.unobserve(s.target))
+                    })
+                }, {
+                    root: c,
+                    threshold: .15
+                }), r.forEach(function (e) {
+                    o.observe(e)
+                })
+            }
+            window.openPoem = function () {
+                if (!(document.body.classList.contains("locked") || !t.hidden || i)) {
+                    n = document.activeElement, l = document.body.style.overflow, document.body.style.overflow =
+                        "hidden", t.classList.add("poem-js"), t.hidden = !1, c.scrollTop = 0, m(), t
+                        .offsetWidth, t.classList.add("is-open");
+                    try {
+                        u.focus({
+                            preventScroll: !0
+                        })
+                    } catch {}
+                }
+            }, window.closePoem = function () {
+                if (!(t.hidden || i)) {
+                    i = !0, t.classList.remove("is-open");
+                    var e = function () {
+                        t.hidden = !0, i = !1, document.body.style.overflow = l, o && o.disconnect();
+                        try {
+                            n && n.focus && n.focus({
+                                preventScroll: !0
+                            })
+                        } catch {}
+                    };
+                    f ? e() : setTimeout(e, 350)
+                }
+            }, d.addEventListener("click", window.closePoem), t.addEventListener("click", function (e) {
+                e.target === t && window.closePoem()
+            }), document.addEventListener("keydown", function (e) {
+                t.hidden || (e.key === "Escape" ? (e.preventDefault(), window.closePoem()) : e.key ===
+                    "Tab" && (e.preventDefault(), d.focus()))
+            })
+        })();
+    </script>
+    <script>
+        (function () {
+            var t = document.getElementById("recap-list");
+            if (t) {
+                var i = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+                t.addEventListener("click", function (r) {
+                    var c = r.target.closest && r.target.closest(".tl-go");
+                    if (c) {
+                        var e = document.getElementById(c.getAttribute("data-target"));
+                        if (!(!e || getComputedStyle(e).display === "none")) {
+                            e.scrollIntoView({
+                                behavior: i ? "auto" : "smooth",
+                                block: e.getBoundingClientRect().height > innerHeight * .85 ?
+                                    "start" : "center"
+                            }), e.classList.add("jump-flash"), setTimeout(function () {
+                                e.classList.remove("jump-flash")
+                            }, 1700);
+                            var n = e.querySelector("input:checked") || e.querySelector("input");
+                            try {
+                                n && n.focus({
+                                    preventScroll: !0
+                                })
+                            } catch {}
+                        }
+                    }
+                })
+            }
+        })();
+    </script>
+    <script>
+        (function () {
+            var i = document.getElementById("letterCard"),
+                d;
+            if (!i) return;
+            try {
+                d = WEEKEND_START.getTime()
+            } catch {
+                return
+            }
+            var n = document.getElementById("letterLock"),
+                f = document.getElementById("letterStatus"),
+                c = document.getElementById("letterOpenBtn"),
+                t = document.getElementById("letterModal"),
+                E = t.querySelector(".poem-sheet"),
+                L = t.querySelector(".poem-scroll"),
+                m = document.getElementById("letterClose"),
+                y = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches,
+                v = "weekendLetterRead_v1",
+                h = ["Pas touche, mon chat, il faudra attendre encore un peu 😘", "Patience… la fable se mérite 🔒",
+                    "Un peu de suspense, ça fait du bien 🤭"
+                ],
+                w = 0,
+                r = null,
+                o = null,
+                g = "",
+                a = !1;
+
+            function T() {
+                try {
+                    return localStorage.getItem(v) === "1"
+                } catch {
+                    return !1
+                }
+            }
+
+            function b() {
+                return LETTER_START.toLocaleDateString("fr-FR", {
+                    day: "numeric",
+                    month: "long"
+                })
+            }
+
+            function D() {
+                if (!r) {
+                    f.innerHTML = "Cadenas fermé jusqu'au " + b() +
+                        "…<small>Il s'ouvrira tout seul, ici, ce jour-là.</small>";
+                    return
+                }
+                var e = T();
+                f.innerHTML = e ? "Le cadenas est ouvert 📜<small>Tu peux la relire quand tu veux.</small>" :
+                    "Le cadenas s'est ouvert&nbsp;! 📜<small>Ta fable t'attend.</small>", c.textContent = e ?
+                    "📜 Relire ma fable" : "📜 Lire ma fable"
+            }
+
+            function C() {
+                try {
+                    typeof playMagic == "function" && playMagic()
+                } catch {}
+                if (!(y || typeof confetti != "function")) try {
+                    var e = n.getBoundingClientRect();
+                    confetti({
+                        particleCount: 60,
+                        spread: 80,
+                        startVelocity: 32,
+                        origin: {
+                            x: (e.left + e.width / 2) / innerWidth,
+                            y: (e.top + e.height / 2) / innerHeight
+                        },
+                        colors: ["#dc4971", "#ffb3c6", "#ffffff", "#FFD700"],
+                        zIndex: 1e4,
+                        disableForReducedMotion: !0
+                    })
+                } catch {}
+            }
+
+            function S(e) {
+                if (e !== r) {
+                    var l = r === !1 && e;
+                    r = e, i.classList.toggle("is-open", e), i.classList.toggle("is-locked", !e), n.setAttribute(
+                            "aria-label", e ? "Ouvrir la fable" : "Fable verrouillée"), n.setAttribute(
+                            "aria-disabled", e ? "false" : "true"), c.hidden = !e, D(), l && i.offsetParent !==
+                        null && C()
+                }
+            }
+
+            function u() {
+                S(Date.now() >= LETTER_START.getTime())
+            }
+
+            function p() {
+                if (!(!r || document.body.classList.contains("locked") || !t.hidden || a)) {
+                    o = document.activeElement, g = document.body.style.overflow, document.body.style.overflow =
+                        "hidden", Array.prototype.forEach.call(t.querySelectorAll(".letter-para, .letter-sign"),
+                            function (e, l) {
+                                e.style.setProperty("--i", l)
+                            }), t.hidden = !1, L.scrollTop = 0, t.offsetWidth, t.classList.add("is-open");
+                    try {
+                        E.focus({
+                            preventScroll: !0
+                        })
+                    } catch {}
+                    try {
+                        localStorage.setItem(v, "1")
+                    } catch {}
+                    D()
+                }
+            }
+
+            function s() {
+                if (!(t.hidden || a)) {
+                    a = !0, t.classList.remove("is-open");
+                    var e = function () {
+                        t.hidden = !0, a = !1, document.body.style.overflow = g;
+                        try {
+                            o && o.focus && o.focus({
+                                preventScroll: !0
+                            })
+                        } catch {}
+                    };
+                    y ? e() : setTimeout(e, 350)
+                }
+            }
+            n.addEventListener("click", function () {
+                if (r) return p();
+                n.classList.remove("is-wiggle"), n.offsetWidth, n.classList.add("is-wiggle"),
+                    typeof playPop == "function" && playPop(), typeof showCuteAlert == "function" &&
+                    showCuteAlert(h[w++ % h.length], 2600)
+            }), c.addEventListener("click", p), m.addEventListener("click", s), t.addEventListener("click",
+                function (e) {
+                    e.target === t && s()
+                }), document.addEventListener("keydown", function (e) {
+                t.hidden || (e.key === "Escape" ? (e.preventDefault(), s()) : e.key === "Tab" && (e
+                    .preventDefault(), m.focus()))
+            }), document.addEventListener("visibilitychange", u), setInterval(u, 1e3), u()
+        })();
+    </script>
+<script>
+        (function () {
+            var D = {"20 mars": "20270320T110000Z/20270321T230000Z", "27 mars": "20270327T110000Z/20270328T230000Z"};
+            var LD = {"20 mars": ["19 mars", "March 19, 2027 00:00:00"], "27 mars": ["23 mars", "March 23, 2027 00:00:00"]};
+            function apply(k) {
+                if (!D[k]) return;
+                LETTER_START = new Date(LD[k][1]);
+                TICKET_INFO.date = k;
+                WEEKEND_START = new Date(k.replace(" mars", " March") .replace(/^(\d+) March/, "March $1") + ", 2027 12:00:00");
+                var a = document.querySelector('a[href*="calendar.google.com"]');
+                if (a) a.href = a.href.replace(/dates=[^&]*/, "dates=" + D[k]);
+                var c = document.getElementById("letterCard"), f = document.getElementById("letterStatus");
+                if (f && c && c.classList.contains("is-locked")) f.innerHTML = "Cadenas fermé jusqu'au " + LD[k][0] + "…<small>Il s'ouvrira tout seul, ici, ce jour-là.</small>";
+                if (typeof updateCountdown == "function") updateCountdown()
+            }
+            document.querySelectorAll('input[name="date_weekend"]').forEach(function (r) {
+                r.addEventListener("change", function () { apply(r.value); reveal("sec-activite") })
+            });
+            var sent = readSent(), ck = document.querySelector('input[name="date_weekend"]:checked');
+            if (sent && sent.date) apply(sent.date); else if (ck) apply(ck.value);
+            if (ck) reveal("sec-activite");
+
+            var K = "weekendScratch_v1", S = {}, built = !1, g = document.getElementById("scratchGrid"),
+                B = [["💆‍♀️", "Bon pour un massage", "valable une fois, durant ce weekend uniquement"], ["🥐", "Petit-déj au lit", "servi avec amour"], ["🎬", "Tu choisis le film", "ton gentleman attitré te laisse choisir"]];
+            try { S = JSON.parse(localStorage.getItem(K)) || {} } catch (e) {}
+            function done(el, i) {
+                el.classList.add("done"); S[i] = 1;
+                try { localStorage.setItem(K, JSON.stringify(S)) } catch (e) {}
+                try { playMagic() } catch (e) {}
+                try { confetti({particleCount: 40, spread: 70, origin: {y: .7}, colors: ["#dc4971", "#ffb3c6", "#FFD700"]}) } catch (e) {}
+            }
+            function init() {
+                if (built || !g || !g.offsetWidth) return;
+                built = !0;
+                B.forEach(function (b, i) {
+                    var el = document.createElement("div");
+                    el.className = "scratch"; el.tabIndex = 0; el.setAttribute("role", "button");
+                    el.setAttribute("aria-label", "Bon à gratter : " + b[1] + ". Appuie sur Entrée pour le révéler.");
+                    el.innerHTML = '<span aria-hidden="true">' + b[0] + "</span><b>" + b[1] + "</b><small>" + b[2] + "</small>";
+                    g.appendChild(el);
+                    if (S[i]) { el.classList.add("done"); return }
+                    var c = document.createElement("canvas"), w = c.width = el.clientWidth, h = c.height = el.clientHeight, x = c.getContext("2d"), gr = x.createLinearGradient(0, 0, w, h), down = !1, n = 0;
+                    gr.addColorStop(0, "#d9d9de"); gr.addColorStop(.5, "#f4f4f7"); gr.addColorStop(1, "#bdbdc6");
+                    x.fillStyle = gr; x.fillRect(0, 0, w, h);
+                    x.fillStyle = "#9a9aa5"; x.font = "600 18px League Spartan,sans-serif"; x.textAlign = "center"; x.textBaseline = "middle"; x.fillText("GRATTE ICI ♥", w / 2, h / 2);
+                    x.globalCompositeOperation = "destination-out";
+                    function chk() {
+                        var d = x.getImageData(0, 0, w, h).data, t = 0, k;
+                        for (k = 3; k < d.length; k += 64) if (d[k] === 0) t++;
+                        if (t > d.length / 64 * .45) done(el, i)
+                    }
+                    function p(e) {
+                        var r = c.getBoundingClientRect();
+                        x.beginPath(); x.arc((e.clientX - r.left) * w / r.width, (e.clientY - r.top) * h / r.height, 16, 0, 7); x.fill();
+                        if (++n % 6 === 0) chk()
+                    }
+                    c.addEventListener("pointerdown", function (e) { down = !0; try { c.setPointerCapture(e.pointerId) } catch (z) {} p(e) });
+                    c.addEventListener("pointermove", function (e) { down && p(e) });
+                    c.addEventListener("pointerup", function () { down = !1; chk() });
+                    c.addEventListener("pointercancel", function () { down = !1 });
+                    el.addEventListener("keydown", function (e) {
+                        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); done(el, i) }
+                    });
+                    el.appendChild(c)
+                })
+            }
+            var sr = window.showResult;
+            if (typeof sr == "function") window.showResult = function () {
+                var r = sr.apply(this, arguments); requestAnimationFrame(init); return r
+            };
+            var res = document.getElementById("result");
+            if (res && getComputedStyle(res).display !== "none") requestAnimationFrame(init)
+        })();
+    </script>
+<script>
+        (function () {
+            var QUIZ = [
+                {q: "Quel est mon film préféré ?", a: ["F1 : Le film", "Fast Five", "Comte de Monte Cristo"]},
+                {q: "Combien de mois fêtons-nous bientôt ?", a: ["6 mois", "3 mois", "J'ai arrêté de compter..."]},
+                {q: "Quel vin blanc t'ais-je conseillé et que tu as adoré ?", a: ["Coteaux du Layon", "Saumur blanc", "Uby n°4"]},
+                {q: "Quelle pizza est « la meilleure de toutes » ?", a: ["Chèvre miel", "Pistacchio", "Reine"]},
+                {q: "Quelle rivière longe notre balade du dimanche ?", a: ["Le Clain", "La Vienne", "La Marne"]},
+                {q: "Quelle est la première chose que j'ai remarquée chez toi ?", a: ["", "", ""]},
+                {q: "Où avons-nous été lors de notre premier rendez-vous ?", a: ["La Taverne", "Oh le Bistro", "Parc de Blossac"]},
+                {q: "Quel était mon tout premier message ?", a: ["C'est bien ici pour les discussions jusqu'à 2h du matin ??", "J'ai montré ton profil à mon meilleur pote, il m'a dit de tenter ma chance sinon il arrête de me parler. Donc salut !", "Aucun, c'est toi qui a envoyé le premier message."]},
+                {q: "Quelle bêtise nous a fait rire aux larmes ?", a: ["", "", ""]},
+                {q: "Quelle est la première chose que tu bois le matin ?", a: ["", "", ""]},
+                {q: "Quelle chanson nous fait toujours danser ?", a: ["J'irais où tu iras", "Perfect", ""]},
+                {q: "Quelle est la sortie que l'on n'oubliera jamais ?", a: ["", "", ""]},
+                {q: "D'où vient notre surnom ?", a: ["", "", ""]},
+                {q: "Quel pays je rêverais de visiter ?", a: ["Australie", "Etats-Unis", "Italie"]},
+                {q: "Quel jour nous sommes-nous mis ensemble ?", a: ["Le 23 septembre", "Le 21 septembre", "Le 18 septembre"]}
+            ],
+            PASS = QUIZ.length,
+                b = document.getElementById("gateQuiz"), go = document.getElementById("loginBtn");
+            if (!b || !go) return;
+            function btn(t, f) {
+                var x = document.createElement("button");
+                x.type = "button"; x.className = "quiz-opt"; x.textContent = t; x.addEventListener("click", f); return x
+            }
+            function end(sc) {
+                var p = document.createElement("p"), ok = sc >= PASS;
+                b.innerHTML = ""; p.className = "quiz-score";
+                p.textContent = sc + " / " + QUIZ.length + (ok ? " : tu me connais par cœur 🥰" : " : il faut TOUTES les bonnes réponses pour entrer. Retente ta chance 😏");
+                b.appendChild(p);
+                if (ok) {
+                    window.gatePassed = !0; go.style.display = "";
+                    try { playMagic() } catch (e) {}
+                    try { go.focus() } catch (e) {}
+                } else b.appendChild(btn("Réessayer", function () { ask(0, 0) }))
+            }
+            function ask(i, sc) {
+                var q = QUIZ[i], n = document.createElement("p"), t = document.createElement("p"), locked = !1, wrongTries = 0;
+                b.innerHTML = ""; n.className = "quiz-q"; t.className = "quiz-title";
+                n.textContent = "Question " + (i + 1) + " / " + QUIZ.length; t.textContent = q.q; b.append(n, t);
+                q.a.map(function (v, k) { return [Math.random(), v, k === 0] }).sort(function (x, y) { return x[0] - y[0] }).forEach(function (o) {
+                    var x = btn(o[1], function () {
+                        if (locked || x.disabled) return;
+                        if (o[2]) {
+                            locked = !0;
+                            x.classList.add("ok");
+                            try { initAudio(); playPop() } catch (e) {}
+                            setTimeout(function () {
+                                var s2 = sc + 1;
+                                i + 1 < QUIZ.length ? ask(i + 1, s2) : end(s2)
+                            }, 900)
+                        } else {
+                            x.classList.add("ko");
+                            x.disabled = !0;
+                            try { initAudio(); playError() } catch (e) {}
+                            wrongTries++;
+                            if (wrongTries >= 3) {
+                                locked = !0;
+                                setTimeout(function () {
+                                    i + 1 < QUIZ.length ? ask(i + 1, sc) : end(sc)
+                                }, 900)
+                            }
+                        }
+                    });
+                    b.appendChild(x)
+                })
+            }
+            ask(0, 0)
+        })();
+    </script>
+</body>
+
+</html>
