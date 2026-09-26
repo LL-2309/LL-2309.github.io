@@ -698,7 +698,7 @@ body {
     border-radius:12px;
     background:var(--field);
     border:1px solid var(--line);
-    font-family:var(--script);
+    font-family:var(--sans);
     font-size:1.8em;
     line-height:1.25;
     color:var(--rose);
@@ -3378,7 +3378,7 @@ body {
         }
 
         #countdown {
-            font-size: clamp(1.3rem, 7vw, 2.2rem) !important;
+            font-size: 1.5rem !important;
             letter-spacing: 1px !important;
             font-variant-numeric: tabular-nums;
             overflow-wrap: anywhere

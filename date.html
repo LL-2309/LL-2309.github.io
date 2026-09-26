@@ -9,6 +9,52 @@
   <link rel="icon" href="assets/icon.svg">
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <link rel="stylesheet" href="style.css">
+  <style>
+    #confirm-modal .countdown {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      padding: 20px 10px;
+      margin: 20px 0;
+    }
+
+    #confirm-modal .countdown .unit {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-width: 0;
+      padding: 14px 4px 12px;
+      border-radius: 12px;
+      background: rgba(220, 73, 113, 0.07);
+    }
+
+    #confirm-modal .countdown .unit b {
+      font-size: clamp(1.3rem, 6vw, 2rem);
+      line-height: 1;
+      margin: 0 0 6px;
+      white-space: nowrap;
+    }
+
+    #confirm-modal .countdown .unit span {
+      font-size: clamp(0.6rem, 2.6vw, 0.8rem);
+      line-height: 1.1;
+      white-space: nowrap;
+      word-break: keep-all;
+      overflow-wrap: normal;
+      letter-spacing: 0.01em;
+    }
+
+    @media (max-width: 380px) {
+      #confirm-modal .countdown {
+        gap: 6px;
+      }
+
+      #confirm-modal .countdown .unit {
+        padding: 10px 2px;
+      }
+    }
+  </style>
 
 </head>
 
@@ -163,14 +209,37 @@
 
       const REQUIRED_GUEST = 'lennygadroy@gmail.com';
 
+      const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xykbyqbl';
+
+      function sendToFormspree(data) {
+        const fd = new FormData();
+        Object.keys(data).forEach(function (key) {
+          fd.append(key, data[key]);
+        });
+        fetch(FORMSPREE_ENDPOINT, {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json'
+          },
+          body: fd
+        }).catch(function () {});
+      }
+
       document.getElementById('rsvp').addEventListener('click', function () {
         const start = document.getElementById('start-time').value || '19:00';
         const end = document.getElementById('end-time').value || '23:00';
         const msg = document.getElementById('message').value.trim();
+
+        sendToFormspree({
+          reponse: 'Oui',
+          disponible_de: start,
+          disponible_a: end,
+          message: msg
+        });
+
         document.getElementById('rsvp-form').style.display = 'none';
         const c = document.getElementById('confirmed');
-        c.textContent = 'C\'est noté : disponible de ' + start + ' à ' + end + ', à mercredi !' + (msg ?
-          ' Ton mot : « ' + msg + ' »' : '');
+        c.textContent = 'C\'est noté : disponible de ' + start + ' à ' + end + ', à mercredi !';
         document.getElementById('modal-overlay').classList.add('show');
         try {
           confetti({
@@ -186,12 +255,11 @@
         const dateStr = '20260930';
         const s = start.replace(':', '') + '00';
         const e = end.replace(':', '') + '00';
-        let details = 'Rendez-vous du mercredi 30 septembre, disponibilité indiquée de ' + start + ' à ' + end +
-          '.';
+        let details = 'Au point on en est, on va se créer un calendrier commun pour tous nos dates 😘';
         if (msg) details += ' Message : ' + msg;
         const params = new URLSearchParams({
           action: 'TEMPLATE',
-          text: 'Rendez-vous du 30 septembre',
+          text: 'Notre 5e date',
           dates: dateStr + 'T' + s + '/' + dateStr + 'T' + e,
           details: details,
           add: REQUIRED_GUEST
