@@ -54,6 +54,119 @@
         padding: 10px 2px;
       }
     }
+
+    .veto-field {
+      margin-bottom: 18px;
+    }
+
+    .veto-title {
+      font-family: var(--script);
+      font-weight: 400;
+      font-size: clamp(1.5rem, 7vw, 2rem);
+      line-height: 1.1;
+      color: var(--rose);
+      margin: 0 0 4px;
+      text-align: center;
+    }
+
+    .veto-field > .place-desc {
+      display: block;
+      text-align: center;
+      font-size: .8em;
+      font-style: italic;
+      opacity: .75;
+      margin: 0 auto 14px;
+    }
+
+    .veto-options {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .veto-option {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      padding: 13px 16px;
+      border-radius: 14px;
+      background: var(--field);
+      border: 1.5px solid var(--line);
+      cursor: pointer;
+      transition: border-color .25s ease, background .25s ease, box-shadow .25s ease, transform .2s ease;
+    }
+
+    .veto-option:hover {
+      border-color: #e9b9c4;
+      transform: translateY(-1px);
+    }
+
+    .veto-option input {
+      accent-color: var(--rose);
+      width: 17px;
+      height: 17px;
+      flex-shrink: 0;
+      margin-right: 8px !important;
+    }
+
+    .veto-option input:before {
+      font-size: 22px !important;
+    }
+
+    .veto-option span {
+      font-size: .92em;
+      font-weight: 600;
+      color: var(--ink);
+      transition: color .25s ease;
+    }
+
+    .veto-option:has(input:checked) {
+      border-color: var(--rose);
+      background: linear-gradient(135deg, var(--rose-soft) 0%, #fff 120%);
+      box-shadow: 0 8px 20px #9f032c1c;
+      transform: translateY(-1px);
+    }
+
+    .veto-option:has(input:checked) span {
+      color: var(--rose-dark);
+    }
+
+    .veto-option:has(input:focus-visible) {
+      outline: 2px solid var(--rose);
+      outline-offset: 2px;
+    }
+
+    .driver-field {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 16px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: var(--field);
+      border: 1.5px solid var(--line);
+      transition: border-color .25s ease, background .25s ease;
+    }
+
+    .driver-field:has(input:checked) {
+      border-color: var(--rose);
+      background: var(--rose-soft);
+    }
+
+    .driver-field input {
+      accent-color: var(--rose);
+      width: 17px;
+      height: 17px;
+      flex-shrink: 0;
+    }
+
+    .driver-field label {
+      font-size: .9em;
+      font-weight: 600;
+      color: var(--ink);
+      cursor: pointer;
+    }
   </style>
 
 </head>
@@ -99,19 +212,47 @@
         <div class="ornament" aria-hidden="true">&#10022;</div>
 
         <div id="rsvp-form">
+          <div class="veto-field">
+            <p class="veto-title">Ton droit de Veto</p>
+            <span class="place-desc">Uniquement si tu es dispo pour midi...</span>
+            <div class="veto-options" role="radiogroup" aria-label="Choix de l'activité">
+              <label class="veto-option">
+                <input type="radio" name="veto" id="veto-1" value="Resto : simple, basique, efficace" checked>
+                <span>🍽️ Resto : simple, basique, efficace</span>
+              </label>
+              <label class="veto-option">
+                <input type="radio" name="veto" id="veto-2" value="On cuisine ensemble (au pire, on commandera McDo...)">
+                <span>👩‍🍳 On cuisine ensemble, au pire on commandera McDo...</span>
+              </label>
+              <label class="veto-option">
+                <input type="radio" name="veto" id="veto-3" value="On mange chacun de son côté">
+                <span>👀 On mange chacun de son côté</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="ornament" aria-hidden="true">&#10022;</div>
+
           <p class="time-range-title">Quelles sont tes disponibilités ?</p>
           <div class="time-range">
             <label>À partir de
-              <input type="time" id="start-time" value="12:00">
+              <input type="time" id="start-time" value="12:30" min="12:30" max="23:00">
             </label>
             <label>Jusqu'à
-              <input type="time" id="end-time" value="20:00">
+              <input type="time" id="end-time" value="20:00" min="12:30" max="23:00">
             </label>
           </div>
 
           <div class="msg-field">
             <label for="message">Un petit mot pour moi ?</label>
             <textarea id="message" placeholder="ou c'est trop demandé peut-être..."></textarea>
+          </div>
+
+          <div class="ornament" aria-hidden="true">&#10022;</div>
+
+          <div class="driver-field">
+            <input type="checkbox" id="driver-check">
+            <label for="driver-check">J'accepte d'être ta chauffeuse privée 🚗</label>
           </div>
 
           <div class="btn-row">
@@ -225,15 +366,30 @@
         }).catch(function () {});
       }
 
+      const MIN_TIME = '12:00';
+      const MAX_TIME = '23:00';
+
+      function clampTime(value, fallback) {
+        const v = value || fallback;
+        if (v < MIN_TIME) return MIN_TIME;
+        if (v > MAX_TIME) return MAX_TIME;
+        return v;
+      }
+
       document.getElementById('rsvp').addEventListener('click', function () {
-        const start = document.getElementById('start-time').value || '19:00';
-        const end = document.getElementById('end-time').value || '23:00';
+        const start = clampTime(document.getElementById('start-time').value, '12:00');
+        const end = clampTime(document.getElementById('end-time').value, '20:00');
         const msg = document.getElementById('message').value.trim();
+        const vetoInput = document.querySelector('input[name="veto"]:checked');
+        const veto = vetoInput ? vetoInput.value : '';
+        const driver = document.getElementById('driver-check').checked ? 'Oui' : 'Non';
 
         sendToFormspree({
           reponse: 'Oui',
           disponible_de: start,
           disponible_a: end,
+          choix_activite: veto,
+          chauffeuse: driver,
           message: msg
         });
 
@@ -256,6 +412,7 @@
         const s = start.replace(':', '') + '00';
         const e = end.replace(':', '') + '00';
         let details = 'Au point on en est, on va se créer un calendrier commun pour tous nos dates 😘';
+        if (veto) details += ' Choix : ' + veto + '.';
         if (msg) details += ' Message : ' + msg;
         const params = new URLSearchParams({
           action: 'TEMPLATE',
