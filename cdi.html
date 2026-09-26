@@ -9,6 +9,103 @@
   <link rel="icon" href="assets/icon.svg">
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <link rel="stylesheet" href="style.css">
+<style>
+    #apply-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(40, 10, 20, 0.55);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 1000;
+    }
+ 
+    #apply-overlay.show {
+      display: flex;
+    }
+ 
+    #apply-modal {
+      position: relative;
+      background: #fff;
+      border-radius: 20px;
+      max-width: 420px;
+      width: 100%;
+      padding: 36px 28px 28px;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+      animation: apply-modal-in .35s ease;
+    }
+ 
+    @keyframes apply-modal-in {
+      from {
+        opacity: 0;
+        transform: translateY(16px) scale(.97);
+      }
+ 
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+ 
+    #apply-modal .modal-close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 32px;
+      height: 32px;
+      border: none;
+      border-radius: 50%;
+      background: rgba(220, 73, 113, 0.1);
+      color: #dc4971;
+      font-size: 1.2rem;
+      line-height: 1;
+      cursor: pointer;
+    }
+ 
+    #apply-modal .apply-icon {
+      width: 56px !important;
+      height: 56px !important;
+      margin: 0 auto 10px !important;
+      overflow: hidden;
+      border-radius: 12px;
+    }
+ 
+    #apply-modal .apply-icon img {
+      display: block;
+      width: 100% !important;
+      height: 100% !important;
+      max-width: 100% !important;
+      object-fit: contain;
+    }
+ 
+    #apply-modal h2 {
+      color: #dc4971;
+      font-size: 1.4rem;
+      margin: 0 0 12px;
+    }
+ 
+    #apply-modal p {
+      color: #6b4553;
+      font-size: 1rem;
+      line-height: 1.5;
+      margin: 0 0 24px;
+    }
+ 
+    #apply-modal .btn-continue {
+      display: inline-block;
+      background: #dc4971;
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      padding: 14px 28px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  </style>
 
 </head>
 
@@ -87,7 +184,7 @@
         <div class="offer-footer">Pour postuler, un seul geste suffit : <br>clique sur « Oui » ci-dessous. 💌</div>
 
         <div class="offer-actions">
-          <a class="btn btn-yes" href="date.html">Je postule — Ouiiiii !</a>
+          <button type="button" class="btn btn-yes" id="applyBtn">Je postule — Ouiiiii !</button>
         </div>
 
         <div class="offer-signature">
@@ -95,6 +192,16 @@
           <span class="offer-dept">Directeur des Ressources Sentimentales</span>
         </div>
       </div>
+    </div>
+  </div>
+
+  <div id="apply-overlay">
+    <div id="apply-modal" role="dialog" aria-modal="true" aria-labelledby="apply-modal-title">
+      <button type="button" class="modal-close" id="apply-modal-close" aria-label="Fermer">&times;</button>
+      <div class="apply-icon" aria-hidden="true"><img src="assets/logo.svg" alt=""></div>
+      <h2 id="apply-modal-title">Candidature validée !</h2>
+      <p>C'est noté, ta candidature est enregistrée. Il ne reste plus qu'a organiser notre prochain date !!</p>
+      <button type="button" class="btn-continue" id="continueBtn">D'accord !</button>
     </div>
   </div>
 
@@ -109,6 +216,51 @@
         colors: ['#dc4971', '#ffb3c6', '#FFD700']
       });
     } catch (e) {}
+  </script>
+
+  <script>
+    var FORMSPREE_ENDPOINT_CDI = 'https://formspree.io/f/xykbyqbl';
+
+    var applyBtn = document.getElementById('applyBtn');
+    var overlay = document.getElementById('apply-overlay');
+    var closeBtn = document.getElementById('apply-modal-close');
+
+    applyBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+
+      try {
+        var fd = new FormData();
+        fd.append('reponse', 'Ouiiiii');
+        navigator.sendBeacon(FORMSPREE_ENDPOINT_CDI, fd);
+      } catch (err) {}
+
+      overlay.classList.add('show');
+      try {
+        confetti({
+          particleCount: 100,
+          spread: 90,
+          origin: {
+            y: .6
+          },
+          colors: ['#dc4971', '#ffb3c6', '#FFD700']
+        });
+      } catch (err) {}
+    });
+
+    var continueBtn = document.getElementById('continueBtn');
+    continueBtn.addEventListener('click', function () {
+      overlay.classList.remove('show');
+    });
+
+    closeBtn.addEventListener('click', function () {
+      overlay.classList.remove('show');
+    });
+    overlay.addEventListener('click', function (e) {
+      if (e.target === overlay) overlay.classList.remove('show');
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') overlay.classList.remove('show');
+    });
   </script>
 </body>
 
