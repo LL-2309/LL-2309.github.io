@@ -649,7 +649,7 @@ body {
 
   .tip{margin:0}
   .tip-title{font-family:var(--script);font-weight:400;font-size:clamp(1.5rem,7vw,2rem);line-height:1.1;color:var(--rose);margin:0 0 6px}
-  .tip-text{margin:0 auto;max-width:32ch;font-weight:600;color:var(--muted);font-size:1em}
+  .tip-text{margin:0 auto;max-width:32ch;color:var(--muted);font-size:1em}
 
   #rsvp-form{text-align:left; margin-top: 24px;}
   .time-range-title{font-size:1.05em;font-weight:700;color:var(--rose-dark);margin:0}
@@ -3860,3 +3860,183 @@ body {
         .quiz-score{font-size:1.15em;font-weight:600;margin:0 0 12px}
     
         .pack-avoid{margin:12px 0 0;padding-top:12px;border-top:1px dashed #dc4971;font-family:League Spartan,sans-serif;color:#9F032C;line-height:1.5}
+/* date.html */
+    #confirm-modal .countdown {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      padding: 20px 10px;
+      margin: 20px 0;
+    }
+
+    #confirm-modal .countdown .unit {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-width: 0;
+      padding: 14px 4px 12px;
+      border-radius: 12px;
+      background: rgba(220, 73, 113, 0.07);
+    }
+
+    #confirm-modal .countdown .unit b {
+      font-size: clamp(1.3rem, 6vw, 2rem);
+      line-height: 1;
+      margin: 0 0 6px;
+      white-space: nowrap;
+    }
+
+    #confirm-modal .countdown .unit span {
+      font-size: clamp(0.6rem, 2.6vw, 0.8rem);
+      line-height: 1.1;
+      white-space: nowrap;
+      word-break: keep-all;
+      overflow-wrap: normal;
+      letter-spacing: 0.01em;
+    }
+
+    @media (max-width: 380px) {
+      #confirm-modal .countdown {
+        gap: 6px;
+      }
+
+      #confirm-modal .countdown .unit {
+        padding: 10px 2px;
+      }
+    }
+
+    .veto-field {
+      margin-bottom: 18px;
+    }
+
+    .veto-title {
+      font-family: var(--script);
+      font-weight: 400;
+      font-size: clamp(1.5rem, 7vw, 2rem);
+      line-height: 1.1;
+      color: var(--rose);
+      margin: 0 0 4px;
+      text-align: center;
+    }
+
+    .veto-field > .place-desc {
+      display: block;
+      text-align: center;
+      font-size: .8em;
+      font-style: italic;
+      opacity: .75;
+      margin: 0 auto 14px;
+    }
+
+    .veto-options {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .veto-option {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      padding: 13px 16px;
+      border-radius: 14px;
+      background: var(--field);
+      border: 1.5px solid var(--line);
+      cursor: pointer;
+      transition: border-color .25s ease, background .25s ease, box-shadow .25s ease, transform .2s ease;
+    }
+
+    .veto-option:hover {
+      border-color: #e9b9c4;
+      transform: translateY(-1px);
+    }
+
+    .veto-option input {
+      accent-color: var(--rose);
+      width: 17px;
+      height: 17px;
+      flex-shrink: 0;
+      margin-right: 8px !important;
+    }
+
+    .veto-option input:before {
+      font-size: 22px !important;
+    }
+
+    .veto-option span {
+      font-size: .92em;
+      font-weight: 600;
+      color: var(--ink);
+      transition: color .25s ease;
+    }
+
+    .veto-option:has(input:checked) {
+      border-color: var(--rose);
+      background: linear-gradient(135deg, var(--rose-soft) 0%, #fff 120%);
+      box-shadow: 0 8px 20px #9f032c1c;
+      transform: translateY(-1px);
+    }
+
+    .veto-option:has(input:checked) span {
+      color: var(--rose-dark);
+    }
+
+    .veto-option:has(input:focus-visible) {
+      outline: 2px solid var(--rose);
+      outline-offset: 2px;
+    }
+
+    .driver-field {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 16px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: var(--field);
+      border: 1.5px solid var(--line);
+      transition: border-color .25s ease, background .25s ease;
+    }
+
+    .driver-field:has(input:checked) {
+      border-color: var(--rose);
+      background: var(--rose-soft);
+    }
+
+    .driver-field input {
+      accent-color: var(--rose);
+      width: 17px;
+      height: 17px;
+      flex-shrink: 0;
+    }
+
+    .driver-field label {
+      font-size: .9em;
+      font-weight: 600;
+      color: var(--ink);
+      cursor: pointer;
+    }
+
+    .form-error {
+      display: none;
+      margin: 10px 0 0;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: #fdecef;
+      border: 1.5px solid #f3b8c4;
+      color: var(--rose-dark);
+      font-size: .85em;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .form-error.show {
+      display: block;
+    }
+
+    #rsvp[disabled] {
+      opacity: .6;
+      cursor: not-allowed;
+    }

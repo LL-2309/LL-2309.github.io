@@ -9,166 +9,6 @@
   <link rel="icon" href="assets/icon.svg">
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <link rel="stylesheet" href="style.css">
-  <style>
-    #confirm-modal .countdown {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 10px;
-      padding: 20px 10px;
-      margin: 20px 0;
-    }
-
-    #confirm-modal .countdown .unit {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-width: 0;
-      padding: 14px 4px 12px;
-      border-radius: 12px;
-      background: rgba(220, 73, 113, 0.07);
-    }
-
-    #confirm-modal .countdown .unit b {
-      font-size: clamp(1.3rem, 6vw, 2rem);
-      line-height: 1;
-      margin: 0 0 6px;
-      white-space: nowrap;
-    }
-
-    #confirm-modal .countdown .unit span {
-      font-size: clamp(0.6rem, 2.6vw, 0.8rem);
-      line-height: 1.1;
-      white-space: nowrap;
-      word-break: keep-all;
-      overflow-wrap: normal;
-      letter-spacing: 0.01em;
-    }
-
-    @media (max-width: 380px) {
-      #confirm-modal .countdown {
-        gap: 6px;
-      }
-
-      #confirm-modal .countdown .unit {
-        padding: 10px 2px;
-      }
-    }
-
-    .veto-field {
-      margin-bottom: 18px;
-    }
-
-    .veto-title {
-      font-family: var(--script);
-      font-weight: 400;
-      font-size: clamp(1.5rem, 7vw, 2rem);
-      line-height: 1.1;
-      color: var(--rose);
-      margin: 0 0 4px;
-      text-align: center;
-    }
-
-    .veto-field > .place-desc {
-      display: block;
-      text-align: center;
-      font-size: .8em;
-      font-style: italic;
-      opacity: .75;
-      margin: 0 auto 14px;
-    }
-
-    .veto-options {
-      display: flex;
-      flex-direction: column;
-      gap: 9px;
-    }
-
-    .veto-option {
-      position: relative;
-      display: flex;
-      align-items: center;
-      gap: 2px;
-      padding: 13px 16px;
-      border-radius: 14px;
-      background: var(--field);
-      border: 1.5px solid var(--line);
-      cursor: pointer;
-      transition: border-color .25s ease, background .25s ease, box-shadow .25s ease, transform .2s ease;
-    }
-
-    .veto-option:hover {
-      border-color: #e9b9c4;
-      transform: translateY(-1px);
-    }
-
-    .veto-option input {
-      accent-color: var(--rose);
-      width: 17px;
-      height: 17px;
-      flex-shrink: 0;
-      margin-right: 8px !important;
-    }
-
-    .veto-option input:before {
-      font-size: 22px !important;
-    }
-
-    .veto-option span {
-      font-size: .92em;
-      font-weight: 600;
-      color: var(--ink);
-      transition: color .25s ease;
-    }
-
-    .veto-option:has(input:checked) {
-      border-color: var(--rose);
-      background: linear-gradient(135deg, var(--rose-soft) 0%, #fff 120%);
-      box-shadow: 0 8px 20px #9f032c1c;
-      transform: translateY(-1px);
-    }
-
-    .veto-option:has(input:checked) span {
-      color: var(--rose-dark);
-    }
-
-    .veto-option:has(input:focus-visible) {
-      outline: 2px solid var(--rose);
-      outline-offset: 2px;
-    }
-
-    .driver-field {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-top: 16px;
-      padding: 12px 14px;
-      border-radius: 12px;
-      background: var(--field);
-      border: 1.5px solid var(--line);
-      transition: border-color .25s ease, background .25s ease;
-    }
-
-    .driver-field:has(input:checked) {
-      border-color: var(--rose);
-      background: var(--rose-soft);
-    }
-
-    .driver-field input {
-      accent-color: var(--rose);
-      width: 17px;
-      height: 17px;
-      flex-shrink: 0;
-    }
-
-    .driver-field label {
-      font-size: .9em;
-      font-weight: 600;
-      color: var(--ink);
-      cursor: pointer;
-    }
-  </style>
-
 </head>
 
 <body>
@@ -205,8 +45,8 @@
         <div class="ornament" aria-hidden="true">&#10022;</div>
 
         <div class="tip">
-          <h2 class="tip-title">Conseil de couple :</h2>
-          <p class="tip-text">laisse tes talons à la maison, ou prends une seconde paire plus confortable. 😉</p>
+          <h2 class="tip-title">Conseil pour une copine :</h2>
+          <p class="tip-text">Viens comme tu es : parfaite ! <br>Et non, on n'ira pas à McDo mdrr </p>
         </div>
 
         <div class="ornament" aria-hidden="true">&#10022;</div>
@@ -217,16 +57,12 @@
             <span class="place-desc">Uniquement si tu es dispo pour midi...</span>
             <div class="veto-options" role="radiogroup" aria-label="Choix de l'activité">
               <label class="veto-option">
-                <input type="radio" name="veto" id="veto-1" value="Resto : simple, basique, efficace" checked>
+                <input type="radio" name="veto" id="veto-1" value="Resto" checked>
                 <span>🍽️ Resto : simple, basique, efficace</span>
               </label>
               <label class="veto-option">
-                <input type="radio" name="veto" id="veto-2" value="On cuisine ensemble (au pire, on commandera McDo...)">
-                <span>👩‍🍳 On cuisine ensemble, au pire on commandera McDo...</span>
-              </label>
-              <label class="veto-option">
-                <input type="radio" name="veto" id="veto-3" value="On mange chacun de son côté">
-                <span>👀 On mange chacun de son côté</span>
+                <input type="radio" name="veto" id="veto-2" value="On cuisine ensemble">
+                <span>👩‍🍳 On cuisine ensemble, au pire on commande...</span>
               </label>
             </div>
           </div>
@@ -239,9 +75,10 @@
               <input type="time" id="start-time" value="12:30" min="12:30" max="23:00">
             </label>
             <label>Jusqu'à
-              <input type="time" id="end-time" value="20:00" min="12:30" max="23:00">
+              <input type="time" id="end-time" value="23:00" min="12:30" max="23:00">
             </label>
           </div>
+          <p class="form-error" id="form-error" role="alert"></p>
 
           <div class="msg-field">
             <label for="message">Un petit mot pour moi ?</label>
@@ -357,16 +194,19 @@
         Object.keys(data).forEach(function (key) {
           fd.append(key, data[key]);
         });
-        fetch(FORMSPREE_ENDPOINT, {
+        return fetch(FORMSPREE_ENDPOINT, {
           method: 'POST',
           headers: {
             'Accept': 'application/json'
           },
           body: fd
-        }).catch(function () {});
+        }).then(function (res) {
+          if (!res.ok) throw new Error('Formspree error ' + res.status);
+          return res;
+        });
       }
 
-      const MIN_TIME = '12:00';
+      const MIN_TIME = '12:30';
       const MAX_TIME = '23:00';
 
       function clampTime(value, fallback) {
@@ -376,13 +216,36 @@
         return v;
       }
 
-      document.getElementById('rsvp').addEventListener('click', function () {
-        const start = clampTime(document.getElementById('start-time').value, '12:00');
-        const end = clampTime(document.getElementById('end-time').value, '20:00');
+      const errorBox = document.getElementById('form-error');
+
+      function showFormError(msg) {
+        errorBox.textContent = msg;
+        errorBox.classList.add('show');
+      }
+
+      function hideFormError() {
+        errorBox.classList.remove('show');
+      }
+
+      const rsvpBtn = document.getElementById('rsvp');
+
+      rsvpBtn.addEventListener('click', function () {
+        hideFormError();
+
+        const start = clampTime(document.getElementById('start-time').value, '12:30');
+        const end = clampTime(document.getElementById('end-time').value, '23:00');
+
+        if (end <= start) {
+          showFormError('Ton heure de fin doit être après ton heure de début 😅');
+          return;
+        }
+
         const msg = document.getElementById('message').value.trim();
         const vetoInput = document.querySelector('input[name="veto"]:checked');
         const veto = vetoInput ? vetoInput.value : '';
         const driver = document.getElementById('driver-check').checked ? 'Oui' : 'Non';
+
+        rsvpBtn.disabled = true;
 
         sendToFormspree({
           reponse: 'Oui',
@@ -391,39 +254,42 @@
           choix_activite: veto,
           chauffeuse: driver,
           message: msg
-        });
+        }).then(function () {
+          document.getElementById('rsvp-form').style.display = 'none';
+          const c = document.getElementById('confirmed');
+          c.textContent = 'C\'est noté : disponible de ' + start + ' à ' + end + ', à mercredi !';
+          document.getElementById('modal-overlay').classList.add('show');
+          try {
+            confetti({
+              particleCount: 120,
+              spread: 100,
+              origin: {
+                y: .7
+              },
+              colors: ['#dc4971', '#ffb3c6', '#FFD700', '#fff']
+            });
+          } catch (e) {}
 
-        document.getElementById('rsvp-form').style.display = 'none';
-        const c = document.getElementById('confirmed');
-        c.textContent = 'C\'est noté : disponible de ' + start + ' à ' + end + ', à mercredi !';
-        document.getElementById('modal-overlay').classList.add('show');
-        try {
-          confetti({
-            particleCount: 120,
-            spread: 100,
-            origin: {
-              y: .7
-            },
-            colors: ['#dc4971', '#ffb3c6', '#FFD700', '#fff']
+          const dateStr = '20260930';
+          const s = start.replace(':', '') + '00';
+          const e = end.replace(':', '') + '00';
+          let details = 'Au point on en est, on va se créer un calendrier commun pour tous nos dates 😘';
+          if (veto) details += ' Choix : ' + veto + '.';
+          if (msg) details += ' Message : ' + msg;
+          const params = new URLSearchParams({
+            action: 'TEMPLATE',
+            text: 'Notre 5e date',
+            dates: dateStr + 'T' + s + '/' + dateStr + 'T' + e,
+            details: details,
+            add: REQUIRED_GUEST
           });
-        } catch (e) {}
-
-        const dateStr = '20260930';
-        const s = start.replace(':', '') + '00';
-        const e = end.replace(':', '') + '00';
-        let details = 'Au point on en est, on va se créer un calendrier commun pour tous nos dates 😘';
-        if (veto) details += ' Choix : ' + veto + '.';
-        if (msg) details += ' Message : ' + msg;
-        const params = new URLSearchParams({
-          action: 'TEMPLATE',
-          text: 'Notre 5e date',
-          dates: dateStr + 'T' + s + '/' + dateStr + 'T' + e,
-          details: details,
-          add: REQUIRED_GUEST
+          const calBtn = document.getElementById('cal-btn');
+          calBtn.href = 'https://calendar.google.com/calendar/render?' + params.toString();
+          calBtn.style.display = 'flex';
+        }).catch(function () {
+          rsvpBtn.disabled = false;
+          showFormError('Oups, l\'envoi n\'a pas fonctionné... tu peux réessayer ?');
         });
-        const calBtn = document.getElementById('cal-btn');
-        calBtn.href = 'https://calendar.google.com/calendar/render?' + params.toString();
-        calBtn.style.display = 'flex';
       });
 
       const modalOverlay = document.getElementById('modal-overlay');
