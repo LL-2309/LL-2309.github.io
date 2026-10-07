@@ -9,7 +9,7 @@
   <link rel="icon" href="assets/icon.svg">
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <link rel="stylesheet" href="style.css">
-<style>
+  <style>
     #apply-overlay {
       position: fixed;
       inset: 0;
@@ -20,11 +20,11 @@
       padding: 20px;
       z-index: 1000;
     }
- 
+
     #apply-overlay.show {
       display: flex;
     }
- 
+
     #apply-modal {
       position: relative;
       background: #fff;
@@ -36,19 +36,19 @@
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
       animation: apply-modal-in .35s ease;
     }
- 
+
     @keyframes apply-modal-in {
       from {
         opacity: 0;
         transform: translateY(16px) scale(.97);
       }
- 
+
       to {
         opacity: 1;
         transform: translateY(0) scale(1);
       }
     }
- 
+
     #apply-modal .modal-close {
       position: absolute;
       top: 14px;
@@ -63,7 +63,7 @@
       line-height: 1;
       cursor: pointer;
     }
- 
+
     #apply-modal .apply-icon {
       width: 56px !important;
       height: 56px !important;
@@ -71,7 +71,7 @@
       overflow: hidden;
       border-radius: 12px;
     }
- 
+
     #apply-modal .apply-icon img {
       display: block;
       width: 100% !important;
@@ -79,20 +79,20 @@
       max-width: 100% !important;
       object-fit: contain;
     }
- 
+
     #apply-modal h2 {
       color: #dc4971;
       font-size: 1.4rem;
       margin: 0 0 12px;
     }
- 
+
     #apply-modal p {
       color: #6b4553;
       font-size: 1rem;
       line-height: 1.5;
       margin: 0 0 24px;
     }
- 
+
     #apply-modal .btn-continue {
       display: inline-block;
       background: #dc4971;
@@ -122,7 +122,8 @@
 
       <div class="offer-body">
         <div class="offer-meta">
-          <div><span class="meta-icon" aria-hidden="true">📄</span><span><b>Type de contrat</b>CDI non négociable</span></div>
+          <div><span class="meta-icon" aria-hidden="true">📄</span><span><b>Type de contrat</b>CDI non négociable</span>
+          </div>
           <div><span class="meta-icon" aria-hidden="true">📍</span><span><b>Lieu</b>Dans mon cœur</span></div>
           <div><span class="meta-icon" aria-hidden="true">🗓️</span><span><b>Prise de poste</b>Immédiate !</span></div>
           <div><span class="meta-icon" aria-hidden="true">⏳</span><span><b>Durée</b>Ad vitam æternam</span></div>
@@ -134,8 +135,10 @@
             <li>M'accompagner aux soirées 80's / 90's / 2000's <br><em>et surtout danser !</em></li>
             <li>Me rappeler à quel point je suis incroyable, sans jamais s'en lasser</li>
             <li>Hacker mon agenda pour planifier des dates.</li>
-            <li>Partager les meilleures pizzas chèvres-miel ! <br><em>Tu es obligé de goûter avant de refuser !!!</em></li>
+            <li>Partager les meilleures pizzas chèvres-miel ! <br><em>Tu es obligé de goûter avant de refuser !!!</em>
+            </li>
             <li>Gagner à Mario Kart <em>à la loyale...</em></li>
+            <li>Gagner au Bowling <em>(enfin, si tu y arrives...)</em></li>
             <li>Survivre à mes explications sur l'UX ou la F1.</li>
             <li>Accepter de ne pas choisir le film.</li>
           </ul>
@@ -148,7 +151,6 @@
             <li>Sens de l'humour indispensable</li>
             <li>Résistance olympique pour endurer mes explications sur la F1, les dimanches de course.</li>
             <li>Motivée par les câlins et les fous rires</li>
-            <li>Compétences en piratage informatique pour infiltrer mon agenda et imposer tes propres dates.</li>
             <li>Aucune expérience requise <em>vu Mario en même temps..</em></li>
           </ul>
         </div>
@@ -156,12 +158,12 @@
         <div class="offer-section">
           <h2><span class="h-icon" aria-hidden="true">🎁</span>Avantages</h2>
           <ul>
-            <li>Câlins illimités, sans période d'essai</li>
+            <li>Bisous illimités</li>
+            <li>Papouilles et câlins compris</li>
             <li>Tickets restaurant convertis en dîners en tête-à-tête</li>
-            <li>RTT romantiques, posables quand on veut <br><em>surtout quand tu peux</em></li>
-            <li>Droit de veto exclusif : applicable une fois par mois sur le film du dimanche soir.</li>
+            <li>RTT romantiques, posables quand on veut <br><em>surtout quand on peut</em></li>
+            <li>Droit de veto exclusif : applicable une fois par mois sur le choix du film.</li>
             <li>Voyage d'intégration illimité, destination à choisir..</li>
-            <li>Dégustation de pizza chèvre-miel inscrite au contrat avec ton obligation formelle de goûter.</li>
             <li>Mutuelle de couple couverture à 100%</li>
           </ul>
         </div>
@@ -169,7 +171,8 @@
         <div class="offer-section">
           <h2><span class="h-icon" aria-hidden="true">💬</span>Le mot du RH</h2>
           <div class="offer-quote">
-            <p>Objectivement le meilleur poste que j'ai jamais proposé. Plus besoin de la période d'essai, je suis sur de mon choix !</p>
+            <p>Objectivement le meilleur poste que j'ai jamais proposé. Plus besoin de la période d'essai, je suis sur
+              de mon choix !</p>
             <cite>— Le cœur recrute uniquement LA meilleure</cite>
           </div>
         </div>
@@ -188,7 +191,7 @@
         </div>
 
         <div class="offer-signature">
-          <span class="offer-company">Clark Kent</span>
+          <span class="offer-company">Yoshi</span>
           <span class="offer-dept">Directeur des Ressources Sentimentales</span>
         </div>
       </div>
