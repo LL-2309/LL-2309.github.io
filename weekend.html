@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="robots" content="noindex, nofollow, noarchive">
+    <title>Notre Weekend à Deux</title>
+    <link rel="icon" href="assets/icon.svg">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        #menuForm { display: block; }
+        .option-locked { cursor: default; }
+        .option-locked:hover { transform: none; }
+        #sec-heure .time-range { margin-top: 0; }
+        #sec-heure .time-range label { font-size: 1em; }
+        .big-days { display: flex; align-items: flex-end; justify-content: center; gap: clamp(10px, 4vw, 28px); margin-top: 8px; text-align: center; }
+        .big-days .big-day { margin: 0; }
+        .big-days .day-num { font-size: clamp(3.4rem, 18vw, 6rem); }
+        .day-plus { font-family: var(--script); font-size: clamp(2rem, 9vw, 3rem); line-height: 1; color: var(--rose); padding-bottom: clamp(.6rem, 3vw, 1.2rem); }
+        .date-ornament { margin: 22px 0 26px; }
+    </style>
+</head>
+
+<body>
+    <div id="mainContent">
+        <div class="container">
+            <h1>Notre Weekend à Deux</h1>
+            <div class="big-days">
+                <div class="big-day">
+                    <span class="day-name">Samedi</span>
+                    <span class="day-num">17</span>
+                </div>
+                <span class="day-plus" aria-hidden="true">&</span>
+                <div class="big-day">
+                    <span class="day-name">Dimanche</span>
+                    <span class="day-num">18</span>
+                </div>
+            </div>
+            <div class="ornament date-ornament" aria-hidden="true">&#10022;</div>
+            <form id="menuForm" action="https://formspree.io/f/xykbyqbl" method="POST" novalidate>
+                <input type="hidden" name="date_weekend" value="Samedi 17 et dimanche 18">
+                <input type="hidden" name="formulaire" value="Weekend à deux (samedi 17 + dimanche 18)">
+
+                <!-- 1. Heure de début -->
+                <div class="category" id="sec-heure">
+                    <div class="category-title"><span>À quelle heure commence-t-on ?</span><span class="note">PAS AVANT 12H : les princes charmants ont besoin de sommeil</span></div>
+                    <div class="time-range">
+                        <label>Rendez-vous à
+                            <input type="time" id="start-time" name="heure_debut" min="12:00" max="23:00" required>
+                        </label>
+                    </div>
+                    <p class="form-error" id="form-error" role="alert"></p>
+                </div>
+
+                <!-- 1b. Seulement si on commence à 12h -->
+                <div class="category" id="sec-repas" style="display: none;">
+                    <div class="category-title"><span>Déjeuner en amoureux</span><span class="note">AU CHOIX</span></div>
+                    <label class="option"><input type="radio" name="repas" value="Resto" required>RESTO<span class="desc">on s'installe, on se regarde dans les yeux, et on se fait servir</span></label>
+                    <label class="option"><input type="radio" name="repas" value="Cuisto personnel">CUISTO PERSONNEL<span class="desc">un chef rien que pour toi, payé en bisous (c'est moi)</span></label>
+                    <label class="option"><input type="radio" name="repas" value="On cuisine à 2">ON CUISINE À 2<span class="desc">tabliers, musique et fous rires : on met les mains à la pâte ensemble</span></label>
+                </div>
+
+                <!-- 1c. Seulement si cuisto personnel -->
+                <div class="category" id="sec-menu" style="display: none;">
+                    <div class="category-title"><span>A la carte</span><span class="note">3 CHOIX, TOUS PARFAITS</span></div>
+                    <label class="option"><input type="radio" name="menu_cuisto" value="Croques">LES MEILLEURS CROQUES DU MONDE<span class="desc">100% objectif, bien évidemment</span></label>
+                    <label class="option"><input type="radio" name="menu_cuisto" value="Pâtes Carbonara">PÂTES CARBONARA<span class="desc">la vraie recette, avec des œufs et du lard, et zéro crème (les Italiens approuvent)</span></label>
+                    <label class="option"><input type="radio" name="menu_cuisto" value="Pizza chèvre miel" required>PIZZA CHÈVRE MIEL<span class="desc">comme je sais que tu en raffoles...</span></label>
+                </div>
+
+                <!-- 2. Outfits -->
+                <div class="category" id="sec-tenue" style="display: none;">
+                    <div class="category-title"><span>Outfit du jour</span><span class="note">AU CHOIX</span></div>
+                    <label class="option"><input type="radio" name="outfit" value="31" required>ON SE MET SUR NOTRE 31<span class="desc">tu seras sublime, moi j'essaierai de suivre</span></label>
+                    <label class="option"><input type="radio" name="outfit" value="Relax">RELAX, C'EST WEEKEND<span class="desc">confort avant tout : tu es resplendissante même en jogging</span></label>
+                </div>
+
+                <!-- 3. Activité à Poitiers -->
+                <div class="category" id="sec-activite" style="display: none;">
+                    <div class="category-title"><span>Activité à Deux</span><span class="note" id="activite-note">AU CHOIX</span></div>
+                    <label class="option"><input type="radio" name="activite" value="Parc de Blossac">BALADE AU PARC DE BLOSSAC<span class="desc">on commence à y avoir l'habitude mdrr</span></label>
+                    <label class="option"><input type="radio" name="activite" value="Terrasse place Charles-de-Gaulle">PAUSE EN TERRASSE<span class="desc">un chocolat chaud (ou un verre), et mes beaux yeux bleus rien que pour toi</span></label>
+                    <label class="option"><input type="radio" name="activite" value="Bowling">FLÉCHETTE<span class="desc">tu veux prendre ta revanche peut-être ? (lot de consolation déjà prévu)</span></label>
+                    <label class="option"><input type="radio" name="activite" value="Laser game">BILLARD<span class="desc">cette fois-ci je t'écrase  : amoureux oui, mais sans pitié</span></label>
+                    <label class="option"><input type="radio" name="activite" value="Surprise">SURPRISE<span class="desc">choisis pour moi et fais-moi rêver !!</span></label>
+                </div>
+
+                <!-- 4. Soir -->
+                <div class="category" id="sec-soir" style="display: none;">
+                    <div class="category-title"><span>Et au soir ?</span><span class="note">AU CHOIX</span></div>
+                    <label class="option"><input type="radio" name="soir" value="Reste" required>JE RESTE LE SOIR<span class="desc">l'essence coute trop cher pour faire un aller-retour et on a des Harry Potter à regarder !</span></label>
+                    <label class="option"><input type="radio" name="soir" value="Rentre">JE RENTRE CHEZ MOI<span class="desc">à mon grand regret, je renonce aux papouilles pendant Harry Potter...</span></label>
+                </div>
+
+                <!-- 4b. Seulement si elle reste -->
+                <div class="category" id="sec-harry" style="display: none;">
+                    <div class="category-title"><span>Soirée à Deux</span><span class="note">LA DICTATRICE VA ME L'IMPOSER, DONC....</span></div>
+                    <label class="option option-locked"><input type="checkbox" name="soiree" value="Harry Potter" checked required onclick="return false">ON REGARDE HARRY POTTER<span class="desc">M&Ms, PopCorn, d'autres réclamations Madame ?</span></label>
+                    <label class="option option-locked"><input type="checkbox" name="soiree" value="Discussion de 10 min" checked required onclick="return false">ON PAPOTE UN PETIT PEU<span class="desc">On commence une discussion de 10min qui finit à 2h du mat</span></label>
+                </div>
+
+                <!-- 5. Dimanche (dans tous les cas) -->
+                <div class="category" id="sec-pdj" style="display: none;">
+                    <div class="category-title"><span>P'tit déj du dimanche</span><span class="note">AU CHOIX</span></div>
+                    <label class="option"><input type="radio" name="ptitdej" value="Viennoiseries" required>CROISSANTS, PAINS AU CHOCOLAT<span class="desc">de la boulangerie : mes talents ont des limites...</span></label>
+                    <label class="option"><input type="radio" name="ptitdej" value="Crêpes">CRÊPES<span class="desc">faites maison, avec amour et un peu de farine</span></label>
+                    <label class="option"><input type="radio" name="ptitdej" value="Pancakes">PANCAKES<span class="desc">juste des crêpes un peu épaisses (ou ratées)</span></label>
+                    <label class="option"><input type="radio" name="ptitdej" value="Autre">AUTRE<span class="desc">une envie précise ? écris ta propre proposition</span><textarea class="other-textarea" id="ptitdej-autre" name="ptitdej_autre" rows="2" maxlength="300" placeholder="Ton p'tit déj idéal..."></textarea></label>
+                </div>
+
+                <div class="category" id="sec-act-dim" style="display: none;">
+                    <div class="category-title"><span>Activité du dimanche matin</span><span class="note">AU CHOIX</span></div>
+                    <label class="option"><input type="radio" name="activite_dimanche" value="Grasse matinée" required>GRASSE MATINÉE<span class="desc">câlins, papouilles, zéro productivité et Harry Potter (encore) : le programme parfait</span></label>
+                    <label class="option"><input type="radio" name="activite_dimanche" value="Balade le long du Clain">BALADE LE LONG DU CLAIN<span class="desc">de l'air frais et un paysage pas exceptionnel, mais avec toi tout devient magnifique</span></label>
+                    <label class="option"><input type="radio" name="activite_dimanche" value="Visite de la ville">VISITE DE LA VILLE<span class="desc">obligé de te faire découvrir les meilleurs coins de la ville..</span></label>
+                    <label class="option"><input type="radio" name="activite_dimanche" value="Running">RUNNING MATINAL<span class="desc">pas un bon cardio ? pas grave, on ira à ton rythme ! [affaire obligatoire]</span></label>
+                    <label class="option"><input type="radio" name="activite_dimanche" value="Surprise">DIMANCHE SANS PRISE DE TÊTE<span class="desc">cerveau en mode économie d'énergie : décide, c'est toi la vraie boss</span></label>
+                </div>
+
+                <div class="category" id="sec-dej-dim" style="display: none;">
+                    <div class="category-title"><span>Déjeuner du dimanche</span><span class="note">AU CHOIX</span></div>
+                    <label class="option"><input type="radio" name="dejeuner_dimanche" value="Brunch maison" required>BRUNCH MAISON<span class="desc">on ne se lève pas de table, on prend notre temps</span></label>
+                    <label class="option"><input type="radio" name="dejeuner_dimanche" value="Pique-nique">PIQUE-NIQUE<span class="desc">si la météo est de la partie (sinon, on le fait sur le tapis..)</span></label>
+                </div>
+
+                <div class="category" id="sec-aprem" style="display: none;">
+                    <div class="category-title"><span>Activité du dimanche après-midi</span><span class="note">LE DERNIER ROUND AVANT LES AU REVOIR</span></div>
+                    <label class="option"><input type="radio" name="activite_aprem" value="Sieste câline" required>SIESTE CÂLINE<span class="desc">oui, on peut appeler ça une activité</span></label>
+                    <label class="option"><input type="radio" name="activite_aprem" value="Film sous le plaid">FILM SOUS LE PLAID<span class="desc">choisi par toi, avec thé, plaid et ma tête sur tes genoux</span></label>
+                    <label class="option"><input type="radio" name="activite_aprem" value="Jeux de société">JEUX DE SOCIÉTÉ<span class="desc">le perdant offre un massage (le gagnant aussi, soyons honnêtes)</span></label>
+                    <label class="option"><input type="radio" name="activite_aprem" value="Futuroscope">FUTUROSCOPE<span class="desc">juste à côté de Poitiers : attractions, spectacles et frissons (une bonne excuse pour se serrer)</span></label>
+                    <label class="option"><input type="radio" name="activite_aprem" value="Aquascope">AQUASCOPE<span class="desc">toboggans, vagues et lumières dans un parc aquatique couvert (prévois le maillot, et des bisous mouillés)</span></label>
+                    <label class="option"><input type="radio" name="activite_aprem" value="Goûter maison">GOÛTER MAISON<span class="desc">un gâteau à deux, avec de la farine partout (encore)</span></label>
+                    <label class="option"><input type="radio" name="activite_aprem" value="Surprise">SURPRISE<span class="desc">laisse-moi t'emmener où je veux, tu ne seras pas déçue</span></label>
+                </div>
+
+                <div id="sec-final" style="display: none;">
+                    <div id="recap-container" class="recap-card">
+                        <h3>Ton Programme Idéal :</h3>
+                        <ul id="recap-list" class="recap-list"></ul>
+                    </div>
+                    <button type="submit" class="btn-submit" id="submitBtn">Valider notre weekend 💖</button>
+                </div>
+            </form>
+
+            <div id="result">
+                <h2>C'est noté, Peach !</h2>
+                <p>Tes choix sont bien arrivés. Il ne reste plus qu'à compter les jours (et à préparer les bisous).</p>
+                <div id="result-recap"></div>
+            </div>
+            <div id="error">
+                <p>Oups ! Il y a eu un petit problème technique lors de l'envoi. Réessaie ou dis-le-moi directement par message !</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById("menuForm");
+        const startInput = document.getElementById("start-time");
+        const timeError = document.getElementById("form-error");
+        const MIN_TIME = "12:00";
+        const $ = id => document.getElementById(id);
+        const val = name => { const c = form.querySelector('input[name="' + name + '"]:checked'); return c ? c.value : ""; };
+
+        function setSection(id, show) {
+            const el = $(id);
+            el.style.display = show ? "block" : "none";
+            el.querySelectorAll("input").forEach(i => {
+                i.disabled = !show;
+                if (!show) i.checked = false;
+            });
+        }
+
+        function refresh() {
+            const start = startInput.value;
+            const timeOk = start !== "" && start >= MIN_TIME;
+            const tooEarly = start !== "" && start < MIN_TIME;
+            timeError.textContent = tooEarly ? "Pas avant 12h, Peach : les princes charmants ont besoin de sommeil 😴" : "";
+            timeError.classList.toggle("show", tooEarly);
+
+            const needLunch = timeOk && start < "13:00";
+            setSection("sec-repas", needLunch);
+
+            const needMenu = needLunch && (val("repas") === "Cuisto personnel" || val("repas") === "On cuisine à 2");
+            setSection("sec-menu", needMenu);
+
+            const lunchDone = !needLunch || (val("repas") !== "" && (!needMenu || val("menu_cuisto") !== ""));
+            const showTenue = timeOk && lunchDone;
+            setSection("sec-tenue", showTenue);
+
+            const showActivite = showTenue && val("outfit") !== "";
+            setSection("sec-activite", showActivite);
+            const dressed = val("outfit") === "31";
+            $("activite-note").textContent = dressed ? "TENUE OBLIGE : NI SALISSANT, NI SPORTIF" : "AU CHOIX";
+            document.querySelectorAll('#sec-activite .option').forEach(opt => {
+                const filtered = dressed && (opt.dataset.messy || opt.dataset.sporty);
+                const input = opt.querySelector("input");
+                opt.style.display = filtered ? "none" : "";
+                if (filtered) { input.checked = false; input.disabled = true; }
+                else input.disabled = !showActivite;
+            });
+
+            const showSoir = showActivite && val("activite") !== "";
+            setSection("sec-soir", showSoir);
+            const stays = showSoir && val("soir") === "Reste";
+            setSection("sec-harry", stays);
+            if (stays) $("sec-harry").querySelectorAll("input").forEach(i => i.checked = true);
+
+            const soirChoisi = showSoir && val("soir") !== "";
+            setSection("sec-pdj", stays);
+            const pdjAutre = $("ptitdej-autre");
+            const pdjIsOther = stays && val("ptitdej") === "Autre";
+            pdjAutre.style.display = pdjIsOther ? "block" : "none";
+            pdjAutre.required = pdjIsOther;
+            pdjAutre.disabled = !pdjIsOther;
+            const pdjOk = val("ptitdej") !== "" && (!pdjIsOther || pdjAutre.value.trim() !== "");
+            const showActDim = stays && pdjOk;
+            setSection("sec-act-dim", showActDim);
+            const matinFait = !stays || val("activite_dimanche") !== "";
+            const showDejDim = soirChoisi && matinFait;
+            setSection("sec-dej-dim", showDejDim);
+            const showAprem = showDejDim && val("dejeuner_dimanche") !== "";
+            setSection("sec-aprem", showAprem);
+
+            const showFinal = showAprem && val("activite_aprem") !== "";
+            $("sec-final").style.display = showFinal ? "block" : "none";
+            $("sec-final").querySelectorAll("button").forEach(b => b.disabled = !showFinal);
+            updateRecap(showFinal);
+        }
+
+        const FORMSPREE_URL = "https://formspree.io/f/xykbyqbl";
+
+        function buildPayload() {
+            const fd = new FormData(form);
+            const lines = [];
+            document.querySelectorAll("#recap-list li").forEach(li => {
+                if (li.classList.contains("tl-day")) lines.push("", "== " + li.textContent.trim() + " ==");
+                else lines.push(li.querySelector(".recap-label").textContent.trim() + " : " + li.querySelector(".recap-value").textContent.trim());
+            });
+            fd.append("recapitulatif", lines.join("\n").trim());
+            return fd;
+        }
+
+        function updateRecap(show) {
+            const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            const tenue = { "31": "On se met sur notre 31", Relax: "Relax, c'est weekend" };
+            const soir = { Reste: "Je reste ce soir", Rentre: "Je rentre chez moi" };
+            const days = [
+                { day: "Notre weekend", rows: [["📅 Date", "Samedi 17 et dimanche 18"]] },
+                {
+                    day: "Samedi", rows: [
+                        ["🕛 Début", startInput.value && startInput.value.replace(":", "h")],
+                        ["🍽️ Déjeuner", val("repas")],
+                        ["👨‍🍳 Plat du chef", val("menu_cuisto")],
+                        ["👗 Outfit", tenue[val("outfit")]],
+                        ["✨ Activité", val("activite")],
+                        ["🌙 Ce soir", soir[val("soir")]],
+                        ["🎬 Soirée", [...form.querySelectorAll('input[name="soiree"]:checked')].map(i => i.value).join(" + ")]
+                    ]
+                },
+                {
+                    day: "Dimanche", rows: [
+                        ["🥐 P'tit déj", val("ptitdej") === "Autre" ? ($("ptitdej-autre").value.trim() && "Autre : " + $("ptitdej-autre").value.trim()) : val("ptitdej")],
+                        ["☀️ Matinée", val("activite_dimanche")],
+                        ["🍴 Déjeuner", val("dejeuner_dimanche")],
+                        ["🎈 Après-midi", val("activite_aprem")]
+                    ]
+                }
+            ];
+            let html = "";
+            if (show) days.forEach(d => {
+                const rows = d.rows.filter(r => r[1]);
+                if (!rows.length) return;
+                html += '<li class="tl-day"><span>' + d.day + "</span></li>";
+                rows.forEach(r => {
+                    html += '<li class="tl-item"><span class="tl-dot" aria-hidden="true"></span><strong class="recap-label">' + esc(r[0]) +
+                        '</strong> <span class="recap-value">' + esc(r[1]) + "</span></li>";
+                });
+            });
+            $("recap-list").innerHTML = html;
+        }
+
+        form.addEventListener("change", refresh);
+        form.addEventListener("input", refresh);
+        startInput.addEventListener("blur", () => {
+            if (startInput.value && startInput.value < MIN_TIME) { startInput.value = MIN_TIME; refresh(); }
+        });
+
+        form.addEventListener("submit", e => {
+            e.preventDefault();
+            if (startInput.value && startInput.value < MIN_TIME) { refresh(); return; }
+            if (!form.checkValidity()) { form.reportValidity(); return; }
+            const btn = $("submitBtn");
+            btn.disabled = true;
+            btn.textContent = "Envoi à ton prince charmant...";
+            fetch(FORMSPREE_URL, { method: "POST", body: buildPayload(), headers: { Accept: "application/json" } })
+                .then(r => {
+                    if (!r.ok) throw new Error("Formspree " + r.status);
+                    const recap = $("recap-container").cloneNode(true);
+                    recap.removeAttribute("id");
+                    $("result-recap").innerHTML = "";
+                    $("result-recap").appendChild(recap);
+                    form.style.display = "none";
+                    $("error").style.display = "none";
+                    $("result").style.display = "block";
+                    $("result").scrollIntoView({ behavior: "smooth" });
+                })
+                .catch(() => {
+                    $("error").style.display = "block";
+                    btn.disabled = false;
+                    btn.textContent = "Valider notre weekend 💕";
+                });
+        });
+
+        refresh();
+    </script>
+</body>
+
+</html>
