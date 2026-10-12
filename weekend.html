@@ -19,6 +19,32 @@
         .big-days .day-num { font-size: clamp(3.4rem, 18vw, 6rem); }
         .day-plus { font-family: var(--script); font-size: clamp(2rem, 9vw, 3rem); line-height: 1; color: var(--rose); padding-bottom: clamp(.6rem, 3vw, 1.2rem); }
         .date-ornament { margin: 22px 0 26px; }
+
+        body #mainContent,
+        body #mainContent .container,
+        body #mainContent h1,
+        body #mainContent h2,
+        body #mainContent h3,
+        body #mainContent p,
+        body #mainContent span { cursor: inherit !important; }
+
+        @media (min-width: 601px) {
+            #mainContent { width: 100%; max-width: 430px; }
+            .container { padding: 20px; border-radius: 12px; }
+            .category { margin-bottom: 24px; padding: 16px 14px; }
+            .option { margin: 10px 0; padding: 10px 12px; }
+            .desc { margin-left: 30px; }
+            .other-textarea { width: calc(100% - 30px); margin-left: 30px; }
+            #result { padding: 16px; }
+            #result .btn-submit { width: 100% !important; text-align: center; }
+            .GIANT { font-size: 33px; }
+            .category-title { font-size: 1.65rem; }
+            .recap-card h3 { font-size: 1.95rem; }
+            .big-days { gap: 16px; }
+            .big-days .day-num { font-size: 4.4rem; }
+            .big-days .day-name { font-size: 1.85rem; }
+            .day-plus { font-size: 2.2rem; padding-bottom: .7rem; }
+        }
     </style>
 </head>
 
@@ -26,6 +52,10 @@
     <div id="mainContent">
         <div class="container">
             <h1>Notre Weekend à Deux</h1>
+            <div class="intro" style="min-height: auto;">
+                <p><span class="GIANT">Ma chère Léa,</span><br>ne voulais-tu pas connaître mon meilleur programme pour un weekend à deux ? <br><span class="red">alors rendez-vous ce weekend !!!</span></p>
+                <p><span>En tant que grande didactrice que tu es,</span><br><span class="red">tu as l'honneur d'avoir le dernier mot</span><span class="red">et d'être la star de ce weekend !</span></p>
+            </div>
             <div class="big-days">
                 <div class="big-day">
                     <span class="day-name">Samedi</span>
@@ -42,68 +72,62 @@
                 <input type="hidden" name="date_weekend" value="Samedi 17 et dimanche 18">
                 <input type="hidden" name="formulaire" value="Weekend à deux (samedi 17 + dimanche 18)">
 
-                <!-- 1. Heure de début -->
                 <div class="category" id="sec-heure">
                     <div class="category-title"><span>À quelle heure commence-t-on ?</span><span class="note">PAS AVANT 12H : les princes charmants ont besoin de sommeil</span></div>
                     <div class="time-range">
                         <label>Rendez-vous à
-                            <input type="time" id="start-time" name="heure_debut" min="12:00" max="23:00" required>
+                            <input type="time" id="start-time" name="heure_debut" min="12:00"required>
                         </label>
                     </div>
                     <p class="form-error" id="form-error" role="alert"></p>
                 </div>
 
-                <!-- 1b. Seulement si on commence à 12h -->
                 <div class="category" id="sec-repas" style="display: none;">
                     <div class="category-title"><span>Déjeuner en amoureux</span><span class="note">AU CHOIX</span></div>
                     <label class="option"><input type="radio" name="repas" value="Resto" required>RESTO<span class="desc">on s'installe, on se regarde dans les yeux, et on se fait servir</span></label>
-                    <label class="option"><input type="radio" name="repas" value="Cuisto personnel">CUISTO PERSONNEL<span class="desc">un chef rien que pour toi, payé en bisous (c'est moi)</span></label>
+                    <label class="option"><input type="radio" name="repas" value="Cuisto personnel">CUISTO PERSONNEL<span class="desc">je fais Linguini, tu fais Rémy ?</span></label>
                     <label class="option"><input type="radio" name="repas" value="On cuisine à 2">ON CUISINE À 2<span class="desc">tabliers, musique et fous rires : on met les mains à la pâte ensemble</span></label>
                 </div>
 
-                <!-- 1c. Seulement si cuisto personnel -->
                 <div class="category" id="sec-menu" style="display: none;">
                     <div class="category-title"><span>A la carte</span><span class="note">3 CHOIX, TOUS PARFAITS</span></div>
                     <label class="option"><input type="radio" name="menu_cuisto" value="Croques">LES MEILLEURS CROQUES DU MONDE<span class="desc">100% objectif, bien évidemment</span></label>
-                    <label class="option"><input type="radio" name="menu_cuisto" value="Pâtes Carbonara">PÂTES CARBONARA<span class="desc">la vraie recette, avec des œufs et du lard, et zéro crème (les Italiens approuvent)</span></label>
+                    <label class="option"><input type="radio" name="menu_cuisto" value="Pâtes Carbonara">PÂTES CARBONARA<span class="desc">vraie recette ou fausse, elles seront excellentes !</span></label>
                     <label class="option"><input type="radio" name="menu_cuisto" value="Pizza chèvre miel" required>PIZZA CHÈVRE MIEL<span class="desc">comme je sais que tu en raffoles...</span></label>
                 </div>
 
-                <!-- 2. Outfits -->
                 <div class="category" id="sec-tenue" style="display: none;">
                     <div class="category-title"><span>Outfit du jour</span><span class="note">AU CHOIX</span></div>
                     <label class="option"><input type="radio" name="outfit" value="31" required>ON SE MET SUR NOTRE 31<span class="desc">tu seras sublime, moi j'essaierai de suivre</span></label>
                     <label class="option"><input type="radio" name="outfit" value="Relax">RELAX, C'EST WEEKEND<span class="desc">confort avant tout : tu es resplendissante même en jogging</span></label>
                 </div>
 
-                <!-- 3. Activité à Poitiers -->
                 <div class="category" id="sec-activite" style="display: none;">
                     <div class="category-title"><span>Activité à Deux</span><span class="note" id="activite-note">AU CHOIX</span></div>
-                    <label class="option"><input type="radio" name="activite" value="Parc de Blossac">BALADE AU PARC DE BLOSSAC<span class="desc">on commence à y avoir l'habitude mdrr</span></label>
+                    <label class="option"><input type="radio" name="activite" value="Shopping">SHOPPING<span class="desc">mais on inverse les rôles cette fois-ci ! Avec peut-être l'achat d'une nouvelle armoire</span></label>
+                    <label class="option"><input type="radio" name="activite" value="Parc de Blossac">BALADE AU PARC DE BLOSSAC<span class="desc">on commence à y avoir l'habitude et à le connâitre par coeur mdrr</span></label>
                     <label class="option"><input type="radio" name="activite" value="Terrasse place Charles-de-Gaulle">PAUSE EN TERRASSE<span class="desc">un chocolat chaud (ou un verre), et mes beaux yeux bleus rien que pour toi</span></label>
                     <label class="option"><input type="radio" name="activite" value="Bowling">FLÉCHETTE<span class="desc">tu veux prendre ta revanche peut-être ? (lot de consolation déjà prévu)</span></label>
-                    <label class="option"><input type="radio" name="activite" value="Laser game">BILLARD<span class="desc">cette fois-ci je t'écrase  : amoureux oui, mais sans pitié</span></label>
+                    <label class="option"><input type="radio" name="activite" value="Laser game">BILLARD<span class="desc">cette fois-ci je t'écrase : amoureux oui, mais sans pitié</span></label>
                     <label class="option"><input type="radio" name="activite" value="Surprise">SURPRISE<span class="desc">choisis pour moi et fais-moi rêver !!</span></label>
                 </div>
 
-                <!-- 4. Soir -->
                 <div class="category" id="sec-soir" style="display: none;">
                     <div class="category-title"><span>Et au soir ?</span><span class="note">AU CHOIX</span></div>
                     <label class="option"><input type="radio" name="soir" value="Reste" required>JE RESTE LE SOIR<span class="desc">l'essence coute trop cher pour faire un aller-retour et on a des Harry Potter à regarder !</span></label>
                     <label class="option"><input type="radio" name="soir" value="Rentre">JE RENTRE CHEZ MOI<span class="desc">à mon grand regret, je renonce aux papouilles pendant Harry Potter...</span></label>
                 </div>
 
-                <!-- 4b. Seulement si elle reste -->
                 <div class="category" id="sec-harry" style="display: none;">
-                    <div class="category-title"><span>Soirée à Deux</span><span class="note">LA DICTATRICE VA ME L'IMPOSER, DONC....</span></div>
-                    <label class="option option-locked"><input type="checkbox" name="soiree" value="Harry Potter" checked required onclick="return false">ON REGARDE HARRY POTTER<span class="desc">M&Ms, PopCorn, d'autres réclamations Madame ?</span></label>
-                    <label class="option option-locked"><input type="checkbox" name="soiree" value="Discussion de 10 min" checked required onclick="return false">ON PAPOTE UN PETIT PEU<span class="desc">On commence une discussion de 10min qui finit à 2h du mat</span></label>
+                    <div class="category-title"><span>Soirée à Deux</span><span class="note">AU CHOIX</span></div>
+                    <label class="option"><input type="radio" name="soiree" value="Harry Potter" required>ON REGARDE HARRY POTTER<span class="desc">M&Ms, PopCorn, d'autres réclamations Madame ?</span></label>
+                    <label class="option"><input type="radio" name="soiree" value="Discussion de 10 min">ON PAPOTE UN PETIT PEU<span class="desc">On commence une discussion de 10min qui finit à 2h du mat</span></label>
+                    <label class="option"><input type="radio" name="soiree" value="On sort">ON SORT<span class="desc">Tu n'en sauras pas plus, mais belle tenue exigée</span></label>
                 </div>
 
-                <!-- 5. Dimanche (dans tous les cas) -->
                 <div class="category" id="sec-pdj" style="display: none;">
                     <div class="category-title"><span>P'tit déj du dimanche</span><span class="note">AU CHOIX</span></div>
-                    <label class="option"><input type="radio" name="ptitdej" value="Viennoiseries" required>CROISSANTS, PAINS AU CHOCOLAT<span class="desc">de la boulangerie : mes talents ont des limites...</span></label>
+                    <label class="option"><input type="radio" name="ptitdej" value="Viennoiseries" required>CROISSANTS, PAINS AU CHOCOLAT<span class="desc">de la boulangerie : mes talents ont des limites... mais avec service le lit !!</span></label>
                     <label class="option"><input type="radio" name="ptitdej" value="Crêpes">CRÊPES<span class="desc">faites maison, avec amour et un peu de farine</span></label>
                     <label class="option"><input type="radio" name="ptitdej" value="Pancakes">PANCAKES<span class="desc">juste des crêpes un peu épaisses (ou ratées)</span></label>
                     <label class="option"><input type="radio" name="ptitdej" value="Autre">AUTRE<span class="desc">une envie précise ? écris ta propre proposition</span><textarea class="other-textarea" id="ptitdej-autre" name="ptitdej_autre" rows="2" maxlength="300" placeholder="Ton p'tit déj idéal..."></textarea></label>
@@ -114,25 +138,32 @@
                     <label class="option"><input type="radio" name="activite_dimanche" value="Grasse matinée" required>GRASSE MATINÉE<span class="desc">câlins, papouilles, zéro productivité et Harry Potter (encore) : le programme parfait</span></label>
                     <label class="option"><input type="radio" name="activite_dimanche" value="Balade le long du Clain">BALADE LE LONG DU CLAIN<span class="desc">de l'air frais et un paysage pas exceptionnel, mais avec toi tout devient magnifique</span></label>
                     <label class="option"><input type="radio" name="activite_dimanche" value="Visite de la ville">VISITE DE LA VILLE<span class="desc">obligé de te faire découvrir les meilleurs coins de la ville..</span></label>
-                    <label class="option"><input type="radio" name="activite_dimanche" value="Running">RUNNING MATINAL<span class="desc">pas un bon cardio ? pas grave, on ira à ton rythme ! [affaire obligatoire]</span></label>
+                    <label class="option"><input type="radio" name="activite_dimanche" value="Running">RUNNING MATINAL<span class="desc">pas un bon cardio ? pas grave, on ira à ton rythme ! [affaires obligatoire]</span></label>
+                    <label class="option"><input type="radio" name="activite_dimanche" value="Aquascope (toute la journée)">AQUASCOPE · TOUTE LA JOURNÉE<span class="desc">toboggans, vagues et prévois accesoirement ton maillot de bain, ça pourrait t'être utile</span></label>
+                    <label class="option"><input type="radio" name="activite_dimanche" value="Futuroscope (toute la journée)">FUTUROSCOPE · TOUTE LA JOURNÉE<span class="desc">pas trop peur des manèges à sensation ? on va voir ça !</span></label>
                     <label class="option"><input type="radio" name="activite_dimanche" value="Surprise">DIMANCHE SANS PRISE DE TÊTE<span class="desc">cerveau en mode économie d'énergie : décide, c'est toi la vraie boss</span></label>
                 </div>
 
                 <div class="category" id="sec-dej-dim" style="display: none;">
                     <div class="category-title"><span>Déjeuner du dimanche</span><span class="note">AU CHOIX</span></div>
                     <label class="option"><input type="radio" name="dejeuner_dimanche" value="Brunch maison" required>BRUNCH MAISON<span class="desc">on ne se lève pas de table, on prend notre temps</span></label>
-                    <label class="option"><input type="radio" name="dejeuner_dimanche" value="Pique-nique">PIQUE-NIQUE<span class="desc">si la météo est de la partie (sinon, on le fait sur le tapis..)</span></label>
+                    <label class="option"><input type="radio" name="dejeuner_dimanche" value="Pique-nique">PIQUE-NIQUE<span class="desc">normalement la météo est de notre côté, sinon, on le fait dans l'appart..</span></label>
+                    <label class="option"><input type="radio" name="dejeuner_dimanche" value="Livraison">ON SE FAIT LIVRER<span class="desc">et pourquoi pas juste ne rien préparer et juste profiter ?</span></label>
                 </div>
 
                 <div class="category" id="sec-aprem" style="display: none;">
                     <div class="category-title"><span>Activité du dimanche après-midi</span><span class="note">LE DERNIER ROUND AVANT LES AU REVOIR</span></div>
                     <label class="option"><input type="radio" name="activite_aprem" value="Sieste câline" required>SIESTE CÂLINE<span class="desc">oui, on peut appeler ça une activité</span></label>
-                    <label class="option"><input type="radio" name="activite_aprem" value="Film sous le plaid">FILM SOUS LE PLAID<span class="desc">choisi par toi, avec thé, plaid et ma tête sur tes genoux</span></label>
-                    <label class="option"><input type="radio" name="activite_aprem" value="Jeux de société">JEUX DE SOCIÉTÉ<span class="desc">le perdant offre un massage (le gagnant aussi, soyons honnêtes)</span></label>
-                    <label class="option"><input type="radio" name="activite_aprem" value="Futuroscope">FUTUROSCOPE<span class="desc">juste à côté de Poitiers : attractions, spectacles et frissons (une bonne excuse pour se serrer)</span></label>
-                    <label class="option"><input type="radio" name="activite_aprem" value="Aquascope">AQUASCOPE<span class="desc">toboggans, vagues et lumières dans un parc aquatique couvert (prévois le maillot, et des bisous mouillés)</span></label>
-                    <label class="option"><input type="radio" name="activite_aprem" value="Goûter maison">GOÛTER MAISON<span class="desc">un gâteau à deux, avec de la farine partout (encore)</span></label>
+                    <label class="option"><input type="radio" name="activite_aprem" value="Film sous le plaid">FILM SOUS LE PLAID<span class="desc">si jamais on a pas encore fini les Harry Potter d'ici là..</span></label>
+                    <label class="option"><input type="radio" name="activite_aprem" value="Jeux de société">JEUX DE SOCIÉTÉ<span class="desc">le perdant offre un massage (le gagnant aussi, soyons honnêtes, comme je vais gagner)</span></label>
+                    <label class="option"><input type="radio" name="activite_aprem" value="Goûter maison">GOÛTER MAISON<span class="desc">un gâteau à deux, avec de la farine partout</span></label>
+                    <label class="option"><input type="radio" name="activite_aprem" value="Châtellerault">VISITE DE CHÂTELLERAULT<span class="desc">marre de Blossac ? on change de ville mdrrr PS : possibilité de tester un restaurant sur place !</span></label>
                     <label class="option"><input type="radio" name="activite_aprem" value="Surprise">SURPRISE<span class="desc">laisse-moi t'emmener où je veux, tu ne seras pas déçue</span></label>
+                </div>
+
+                <div class="category" id="sec-fin" style="display: none;">
+                    <div class="category-title"><span>Dernier choix</span><span class="note">OBLIGATOIRE</span></div>
+                    <label class="option option-locked"><input type="radio" name="dernier_choix" value="Advienne que pourra" checked required onclick="return false">ADVIENNE QUE POURRA</label>
                 </div>
 
                 <div id="sec-final" style="display: none;">
@@ -146,7 +177,7 @@
 
             <div id="result">
                 <h2>C'est noté, Peach !</h2>
-                <p>Tes choix sont bien arrivés. Il ne reste plus qu'à compter les jours (et à préparer les bisous).</p>
+                <p>Tes choix sont bien arrivés. Il ne reste plus qu'à compter les jours d'ici notre premier weekend.</p>
                 <div id="result-recap"></div>
             </div>
             <div id="error">
@@ -176,7 +207,7 @@
             const start = startInput.value;
             const timeOk = start !== "" && start >= MIN_TIME;
             const tooEarly = start !== "" && start < MIN_TIME;
-            timeError.textContent = tooEarly ? "Pas avant 12h, Peach : les princes charmants ont besoin de sommeil 😴" : "";
+            timeError.textContent = tooEarly ? "Pas avant 12h, chérie : les princes charmants ont besoin de sommeil 😴" : "";
             timeError.classList.toggle("show", tooEarly);
 
             const needLunch = timeOk && start < "13:00";
@@ -205,10 +236,9 @@
             setSection("sec-soir", showSoir);
             const stays = showSoir && val("soir") === "Reste";
             setSection("sec-harry", stays);
-            if (stays) $("sec-harry").querySelectorAll("input").forEach(i => i.checked = true);
 
             const soirChoisi = showSoir && val("soir") !== "";
-            setSection("sec-pdj", stays);
+            setSection("sec-pdj", stays && val("soiree") !== "");
             const pdjAutre = $("ptitdej-autre");
             const pdjIsOther = stays && val("ptitdej") === "Autre";
             pdjAutre.style.display = pdjIsOther ? "block" : "none";
@@ -218,12 +248,17 @@
             const showActDim = stays && pdjOk;
             setSection("sec-act-dim", showActDim);
             const matinFait = !stays || val("activite_dimanche") !== "";
-            const showDejDim = soirChoisi && matinFait;
+            const journeeComplete = stays && val("activite_dimanche").includes("toute la journée");
+            const showDejDim = soirChoisi && matinFait && !journeeComplete;
             setSection("sec-dej-dim", showDejDim);
             const showAprem = showDejDim && val("dejeuner_dimanche") !== "";
             setSection("sec-aprem", showAprem);
 
-            const showFinal = showAprem && val("activite_aprem") !== "";
+            const showFin = journeeComplete || (showAprem && val("activite_aprem") !== "");
+            setSection("sec-fin", showFin);
+            if (showFin) $("sec-fin").querySelectorAll("input").forEach(i => i.checked = true);
+
+            const showFinal = showFin;
             $("sec-final").style.display = showFinal ? "block" : "none";
             $("sec-final").querySelectorAll("button").forEach(b => b.disabled = !showFinal);
             updateRecap(showFinal);
@@ -264,7 +299,8 @@
                         ["🥐 P'tit déj", val("ptitdej") === "Autre" ? ($("ptitdej-autre").value.trim() && "Autre : " + $("ptitdej-autre").value.trim()) : val("ptitdej")],
                         ["☀️ Matinée", val("activite_dimanche")],
                         ["🍴 Déjeuner", val("dejeuner_dimanche")],
-                        ["🎈 Après-midi", val("activite_aprem")]
+                        ["🎈 Après-midi", val("activite_aprem")],
+                        ["🎯 Dernier choix", val("dernier_choix")]
                     ]
                 }
             ];
